@@ -3,7 +3,7 @@
 </div>
 
 <section class="h-100 mt-3 section mb-3" *ngIf="!loading">
-  <div class="container h-100">
+  <div class="container container2 h-100">
     <div class="row justify-content-md-center h-100">
       <div class="card-wrapper">
         <div class="card fat">
@@ -23,7 +23,8 @@
               <div class="card" *ngFor="let produto of produtos | slice: 0:2; let i = index">
                   <img class="card-img-top" [src]="produto.img">
                   <div class="card-body">
-                    <h5 class="card-title">{{produto.descricao}}</h5>
+                    <h5 class="card-title">{{produto.nome}}</h5>
+                    <p class="card-text">{{produto.descricao}}</p>
                     <p class="card-text">Valor: {{produto.valor | currency:'BRL' }}</p>
                   </div>
                   <div class="card-footer" *ngIf="!verificarProdutoCarrinho(produto.id)">
@@ -41,7 +42,8 @@
               <div class="card" *ngFor="let produto of produtos | slice: 2:4; let i = index">
                   <img class="card-img-top" [src]="produto.img">
                   <div class="card-body">
-                    <h5 class="card-title">{{produto.descricao}}</h5>
+                    <h5 class="card-title">{{produto.nome}}</h5>
+                    <p class="card-text">{{produto.descricao}}</p>
                     <p class="card-text">Valor: {{produto.valor | currency:'BRL' }}</p>
                   </div>
                   <div class="card-footer" *ngIf="!verificarProdutoCarrinho(produto.id)">

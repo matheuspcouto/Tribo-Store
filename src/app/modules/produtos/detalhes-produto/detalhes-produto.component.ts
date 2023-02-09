@@ -23,12 +23,20 @@ export class DetalhesProdutoComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
-    let produtoSelecionado = sessionStorage.getItem('produto');
+
+    try {
+let produtoSelecionado = sessionStorage.getItem('produto');
 
     if (produtoSelecionado !== null) {
       this.produto = JSON.parse(produtoSelecionado);
       this.disabled = this.carrinho.pesquisar(this.produto.id);
       this.getConfigProduto(this.produto.tipo);
+    }
+    } catch (error: any) {
+      this.erroForm = {
+        tipoErro: 'form',
+        mensagemErro: error
+      }
     }
     this.loading = false;
   }

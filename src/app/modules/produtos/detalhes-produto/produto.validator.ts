@@ -35,7 +35,7 @@ export function getProdutoValidationErrors(produto: Produto): ErroDetalhesProdut
       quantidade: new FormControl(produto.qtdItem, qtdValidator),
       cor: new FormControl(produto.corSelecionada, produto.tipo === TipoProduto.MEIA ? Validators.required : null),
       tamanho: new FormControl(produto.tamanhoSelecionado, produto.tipo === TipoProduto.MEIA || produto.tipo === TipoProduto.CAMISA ? Validators.required : null),
-      modelo_celular: new FormControl(produto.tipoCelular, produto.tipo === TipoProduto.CAPINHA ? Validators.required : null),
+      modelo_celular: new FormControl(produto.modeloCelular, produto.tipo === TipoProduto.CAPINHA ? Validators.required : null),
   });
 
   Object.keys(form.controls).forEach((campoErro) => {

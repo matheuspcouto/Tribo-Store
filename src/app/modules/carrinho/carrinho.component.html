@@ -12,89 +12,58 @@
               <img src="assets/logo.jpg" class="img" />
             </div>
             <h2 class="card-title text-center mt-3" id="titulo">
-              {{ titulo }} - Form
+              Meu Carrinho
             </h2>
             <hr />
-            <h5>Descrição</h5>
-            <hr />
 
-            <form class="my-login-validation">
+            <!-- Alerta de erro -->
+            <div class="alert alert-danger" *ngIf="erroForm"> Erro:
+              {{erroForm.mensagemErro}} <i class="fa fa-exclamation-circle fa-2x float-right"></i>
+            </div>
 
-              <!-- Campo de Texto -->
-              <div class="form-group">
-                <label>Nome</label>
-                <input id="nome" type="text" name="nome" [(ngModel)]="pedido.nome" class="form-control" required
-                  placeholder="Digite o seu nome" />
-                <div *ngIf="errorValidator">
-                  <div *ngFor="let erro of errorValidator">
-                    <p class="label-error" *ngIf="erro.controlError === 'nome'">{{erro.messageError}}</p>
-                  </div>
-                </div>
-              </div>
+            <!-- Alerta de sucesso -->
+            <div class="alert alert-success" *ngIf="removido">
+              Produto removido do carrinho <i class="fa fa-check fa-2x float-right"></i>
+            </div>
 
-              <!-- Campo de Telefone -->
-              <div class="form-group">
-                <label>Telefone</label>
-                <input id="telefone" type="text" name="telefone" [(ngModel)]="pedido.telefone" class="form-control"
-                  required mask="(00) 0 0000-0000 || (00) 0000-0000" placeholder="Digite seu telefone" />
-                <div *ngIf="errorValidator">
-                  <div *ngFor="let erro of errorValidator">
-                    <p class="label-error" *ngIf="erro.controlError === 'telefone'">{{erro.messageError}}</p>
-                  </div>
-                </div>
-              </div>
+            <div *ngIf="produtos.length == 0">
+              <p class="card-title text-center mt-3">Você não tem nenhum item no carrinho !</p>
+              <p class="card-title text-center">Se quiser, dê uma olhada em nossos produtos</p>
+            </div>
 
-              <!-- Campo de Seleção Drop
-              <div class="row">
-                <label>Selecione o Item</label>
-                <div class="form-group col-sm-12">
-                  <div class="form-group">
-                    <select class="form-select form-select-lg" [(ngModel)]="item" name="idItem">
-                      <option *ngFor="let item of itens; let i = index" [ngValue]="item" [selected]="itens[0]">
-                        {{ item }}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              -->
-
-              <!-- Campo de Seleção Table
+            <div class="my-login-validation table-responsive" *ngIf="produtos.length > 0">
               <table class="table table-hover">
                 <thead>
                   <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Ações</th>
-                    <th scope="col">Itens</th>
+                    <th scope="col">Produto</th>
+                    <th scope="col">Qtd</th>
                     <th scope="col">Valor</th>
-                    <th scope="col">Tamanho/Tipo</th>
-                    <th scope="col">Quantidade</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Ações</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let item of itens; let i = index">
-                    <th scope="row">i</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
+                  <tr *ngFor="let produto of produtos; let i = index">
+                    <td>{{formatarProdutoCarrinho(produto)}}</td>
+                    <td>{{produto.qtdItem}}</td>
+                    <td>{{produto.valor | currency:'BRL'}}</td>
+                    <td>{{valorTotalProduto(produto) | currency:'BRL'}}</td>
+                    <td>
+                      <button type="button" (click)="removerCarrinho(produto)" style="width: 50px;"
+                        class="btn btn-outline-danger btn-sm"><i class="fa fa-trash"></i></button>
+                    </td>
                   </tr>
                 </tbody>
               </table>
-              -->
 
-              <!-- Campo de Número -->
-              <div class="form-group">
-                <label>Quantidade</label>
-                <input id="qtd" type="number" name="qtd" class="form-control" [(ngModel)]="pedido.qtdItens" required
-                  placeholder="Digite a quantidade" min="1" />
-              </div>
+              <h6 class="card-title text-right mt-3">Total a Pagar {{totalCarrinho() | currency:'BRL'}}</h6>
+            </div>
 
-              <div class="form-group m-0">
-                <button (click)="enviar()" type="button" id="btnEnviar" class="btn btn-success btn-block">
-                  Enviar
-                </button>
-              </div>
-            </form>
+            <div class="form-group m-0" *ngIf="produtos.length > 0">
+              <button (click)="finalizarPedido()" type="button" id="btnEnviar" class="btn btn-success btn-block">
+                Finalizar Pedido
+              </button>
+            </div>
 
             <hr />
             <app-footer></app-footer>

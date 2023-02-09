@@ -1,12 +1,14 @@
 export class Produto {
   id: number = 0;
-  descricao: string = '';
+  nome: string = '';
+  descricao?: string;
   tipo?: string;
   tamanhoSelecionado?: string;
   corSelecionada?: string;
-  tipoCelular?: string;
+  modeloCelular?: string;
   qtdItem?: number;
   valor: number = 0;
+  valorTotal?: number;
   img?: string;
   ativo: boolean = true;
 }

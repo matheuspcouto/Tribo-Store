@@ -10,11 +10,12 @@
           <div class="card-body" style="background-color: white">
 
             <div class="divImg mt-3"><img [src]="produto.img" class="img" /></div>
-            <h3 class="card-title text-center mt-3" id="titulo"> {{ produto.descricao }}</h3>
+            <h3 class="card-title text-center mt-3" id="titulo"> {{ produto.nome }}</h3>
+            <h5 class="card-title text-left mt-3"> Descrição: {{ produto.descricao}} </h5>
             <h5 class="card-title text-left mt-3"> Valor: {{ produto.valor | currency:"BRL" }} </h5>
 
             <!-- Alerta de erro -->
-            <div class="alert alert-danger" *ngIf="erroForm">
+            <div class="alert alert-danger" *ngIf="erroForm"> Erro:
               {{erroForm.mensagemErro}} <i class="fa fa-exclamation-circle fa-2x float-right"></i>
             </div>
 
@@ -36,7 +37,7 @@
                   </select>
                   <div *ngIf="errorsValidators">
                     <div *ngFor="let erro of errorsValidators">
-                      <p style="color: red" *ngIf="erro.controleErro === 'tamanho'">{{erro.mensagemErro}}</p>
+                      <p class="label-error" *ngIf="erro.controleErro === 'tamanho'">{{erro.mensagemErro}}</p>
                     </div>
                   </div>
                 </div>
@@ -55,7 +56,7 @@
                   </select>
                   <div *ngIf="errorsValidators">
                     <div *ngFor="let erro of errorsValidators">
-                      <p style="color: red" *ngIf="erro.controleErro === 'cor'">{{erro.mensagemErro}}</p>
+                      <p class="label-error" *ngIf="erro.controleErro === 'cor'">{{erro.mensagemErro}}</p>
                     </div>
                   </div>
                 </div>
@@ -64,11 +65,11 @@
 
             <div class="form-group" *ngIf="produto.tipo === 'Celular'">
               <label>Qual o modelo do celular ?</label>
-              <input id="celular" type="text" name="celular" [disabled]="disabled" [(ngModel)]="produto.tipoCelular" class="form-control" required
+              <input id="celular" type="text" name="celular" [disabled]="disabled" [(ngModel)]="produto.modeloCelular" class="form-control" required
                 placeholder="Informe o modelo do celular" />
                 <div *ngIf="errorsValidators">
                   <div *ngFor="let erro of errorsValidators">
-                    <p style="color: red" *ngIf="erro.controleErro === 'modelo_celular'">{{erro.mensagemErro}}</p>
+                    <p class="label-error" *ngIf="erro.controleErro === 'modelo_celular'">{{erro.mensagemErro}}</p>
                   </div>
                 </div>
             </div>
@@ -79,7 +80,7 @@
                 placeholder="Informe a quantidade que deseja comprar" required />
                 <div *ngIf="errorsValidators">
                   <div *ngFor="let erro of errorsValidators">
-                    <p style="color: red" *ngIf="erro.controleErro === 'quantidade'">{{erro.mensagemErro}}</p>
+                    <p class="label-error" *ngIf="erro.controleErro === 'quantidade'">{{erro.mensagemErro}}</p>
                   </div>
                 </div>
             </div>

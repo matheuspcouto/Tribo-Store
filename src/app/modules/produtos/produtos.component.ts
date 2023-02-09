@@ -26,7 +26,8 @@ export class ProdutosComponent implements OnInit {
     this.produtos = [
         {
           id: 1,
-          descricao: "Camiseta Tribo Leão - Algodão",
+          nome: "Camiseta Tribo Leão",
+          descricao: 'Tecido de Algodão',
           tipo: TipoProduto.CAMISA,
           valor: 35.0,
           ativo: true,
@@ -34,7 +35,8 @@ export class ProdutosComponent implements OnInit {
         },
         {
           id: 2,
-          descricao: "Adesivo Tribo Alvo (6cm x 7cm)",
+          nome: "Adesivo Tribo Alvo",
+          descricao: 'Tamanho 6cm x 7cm',
           tipo: TipoProduto.ADESIVO,
           valor: 3.0,
           ativo: true,
@@ -42,7 +44,8 @@ export class ProdutosComponent implements OnInit {
         },
         {
           id: 3,
-          descricao: "Adesivo Logo Tribo (4cm x 8cm)",
+          nome: "Adesivo Logo Tribo",
+          descricao: 'Tamanho 4cm x 8cm',
           tipo: TipoProduto.ADESIVO,
           valor: 3.0,
           ativo: true,
@@ -50,7 +53,8 @@ export class ProdutosComponent implements OnInit {
         },
         {
           id: 4,
-          descricao: "Meias Tribo Alvo",
+          nome: "Meias Tribo Alvo",
+          descricao: 'Tecido de Algodão com a logo da tribo bordada',
           tipo: TipoProduto.MEIA,
           valor: 25.0,
           ativo: true,

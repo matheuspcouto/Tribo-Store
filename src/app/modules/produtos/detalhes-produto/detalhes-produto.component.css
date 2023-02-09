@@ -9,14 +9,14 @@
   margin: 5px 0 15px 0;
 }
 
-.container {
-  position: relative;
-  top: 60px;
-}
-
 @media screen and (max-width: 425px) {
   .img {
     width: 90%;
     height: 200px;
   }
+}
+
+.label-error {
+  color: brown;
+  font-size: small;
 }
