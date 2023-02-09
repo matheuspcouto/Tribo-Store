@@ -1,10 +1,8 @@
-import { Produto } from './produto';
-
 export class Pedido {
-  id?: number;
+  codigoPedido?: string;
   nome: string = '';
   telefone?: string;
-  produtos: Produto[] = [];
+  codigoProdutos: string[] = [];
   qtdItens?: number;
   valorTotal?: number;
   formaPagamento?: string;

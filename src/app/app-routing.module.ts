@@ -1,3 +1,4 @@
+import { FinalizarPedidoComponent } from './modules/finalizar-pedido/finalizar-pedido.component';
 import { CarrinhoComponent } from './modules/carrinho/carrinho.component';
 import { DetalhesProdutoComponent } from './modules/produtos/detalhes-produto/detalhes-produto.component';
 import { SucessoComprovanteComponent } from './modules/sucesso-comprovante/sucesso-comprovante.component';
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'produtos', component: ProdutosComponent, canActivate:[SiteAtivoGuard] },
   { path: 'detalhes-produto', component: DetalhesProdutoComponent, canActivate:[SiteAtivoGuard] },
   { path: 'meu-carrinho', component: CarrinhoComponent, canActivate:[SiteAtivoGuard] },
+  { path: 'finalizar-pedido', component: FinalizarPedidoComponent, canActivate:[SiteAtivoGuard] },
   { path: 'comprovante', component: SucessoComprovanteComponent },
   { path: 'aguarde', component: AguardeComponent },
 ];

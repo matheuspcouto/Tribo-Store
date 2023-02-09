@@ -15,6 +15,7 @@ import { ProdutosComponent } from './modules/produtos/produtos.component';
 import { DetalhesProdutoComponent } from './modules/produtos/detalhes-produto/detalhes-produto.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CarrinhoComponent } from './modules/carrinho/carrinho.component';
+import { FinalizarPedidoComponent } from './modules/finalizar-pedido/finalizar-pedido.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { CarrinhoComponent } from './modules/carrinho/carrinho.component';
     LoadderComponent,
     ProdutosComponent,
     DetalhesProdutoComponent,
+    FinalizarPedidoComponent,
   ],
   imports: [
     HttpClientModule,

@@ -33,7 +33,7 @@
                 <a routerLink="/produtos" class="card-button"> Ver mais</a>
               </div>
 
-              <div class="box blue">
+              <div [class]="disabled ? 'box blue' : 'box gray'">
                 <div class="card-icon">
                   <i class="fa fa-shopping-cart fa-3x"></i>
                 </div>
@@ -41,9 +41,10 @@
                 <p class="text-center mt-3 card-text">
                   Veja o que você tem no carrinho.
                 </p>
-                <a routerLink="/meu-carrinho" class="card-button"> Ver mais</a>
+                <a *ngIf="disabled" routerLink="/meu-carrinho" class="card-button"> Ver mais</a>
+                <a *ngIf="!disabled" class="card-button-disabled"> Necessário ter pelo menos 1 item no carrinho</a>
               </div>
-              <div class="box blue">
+              <div [class]="disabled ? 'box blue' : 'box gray'">
                 <div class="card-icon">
                   <i class="fa fa-credit-card fa-3x"></i>
                 </div>
@@ -51,7 +52,8 @@
                 <p class="text-center mt-3 card-text">
                   Confirme seu pedido com a gente.
                 </p>
-                <a routerLink="/aguarde" class="card-button"> Ver mais</a>
+                <a *ngIf="disabled" routerLink="/finalizar-pedido" class="card-button"> Ver mais</a>
+                <a *ngIf="!disabled" class="card-button-disabled"> Necessário ter pelo menos 1 item no carrinho</a>
               </div>
             </div>
 

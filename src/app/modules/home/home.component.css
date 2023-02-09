@@ -3,6 +3,7 @@
 :root {
   --blue: #1F487E;
   --darkBlue: #050505;
+  --gray: #b8b8b8;
   --weight1: 200;
   --weight2: 400;
   --weight3: 600;
@@ -47,6 +48,18 @@
   margin-top: 25px;
 }
 
+.card-button-disabled {
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
+  width: 100%;
+  background-color: var(--gray);
+  color: #fff !important;
+  border-radius: 0 0 8px 8px;
+  text-decoration: none;
+  margin-top: 25px;
+}
+
 .card-button:hover {
   text-decoration: none;
   background-color: var(--blue);
@@ -72,6 +85,10 @@
 
 .blue {
   border-top: 3px solid var(--blue);
+}
+
+.gray {
+  border-top: 3px solid var(--gray);
 }
 
 @media (min-width: 950px) {
