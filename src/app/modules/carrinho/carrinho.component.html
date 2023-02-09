@@ -1,0 +1,106 @@
+<div *ngIf="loading">
+  <app-loadder></app-loadder>
+</div>
+
+<section class="h-100 mt-3 section mb-3" *ngIf="!loading">
+  <div class="container h-100">
+    <div class="row justify-content-md-center h-100">
+      <div class="card-wrapper">
+        <div class="card fat">
+          <div class="card-body" style="background-color: white">
+            <div class="divImg mt-3">
+              <img src="assets/logo.jpg" class="img" />
+            </div>
+            <h2 class="card-title text-center mt-3" id="titulo">
+              {{ titulo }} - Form
+            </h2>
+            <hr />
+            <h5>Descrição</h5>
+            <hr />
+
+            <form class="my-login-validation">
+
+              <!-- Campo de Texto -->
+              <div class="form-group">
+                <label>Nome</label>
+                <input id="nome" type="text" name="nome" [(ngModel)]="pedido.nome" class="form-control" required
+                  placeholder="Digite o seu nome" />
+                <div *ngIf="errorValidator">
+                  <div *ngFor="let erro of errorValidator">
+                    <p class="label-error" *ngIf="erro.controlError === 'nome'">{{erro.messageError}}</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Campo de Telefone -->
+              <div class="form-group">
+                <label>Telefone</label>
+                <input id="telefone" type="text" name="telefone" [(ngModel)]="pedido.telefone" class="form-control"
+                  required mask="(00) 0 0000-0000 || (00) 0000-0000" placeholder="Digite seu telefone" />
+                <div *ngIf="errorValidator">
+                  <div *ngFor="let erro of errorValidator">
+                    <p class="label-error" *ngIf="erro.controlError === 'telefone'">{{erro.messageError}}</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Campo de Seleção Drop
+              <div class="row">
+                <label>Selecione o Item</label>
+                <div class="form-group col-sm-12">
+                  <div class="form-group">
+                    <select class="form-select form-select-lg" [(ngModel)]="item" name="idItem">
+                      <option *ngFor="let item of itens; let i = index" [ngValue]="item" [selected]="itens[0]">
+                        {{ item }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              -->
+
+              <!-- Campo de Seleção Table
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Ações</th>
+                    <th scope="col">Itens</th>
+                    <th scope="col">Valor</th>
+                    <th scope="col">Tamanho/Tipo</th>
+                    <th scope="col">Quantidade</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of itens; let i = index">
+                    <th scope="row">i</th>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                  </tr>
+                </tbody>
+              </table>
+              -->
+
+              <!-- Campo de Número -->
+              <div class="form-group">
+                <label>Quantidade</label>
+                <input id="qtd" type="number" name="qtd" class="form-control" [(ngModel)]="pedido.qtdItens" required
+                  placeholder="Digite a quantidade" min="1" />
+              </div>
+
+              <div class="form-group m-0">
+                <button (click)="enviar()" type="button" id="btnEnviar" class="btn btn-success btn-block">
+                  Enviar
+                </button>
+              </div>
+            </form>
+
+            <hr />
+            <app-footer></app-footer>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

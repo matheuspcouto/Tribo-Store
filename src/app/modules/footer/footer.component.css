@@ -1,0 +1,28 @@
+/* FOOTER */
+
+.footer {
+  margin: 40px 0;
+  color: rgb(255, 255, 255);
+  text-align: center;
+}
+
+.social-links a {
+  font-size: 18px;
+  display: inline-block;
+  background: #050505;
+  color: #E5E5E5;
+  line-height: 1;
+  padding: 8px 0;
+  margin-right: 4px;
+  border-radius: 50%;
+  text-align: center;
+  width: 36px;
+  height: 36px;
+  transition: 0.3s;
+}
+
+.social-links a:hover {
+  background: #E5E5E5;
+  color: #050505;
+  text-decoration: none;
+}

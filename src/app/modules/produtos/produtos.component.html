@@ -1,0 +1,65 @@
+<div *ngIf="loading">
+  <app-loadder></app-loadder>
+</div>
+
+<section class="h-100 mt-3 section mb-3" *ngIf="!loading">
+  <div class="container h-100">
+    <div class="row justify-content-md-center h-100">
+      <div class="card-wrapper">
+        <div class="card fat">
+          <div class="card-body" style="background-color: white">
+            <div class="divImg mt-3">
+              <img src="assets/logo.jpg" class="img" />
+            </div>
+            <h2 class="card-title text-center mt-3" id="titulo">
+              {{ titulo }} - Lista de Produtos
+            </h2>
+            <p class="text-center mt-3">
+              Confira nossos produtos abaixo.
+            </p>
+            <hr>
+
+            <div class="card-deck">
+              <div class="card" *ngFor="let produto of produtos | slice: 0:2; let i = index">
+                  <img class="card-img-top" [src]="produto.img">
+                  <div class="card-body">
+                    <h5 class="card-title">{{produto.descricao}}</h5>
+                    <p class="card-text">Valor: {{produto.valor | currency:'BRL' }}</p>
+                  </div>
+                  <div class="card-footer" *ngIf="!verificarProdutoCarrinho(produto.id)">
+                    <button type="button" class="btn btn-block btn-primary" (click)="verProduto(produto)">
+                      Comprar <i class="fa fa-cart-plus"></i></button>
+                  </div>
+                  <div class="card-footer" *ngIf="verificarProdutoCarrinho(produto.id)">
+                    <button type="button" class="btn btn-block btn-light" disabled>
+                      Produto já adicionado ao carrinho</button>
+                  </div>
+              </div>
+            </div>
+            <br><br>
+            <div class="card-deck" *ngIf="produtos.length > 3">
+              <div class="card" *ngFor="let produto of produtos | slice: 2:4; let i = index">
+                  <img class="card-img-top" [src]="produto.img">
+                  <div class="card-body">
+                    <h5 class="card-title">{{produto.descricao}}</h5>
+                    <p class="card-text">Valor: {{produto.valor | currency:'BRL' }}</p>
+                  </div>
+                  <div class="card-footer" *ngIf="!verificarProdutoCarrinho(produto.id)">
+                    <button type="button" class="btn btn-block btn-primary" (click)="verProduto(produto)">
+                      Comprar <i class="fa fa-cart-plus"></i></button>
+                  </div>
+                  <div class="card-footer" *ngIf="verificarProdutoCarrinho(produto.id)">
+                    <button type="button" class="btn btn-block btn-light" disabled>
+                      Produto já adicionado ao carrinho</button>
+                  </div>
+              </div>
+            </div>
+            <hr />
+
+            <app-footer></app-footer>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
