@@ -1,6 +1,5 @@
 import { TipoProduto } from './../../shared/enums/tipo-produto-enum';
 import { CarrinhoService } from 'src/app/services/carrinho-state.service';
-import { AppInfo } from 'src/app/shared/enums/app-info-enum';
 import { Component, OnInit } from '@angular/core';
 import { Produto } from 'src/app/models/produto';
 import { Pedido } from 'src/app/models/pedido';
@@ -12,7 +11,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./carrinho.component.css'],
 })
 export class CarrinhoComponent implements OnInit {
-  titulo = AppInfo.TITLE;
   produtos: Produto[] = [];
   produto = new Produto();
   loading = false;

@@ -79,8 +79,8 @@ export class DetalhesProdutoComponent implements OnInit {
       ];
     }
     if (tipo === TipoProduto.MEIA) {
-      this.tamanhos = ['38', '39', '40', '41'];
-      this.cores = ['Branca', 'Preta'];
+      this.tamanhos = ['35', '36', '37', '38', '39', '40', '41', '42', '43'];
+      //this.cores = ['Branca', 'Preta'];
     }
   }
 }

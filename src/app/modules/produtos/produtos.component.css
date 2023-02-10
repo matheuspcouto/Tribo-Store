@@ -1,5 +1,9 @@
 .card-img-top {
   margin: 30px 0 15px 0;
+  max-width: 600px;
+  max-height: 300px;
+  width: auto;
+  height: auto;
 }
 
 .card-button {
@@ -20,7 +24,18 @@
   color: #fff;
 }
 
-.container2 {
-  position: relative;
-  top: 5px !important;
+.btnVoltar {
+  position: absolute;
+  right: 91%;
+  width: 100px;
+  line-height: 1;
+  padding: 8px 10px;
+  text-align: center;
+  text-decoration: none;
+}
+
+@media screen and (max-width: 425px) {
+  .btnVoltar {
+    right: 70%;
+  }
 }

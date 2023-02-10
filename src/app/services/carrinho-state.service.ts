@@ -33,4 +33,10 @@ export class CarrinhoService {
       .map((item) =>  item.qtdItem ? item.valor * item.qtdItem : item.valor)
       .reduce((prev, value) => prev + value, 0);
   }
+
+  totalTaxa(): number {
+    return this.produtos
+      .map((item) =>  item.qtdItem ? item.valorTaxa * item.qtdItem : item.valorTaxa)
+      .reduce((prev, value) => prev + value, 0);
+  }
 }

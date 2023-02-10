@@ -21,7 +21,7 @@ export const telefoneValidator = [
   Validators.nullValidator,
 ];
 
-export function getProdutoValidationErrors(pedido: Pedido): ErroPedido[] {
+export function getPedidoValidationErrors(pedido: Pedido): ErroPedido[] {
   let errors: ErroPedido[] = [];
 
   var form = new FormGroup({

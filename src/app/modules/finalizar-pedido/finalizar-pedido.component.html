@@ -8,6 +8,13 @@
       <div class="card-wrapper">
         <div class="card fat">
           <div class="card-body" style="background-color: white">
+
+            <a routerLink="/meu-carrinho">
+              <button type="button" class="btn btnVoltar text-center">
+                <i class="fa fa-arrow-left float-left"></i> Voltar
+              </button>
+            </a><br>
+
             <div class="divImg mt-3">
               <img src="assets/logo.jpg" class="img" />
             </div>
@@ -20,8 +27,6 @@
             <div class="alert alert-danger" *ngIf="erroForm"> Erro:
               {{erroForm.mensagemErro}} <i class="fa fa-exclamation-circle fa-2x float-right"></i>
             </div>
-
-            <form class="my-login-validation">
 
               <div class="form-group">
                 <label>Nome</label>
@@ -36,7 +41,7 @@
 
               <div class="form-group">
                 <label>Telefone</label>
-                <input id="telefone" type="text" [disabled]="disabled" name="telefone" [(ngModel)]="pedido.telefone"
+                <input id="telefone" type="text" name="telefone" [(ngModel)]="pedido.telefone" [disabled]="disabled"
                   class="form-control" required mask="(00) 0 0000-0000 || (00) 0000-0000"
                   placeholder="Digite seu telefone" />
                 <div *ngIf="errorsValidators">
@@ -50,14 +55,21 @@
                 <label>Forma de Pagamento</label>
                 <div class="form-group col-sm-12">
                   <div class="form-group">
-                    <select class="form-select form-select-lg" [disabled]="disabled" [(ngModel)]="pedido.formaPagamento">
+                    <select class="form-select form-select-lg" required
+                      [(ngModel)]="pedido.formaPagamento" [disabled]="disabled" name="formaPagamento">
                       <option *ngFor="let item of formasPagamento; let i = index" [ngValue]="item">
                         {{ item }}
                       </option>
                     </select>
+                    <div *ngIf="errorsValidators">
+                      <div *ngFor="let erro of errorsValidators">
+                        <p class="label-error" *ngIf="erro.controleErro === 'forma_pagamento'">{{erro.mensagemErro}}</p>
+                      </div>
+                    </div>
                   </div>
-                  <div class="alert alert-warning" *ngIf="pedido.formaPagamento && pedido.formaPagamento === 'Cartão de Crédito'">
-                    <i class="fa fa-exclamation-circle fa-2x float-right"></i>
+                  <div class="alert alert-warning text-right"
+                    *ngIf="pedido.formaPagamento && pedido.formaPagamento === 'Cartão de Crédito'">
+                    <i class="fa fa-exclamation-circle fa-2x float-left"></i>
                     Atenção, para compras no
                     cartão de crédito parcelado em duas ou mais vezes, é cobrada um acréscimo referente a taxa de
                     serviço de pagamento Mercado Pago.
@@ -79,7 +91,7 @@
                     <tr *ngFor="let produto of produtos; let i = index">
                       <td>{{formatarProdutoCarrinho(produto)}}</td>
                       <td>{{produto.qtdItem}}</td>
-                      <td>{{produto.valor | currency:'BRL'}}</td>
+                      <td>{{pedido.formaPagamento === 'Cartão de Crédito' ? produto.valorTaxa : produto.valor | currency:'BRL'}}</td>
                       <td>{{valorTotalProduto(produto) | currency:'BRL'}}</td>
                     </tr>
                   </tbody>
@@ -95,7 +107,6 @@
                   Concluir Pedido
                 </button>
               </div>
-            </form>
 
             <hr />
             <app-footer></app-footer>

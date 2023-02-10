@@ -1,7 +1,6 @@
 import { CarrinhoService } from 'src/app/services/carrinho-state.service';
 import { Component, OnInit } from '@angular/core';
 import { Event, Router, NavigationStart, NavigationEnd, NavigationError } from '@angular/router';
-import { AppInfo } from 'src/app/shared/enums/app-info-enum';
 
 @Component({
   selector: 'app-home',
@@ -10,7 +9,6 @@ import { AppInfo } from 'src/app/shared/enums/app-info-enum';
 })
 export class HomeComponent implements OnInit{
 
-  titulo = AppInfo.TITLE;
   loading = false;
   disabled: boolean = false;
 

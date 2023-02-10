@@ -8,13 +8,21 @@
       <div class="card-wrapper">
         <div class="card fat">
           <div class="card-body" style="background-color: white">
+
+            <a routerLink="/home">
+              <button type="button" class="btn btnVoltar text-center">
+                <i class="fa fa-arrow-left float-left"></i> Voltar
+              </button>
+            </a><br>
+
             <div class="divImg mt-3">
               <img src="assets/logo.jpg" class="img" />
             </div>
             <h2 class="card-title text-center mt-3" id="titulo">
               Meu Carrinho
             </h2>
-            <hr />
+            <hr *ngIf="produtos.length == 0"/>
+            <br *ngIf="produtos.length > 0">
 
             <!-- Alerta de erro -->
             <div class="alert alert-danger" *ngIf="erroForm"> Erro:

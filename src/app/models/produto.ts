@@ -8,7 +8,8 @@ export class Produto {
   modeloCelular?: string;
   qtdItem?: number;
   valor: number = 0;
-  valorTotal?: number;
+  valorTaxa: number = 0;
+  codigoProduto: string = '';
   img?: string;
   ativo: boolean = true;
 }

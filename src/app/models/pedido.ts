@@ -4,8 +4,8 @@ export class Pedido {
   telefone?: string;
   codigoProdutos: string[] = [];
   qtdItens?: number;
-  valorTotal?: number;
+  valorTotal: number = 0;
   formaPagamento?: string;
-  dataPedido?: Date;
+  dataPedido?: string;
   status?: string;
 }
