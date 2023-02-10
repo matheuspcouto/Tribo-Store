@@ -32,6 +32,14 @@
   text-decoration: none;
 }
 
+.btnTrocarImagem {
+  line-height: 1;
+  position: absolute;
+  left: 50%;
+  display: flex;
+  justify-content: center;
+}
+
 @media screen and (max-width: 425px) {
   .btnVoltar {
     right: 70%;

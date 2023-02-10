@@ -16,6 +16,9 @@ import { DetalhesProdutoComponent } from './modules/produtos/detalhes-produto/de
 import { HttpClientModule } from '@angular/common/http';
 import { CarrinhoComponent } from './modules/carrinho/carrinho.component';
 import { FinalizarPedidoComponent } from './modules/finalizar-pedido/finalizar-pedido.component';
+import { NgxMercadopagoModule } from 'ngx-mercadopago';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -36,7 +39,17 @@ import { FinalizarPedidoComponent } from './modules/finalizar-pedido/finalizar-p
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxMaskModule.forRoot()
+    NgxMaskModule.forRoot(),
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true,
+    }),
+    NgxMercadopagoModule.forRoot({
+      publishKey: 'Your Publish Key',
+      pathSDK: 'https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js'
+  })
   ],
   providers: [SiteAtivoGuard],
   bootstrap: [AppComponent]

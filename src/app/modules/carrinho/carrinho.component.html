@@ -24,16 +24,6 @@
             <hr *ngIf="produtos.length == 0"/>
             <br *ngIf="produtos.length > 0">
 
-            <!-- Alerta de erro -->
-            <div class="alert alert-danger" *ngIf="erroForm"> Erro:
-              {{erroForm.mensagemErro}} <i class="fa fa-exclamation-circle fa-2x float-right"></i>
-            </div>
-
-            <!-- Alerta de sucesso -->
-            <div class="alert alert-success" *ngIf="removido">
-              Produto removido do carrinho <i class="fa fa-check fa-2x float-right"></i>
-            </div>
-
             <div *ngIf="produtos.length == 0">
               <p class="card-title text-center mt-3">Você não tem nenhum item no carrinho !</p>
               <p class="card-title text-center">Se quiser, dê uma olhada em nossos produtos</p>

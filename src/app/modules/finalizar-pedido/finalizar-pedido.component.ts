@@ -1,3 +1,5 @@
+import { StatusPedido } from './../../shared/enums/status-pedido.enums';
+import { PedidoService } from './../../services/pedido.service';
 import { ErroPedido, getPedidoValidationErrors } from './pedido.validator';
 import { Component, OnInit } from '@angular/core';
 import { Pedido } from 'src/app/models/pedido';
@@ -6,6 +8,8 @@ import { TipoProduto } from 'src/app/shared/enums/tipo-produto-enum';
 import { Router } from '@angular/router';
 import { CarrinhoService } from 'src/app/services/carrinho-state.service';
 import { FormasPagamento } from 'src/app/shared/enums/formas-pagamento.enum';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-finalizar-pedido',
@@ -26,7 +30,12 @@ export class FinalizarPedidoComponent implements OnInit {
   errorsValidators: ErroPedido[] = [];
   erroForm: any;
 
-  constructor(private carrinho: CarrinhoService, private router: Router) {}
+  constructor(
+    private carrinho: CarrinhoService,
+    private pedidoService: PedidoService,
+    private notificationService: ToastrService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.loading = true;
@@ -34,10 +43,7 @@ export class FinalizarPedidoComponent implements OnInit {
       this.produtos = this.carrinho.getItens();
       this.disabled = this.produtos.length == 0;
     } catch (error: any) {
-      this.erroForm = {
-        tipoErro: 'form',
-        mensagemErro: error,
-      };
+      this.notificationService.error(error, 'Erro');
     }
     this.loading = false;
   }
@@ -46,62 +52,77 @@ export class FinalizarPedidoComponent implements OnInit {
     this.errorsValidators = getPedidoValidationErrors(this.pedido);
 
     if (this.errorsValidators.length == 0) {
-      this.pedido.dataPedido = new Date().toLocaleDateString('pt-br');
+      this.loading = true;
 
-      this.pedido.valorTotal =
-        this.pedido.formaPagamento === FormasPagamento.CARTAO_CREDITO
-          ? parseFloat(this.carrinho.totalTaxa().toFixed(2))
-          : parseFloat(this.carrinho.total().toFixed(2));
+      try {
+        this.pedido.dataPedido = new Date().toLocaleDateString('pt-br');
 
-      this.pedido.codigoProdutos = this.gerarCodigoProduto(this.produtos);
+        this.pedido.valorTotal =
+          this.pedido.formaPagamento === FormasPagamento.CARTAO_CREDITO
+            ? parseFloat(this.carrinho.totalTaxa().toFixed(2))
+            : parseFloat(this.carrinho.total().toFixed(2));
 
-      this.pedido.qtdItens = this.produtos.length;
+        this.pedido.produtos = this.formatarProdutos(this.produtos);
+        this.pedido.qtdItens = this.produtos.length;
+        this.pedido.status = StatusPedido.A_PAGAR;
+        this.pedido.codigoPedido = this.gerarCodigoPedido(this.pedido);
 
-      this.pedido.codigoPedido = this.gerarCodigoPedido(this.pedido);
-
-      alert(JSON.stringify(this.pedido));
+        this.pedidoService.criarPedido(this.pedido).subscribe({
+          next: () => {
+            sessionStorage.setItem('pedido', JSON.stringify(this.pedido));
+            sessionStorage.setItem('produtos', JSON.stringify(this.produtos));
+            this.notificationService.success('Pedido feito com sucesso !', 'Sucesso');
+            this.router.navigate(['comprovante']);
+          },
+          error: (error: HttpErrorResponse) => {
+            this.notificationService.error(error.message, 'Erro');
+          },
+        });
+      } catch (error: any) {
+        this.notificationService.error(error, 'Erro');
+      }
+      this.loading = false;
     }
   }
 
-  gerarCodigoProduto(produtos: Produto[]): string[] {
-    let codes: string[] = [];
+  formatarProdutos(produtos: Produto[]): string {
+    let aux: string ='';
 
-    produtos.map( p => {
+    produtos.map((p) => {
+      aux += `(${p.qtdItem}x) ${p.nome}`;
 
-      let code = p.codigoProduto;
-
-      if (p.tamanhoSelecionado){ code += p.tamanhoSelecionado + '-'; }
-      if (p.corSelecionada){ code += p.corSelecionada + '-'; }
-      if (p.modeloCelular){ code += p.modeloCelular.toUpperCase().replaceAll(' ', '') + '-'; }
-      if (p.qtdItem){ code += p.qtdItem.toString() + '-'; }
+      if (p.tamanhoSelecionado) {
+        aux += ` - ${ p.tamanhoSelecionado.replaceAll(' ', '')}`;
+      }
+      if (p.corSelecionada) {
+        aux += `/${p.corSelecionada}`;
+      }
+      if (p.modeloCelular) {
+        aux += ` - ${p.modeloCelular.toUpperCase().replaceAll(' ', '')}`;
+      }
 
       if (this.pedido.formaPagamento === FormasPagamento.CARTAO_CREDITO) {
-        code += p.valorTaxa.toString();
+        aux +=  ` - ${ p.valorTaxa.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})} `;
+      } else {
+        aux += ` - ${ p.valor.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})} `;
       }
-      else {
-        code += p.valor.toString();
-      }
+    });
 
-      codes.push(code);
-    })
-
-    return codes;
-
+    return aux.trim();
   }
 
   gerarCodigoPedido(pedido: Pedido) {
     let code = 'PED';
-    code += pedido.dataPedido?.replaceAll('/','') + new Date().getTime().toString();
+    code += pedido.dataPedido?.replaceAll('/', '') + new Date().getTime().toString();
     return code;
   }
 
   valorTotalProduto(produto: Produto) {
     let total;
 
-    if (this.pedido.formaPagamento == FormasPagamento.CARTAO_CREDITO){
+    if (this.pedido.formaPagamento == FormasPagamento.CARTAO_CREDITO) {
       total = produto.qtdItem ? produto.valorTaxa * produto.qtdItem : 0;
-    }
-    else {
+    } else {
       total = produto.qtdItem ? produto.valor * produto.qtdItem : 0;
     }
 
@@ -123,7 +144,7 @@ export class FinalizarPedidoComponent implements OnInit {
 
   totalCarrinho() {
     return this.pedido.formaPagamento === FormasPagamento.CARTAO_CREDITO
-    ? this.carrinho.totalTaxa()
-    : this.carrinho.total();
+      ? this.carrinho.totalTaxa()
+      : this.carrinho.total();
   }
 }

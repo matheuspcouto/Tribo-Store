@@ -30,60 +30,53 @@ export class ProdutosComponent implements OnInit {
           valor: 35.0,
           valorTaxa:  36.75,
           ativo: true,
-          img: 'assets/camisa-leao.png',
-          codigoProduto: 'CAM-LEAO-'
+          tamanhos: [
+            'PP',
+            'P',
+            'M',
+            'G',
+            'GG',
+            'PP - Baby Look',
+            'P - Baby Look',
+            'M - Baby Look',
+            'G - Baby Look',
+            'GG - Baby Look',
+          ],
+          img: ['assets/camisa-leao.png']
         },
         {
           id: 2,
-          nome: "Meias Tribo Alvo - Branca",
+          nome: "Meias Tribo Alvo",
           descricao: 'Tecido de algodão com a logo da tribo bordada',
           tipo: TipoProduto.MEIA,
-          corSelecionada: 'Branca',
           valor: 25.0,
           valorTaxa:  26.25,
           ativo: true,
-          img: 'assets/meia-branca-b.png',
-          codigoProduto: 'MEI-ALVO-'
+          tamanhos: ['35', '36', '37', '38', '39', '40', '41', '42', '43'],
+          cores: ['Branca', 'Preta'],
+          img: ['assets/meia-branca.png','assets/meia-preta.png']
         },
         {
           id: 3,
-          nome: "Meias Tribo Alvo - Preta",
-          descricao: 'Tecido de algodão com a logo da tribo bordada',
-          tipo: TipoProduto.MEIA,
-          corSelecionada: 'Preta',
-          valor: 25.0,
-          valorTaxa:  26.25,
-          ativo: true,
-          img: 'assets/meia-preta-b.png',
-          codigoProduto: 'MEI-ALVO-'
-        },
-        {
-          id: 4,
           nome: "Adesivo Tribo Alvo",
           descricao: 'Tamanho 6cm x 7cm',
           tipo: TipoProduto.ADESIVO,
           valor: 3.0,
           valorTaxa:  3.15,
           ativo: true,
-          img: 'assets/camisa-leao.png',
-          codigoProduto: 'ADE-ALVO-'
+          img: ['assets/camisa-leao.png']
         },
         {
-          id: 5,
+          id: 4,
           nome: "Adesivo Logo Tribo",
           descricao: 'Tamanho 4cm x 8cm',
           tipo: TipoProduto.ADESIVO,
           valor: 3.0,
           valorTaxa:  3.15,
           ativo: true,
-          img: 'assets/camisa-leao.png',
-          codigoProduto: 'ADE-LOGO-'
+          img: ['assets/camisa-leao.png']
         },
     ]
-  }
-
-  verificarProdutoCarrinho(idProduto: number): boolean {
-    return this.carrinho.pesquisar(idProduto);
   }
 
  verProduto(produto: Produto){

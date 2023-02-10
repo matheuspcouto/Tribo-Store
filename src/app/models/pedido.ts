@@ -1,8 +1,9 @@
 export class Pedido {
+  id?: string;
   codigoPedido?: string;
   nome: string = '';
   telefone?: string;
-  codigoProdutos: string[] = [];
+  produtos?: string;
   qtdItens?: number;
   valorTotal: number = 0;
   formaPagamento?: string;

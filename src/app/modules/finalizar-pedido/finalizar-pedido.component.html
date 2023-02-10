@@ -23,11 +23,6 @@
             </h2>
             <hr />
 
-            <!-- Alerta de erro -->
-            <div class="alert alert-danger" *ngIf="erroForm"> Erro:
-              {{erroForm.mensagemErro}} <i class="fa fa-exclamation-circle fa-2x float-right"></i>
-            </div>
-
               <div class="form-group">
                 <label>Nome</label>
                 <input id="nome" type="text" name="nome" [disabled]="disabled" [(ngModel)]="pedido.nome"
@@ -67,11 +62,11 @@
                       </div>
                     </div>
                   </div>
-                  <div class="alert alert-warning text-right"
+                  <div class="alert alert-warning text-center"
                     *ngIf="pedido.formaPagamento && pedido.formaPagamento === 'Cartão de Crédito'">
-                    <i class="fa fa-exclamation-circle fa-2x float-left"></i>
+                    <i class="fa fa-exclamation-circle float-left"></i>
                     Atenção, para compras no
-                    cartão de crédito parcelado em duas ou mais vezes, é cobrada um acréscimo referente a taxa de
+                    cartão de crédito, é cobrado um acréscimo referente a taxa de
                     serviço de pagamento Mercado Pago.
                   </div>
                 </div>

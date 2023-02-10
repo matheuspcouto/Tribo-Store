@@ -1,4 +1,3 @@
-import { TipoProduto } from './../../../shared/enums/tipo-produto-enum';
 import { CarrinhoService } from './../../../services/carrinho-state.service';
 import { Produto } from './../../../models/produto';
 import { Component, OnInit } from '@angular/core';
@@ -6,6 +5,7 @@ import {
   ErroDetalhesProduto,
   getProdutoValidationErrors,
 } from './produto.validator';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-detalhes-produto',
@@ -21,8 +21,12 @@ export class DetalhesProdutoComponent implements OnInit {
   errorsValidators: ErroDetalhesProduto[] = [];
   erroForm: any;
   adicionado: boolean = false;
+  indexImg: number = 0;
 
-  constructor(private carrinho: CarrinhoService) {}
+  constructor(
+    private carrinho: CarrinhoService,
+    private notificationService: ToastrService
+  ) {}
 
   ngOnInit() {
     this.loading = true;
@@ -32,55 +36,46 @@ export class DetalhesProdutoComponent implements OnInit {
 
       if (produtoSelecionado !== null) {
         this.produto = JSON.parse(produtoSelecionado);
-        this.disabled = this.carrinho.pesquisar(this.produto.id);
-        this.getConfigProduto(this.produto.tipo);
+        this.tamanhos = this.produto.tamanhos ? this.produto.tamanhos : [];
+        this.cores = this.produto.cores ? this.produto.cores : [];
       }
     } catch (error: any) {
-      this.erroForm = {
-        tipoErro: 'form',
-        mensagemErro: error,
-      };
+      this.notificationService.error(error, 'Erro');
     }
     this.loading = false;
   }
 
   adicionarCarrinho() {
     this.loading = true;
+    console.log(this.produto);
+
     try {
       this.errorsValidators = getProdutoValidationErrors(this.produto);
-
       if (this.errorsValidators.length == 0) {
+
+        /* if (this.verificarProdutoCarrinho(this.produto)) {
+          this.notificationService.error('Ja existe um produto igual a esse no carrinho','Erro');
+          this.loading = false;
+          return;
+        } */
+
         this.carrinho.adicionar(this.produto);
-        this.adicionado = true;
-        this.disabled = true;
+        this.notificationService.success('Produto adicionado ao carrinho !','Sucesso');
       }
     } catch (error: any) {
-      this.erroForm = {
-        tipoErro: 'form',
-        mensagemErro: error,
-      };
+      this.notificationService.error(error, 'Erro');
     }
     this.loading = false;
   }
 
-  getConfigProduto(tipo: string | undefined) {
-    if (tipo === TipoProduto.CAMISA) {
-      this.tamanhos = [
-        'PP',
-        'P',
-        'M',
-        'G',
-        'GG',
-        'PP - Baby Look',
-        'P - Baby Look',
-        'M - Baby Look',
-        'G - Baby Look',
-        'GG - Baby Look',
-      ];
-    }
-    if (tipo === TipoProduto.MEIA) {
-      this.tamanhos = ['35', '36', '37', '38', '39', '40', '41', '42', '43'];
-      //this.cores = ['Branca', 'Preta'];
+  verificarProdutoCarrinho(prod: Produto): boolean {
+    return this.carrinho.verificarExisteProduto(prod);
+  }
+
+  mudarImagem() {
+    this.indexImg++;
+    if (this.produto.img.length == this.indexImg) {
+      this.indexImg = 0;
     }
   }
 }

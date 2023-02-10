@@ -3,13 +3,14 @@ export class Produto {
   nome: string = '';
   descricao?: string;
   tipo?: string;
+  tamanhos?: string[];
   tamanhoSelecionado?: string;
+  cores?: string[];
   corSelecionada?: string;
   modeloCelular?: string;
   qtdItem?: number;
   valor: number = 0;
   valorTaxa: number = 0;
-  codigoProduto: string = '';
-  img?: string;
+  img: string[] = [];
   ativo: boolean = true;
 }
