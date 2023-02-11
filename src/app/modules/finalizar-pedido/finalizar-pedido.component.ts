@@ -75,11 +75,23 @@ export class FinalizarPedidoComponent implements OnInit {
         this.pedido.status = StatusPedido.A_PAGAR;
         this.pedido.codigoPedido = this.gerarCodigoPedido(this.pedido);
 
+        sessionStorage.setItem('pedido', JSON.stringify(this.pedido));
+        sessionStorage.setItem('produtos', JSON.stringify(this.produtos));
+        this.notificationService.success(
+          'Pedido feito com sucesso !',
+          'Sucesso'
+        );
+        this.router.navigate(['comprovante']);
+        return;
+
         this.pedidoService.criarPedido(this.pedido).subscribe({
           next: () => {
             sessionStorage.setItem('pedido', JSON.stringify(this.pedido));
             sessionStorage.setItem('produtos', JSON.stringify(this.produtos));
-            this.notificationService.success('Pedido feito com sucesso !', 'Sucesso');
+            this.notificationService.success(
+              'Pedido feito com sucesso !',
+              'Sucesso'
+            );
             this.router.navigate(['comprovante']);
           },
           error: (error: HttpErrorResponse) => {
@@ -94,13 +106,13 @@ export class FinalizarPedidoComponent implements OnInit {
   }
 
   formatarProdutos(produtos: Produto[]): string {
-    let aux: string ='';
+    let aux: string = '';
 
     produtos.map((p) => {
       aux += `(${p.qtdItem}x) ${p.nome}`;
 
       if (p.tamanhoSelecionado) {
-        aux += ` - ${ p.tamanhoSelecionado.replaceAll(' ', '')}`;
+        aux += ` - ${p.tamanhoSelecionado.replaceAll(' ', '')}`;
       }
       if (p.corSelecionada) {
         aux += `/${p.corSelecionada}`;
@@ -110,9 +122,15 @@ export class FinalizarPedidoComponent implements OnInit {
       }
 
       if (this.pedido.formaPagamento === FormasPagamento.CARTAO_CREDITO) {
-        aux +=  ` - ${ p.valorTaxa.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})} `;
+        aux += ` - ${p.valorTaxa.toLocaleString('pt-br', {
+          style: 'currency',
+          currency: 'BRL',
+        })} `;
       } else {
-        aux += ` - ${ p.valor.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})} `;
+        aux += ` - ${p.valor.toLocaleString('pt-br', {
+          style: 'currency',
+          currency: 'BRL',
+        })} `;
       }
     });
 
@@ -121,7 +139,8 @@ export class FinalizarPedidoComponent implements OnInit {
 
   gerarCodigoPedido(pedido: Pedido) {
     let code = 'PED';
-    code += pedido.dataPedido?.replaceAll('/', '') + new Date().getTime().toString();
+    code +=
+      pedido.dataPedido?.replaceAll('/', '') + new Date().getTime().toString();
     return code;
   }
 
