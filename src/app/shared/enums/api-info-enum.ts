@@ -1,7 +1,7 @@
 export enum ApiInfo {
-  HOST = 'https://sheetdb.io/api/v1/s2qjohzpv2zez',
-  LOGIN = 't6jxk2wc',
-  PASSWORD = '3sl70hsakqe6urm4igky'
+  HOST = 'https://sheetdb.io/api/v1/czceunottyns4',
+  LOGIN = 'srridg1p',
+  PASSWORD = 'i8vay8qwfokrvvk89uxp'
 }
 
 export enum ApiMercadoPagoInfo {
