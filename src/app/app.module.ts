@@ -19,6 +19,7 @@ import { FinalizarPedidoComponent } from './modules/finalizar-pedido/finalizar-p
 import { NgxMercadopagoModule } from 'ngx-mercadopago';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { PagamentoComponent } from './modules/pagamento/pagamento.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { ToastrModule } from 'ngx-toastr';
     ProdutosComponent,
     DetalhesProdutoComponent,
     FinalizarPedidoComponent,
+    PagamentoComponent,
   ],
   imports: [
     HttpClientModule,
@@ -47,7 +49,7 @@ import { ToastrModule } from 'ngx-toastr';
       preventDuplicates: true,
     }),
     NgxMercadopagoModule.forRoot({
-      publishKey: 'Your Publish Key',
+      publishKey: 'TEST-7f12c163-059a-4392-bab9-66b2a65721b1',
       pathSDK: 'https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js'
   })
   ],

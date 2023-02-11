@@ -1,0 +1,21 @@
+.label-error {
+  color: brown;
+  font-size: small;
+}
+
+.btnVoltar {
+  position: absolute;
+  top: 2%;
+  right: 91%;
+  width: 100px;
+  line-height: 1;
+  padding: 8px 10px;
+  text-align: center;
+  text-decoration: none;
+}
+
+@media screen and (max-width: 425px) {
+  .btnVoltar {
+    right: 70%;
+  }
+}

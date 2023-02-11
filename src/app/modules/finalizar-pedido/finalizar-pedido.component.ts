@@ -28,7 +28,6 @@ export class FinalizarPedidoComponent implements OnInit {
   loading = false;
   disabled: boolean = false;
   errorsValidators: ErroPedido[] = [];
-  erroForm: any;
 
   constructor(
     private carrinho: CarrinhoService,
