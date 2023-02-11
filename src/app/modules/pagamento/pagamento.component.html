@@ -16,18 +16,18 @@
             </a><br>
 
             <div class="divImg mt-3">
-              <img src="assets/logo.jpg" class="img" />
+              <img src="assets/logo.png" class="img" />
             </div>
             <h2 class="card-title text-center mt-3" id="titulo">
               Pagamento
             </h2>
             <hr />
 
-            <form id="form-checkout" class="my-login-validation" *ngIf="form == 'cartao'">
+            <form id="form-checkout" class="my-login-validation" action="POST" *ngIf="form == 'cartao'">
               <div class="form-group">
                 <label>Número do Cartão</label>
-                <input id="cardNumber" type="text" name="cardNumber" [(ngModel)]="numeroCartao"
-                  class="form-control" required mask="0000 0000 0000" />
+                <input id="cardNumber" type="text" name="cardNumber" [(ngModel)]="dadosCartao.cardNumber" class="form-control"
+                  required mask="0000 0000 0000 0000" />
                 <div *ngIf="errorsValidators">
                   <div *ngFor="let erro of errorsValidators">
                     <p class="label-error" *ngIf="erro.controleErro === 'numero_cartao'">{{erro.mensagemErro}}</p>
@@ -38,8 +38,7 @@
               <div class="row">
                 <div class="form-group">
                   <label>Vencimento</label>
-                  <input id="expirationDate" type="text"
-                    class="form-control" required mask="MM/yy" />
+                  <input id="expirationDate" type="text" name="expirationDate" [(ngModel)]="dadosCartao.expirationDate" class="form-control" required mask="00/00" />
                   <div *ngIf="errorsValidators">
                     <div *ngFor="let erro of errorsValidators">
                       <p class="label-error" *ngIf="erro.controleErro === 'vencimento'">{{erro.mensagemErro}}</p>
@@ -48,8 +47,7 @@
                 </div>
                 <div class="form-group">
                   <label>CVV</label>
-                  <input id="securityCode" type="number"
-                    class="form-control" required />
+                  <input id="securityCode" type="number" name="securityCode" [(ngModel)]="dadosCartao.securityCode" class="form-control" required />
                   <div *ngIf="errorsValidators">
                     <div *ngFor="let erro of errorsValidators">
                       <p class="label-error" *ngIf="erro.controleErro === 'cvv'">{{erro.mensagemErro}}</p>
@@ -60,8 +58,7 @@
 
               <div class="form-group">
                 <label>Titular do Cartão</label>
-                <input id="cardholderName" type="text"
-                  class="form-control" required />
+                <input id="cardholderName" type="text" class="form-control" name="cardholderName" [(ngModel)]="dadosCartao.cardholderName" required />
                 <div *ngIf="errorsValidators">
                   <div *ngFor="let erro of errorsValidators">
                     <p class="label-error" *ngIf="erro.controleErro === 'vencimento'">{{erro.mensagemErro}}</p>
@@ -73,8 +70,9 @@
                 <label>Bandeira</label>
                 <div class="form-group col-sm-12">
                   <div class="form-group">
-                    <select class="form-select form-select-lg" required name="bandeira" [(ngModel)]="bandeiraSelecionada">
-                      <option *ngFor="let bandeira of bandeiras; let i = index" [ngValue]="bandeira.id">
+                    <select class="form-select form-select-lg" required name="bandeira"
+                      [(ngModel)]="bandeiraSelecionada">
+                      <option *ngFor="let bandeira of bandeiras; let i = index" [ngValue]="bandeira">
                         {{ bandeira.name }}
                       </option>
                     </select>
@@ -91,7 +89,7 @@
                 <label>Parcelas</label>
                 <div class="form-group col-sm-12">
                   <div class="form-group">
-                    <select class="form-select form-select-lg" required id="installments">
+                    <select class="form-select form-select-lg" name="installments" required id="installments" [(ngModel)]="dadosCartao.installments">
                       <option *ngFor="let parcela of parcelas.data; let i = index" [ngValue]="parcela">
                         {{ parcela }}
                       </option>
@@ -105,53 +103,27 @@
                 </div>
               </div>
 
-              <div class="row" *ngIf="documentos">
-                <label>Tipo de Documento</label>
-                <div class="form-group col-sm-12">
-                  <div class="form-group">
-                    <select class="form-select form-select-lg" name="identificationType" [(ngModel)]="docSelecionado" required id="identificationType">
-                      <option *ngFor="let doc of documentos; let i = index" [ngValue]="doc.name">
-                        {{ doc.name }}
-                      </option>
-                    </select>
-                    <div *ngIf="errorsValidators">
-                      <div *ngFor="let erro of errorsValidators">
-                        <p class="label-error" *ngIf="erro.controleErro === 'tipo_documento'">{{erro.mensagemErro}}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="form-group" *ngIf="documentos">
-                <label>Número do Documento</label>
-                <input id="identificationNumber" type="text" name="identificationNumber" [(ngModel)]="numeroDocumento"
-                  class="form-control" required [mask]="docSelecionado === 'CPF' ? '000.000.000-00' : '00.000.000/0000-00'" />
-                <div *ngIf="errorsValidators">
-                  <div *ngFor="let erro of errorsValidators">
-                    <p class="label-error" *ngIf="erro.controleErro === 'numero_documento'">{{erro.mensagemErro}}</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label>E-mail</label>
-                <input id="cardholderEmail" type="email" name="cardholderEmail" [(ngModel)]="email"
-                  class="form-control" required />
-                <div *ngIf="errorsValidators">
-                  <div *ngFor="let erro of errorsValidators">
-                    <p class="label-error" *ngIf="erro.controleErro === 'numero_cartao'">{{erro.mensagemErro}}</p>
-                  </div>
-                </div>
-              </div>
-            </form>
-
               <div class="form-group m-0">
-                <button (click)="pagar()" type="button"
-                  class="btn btn-success btn-block">
+                <button (click)="criarPagamentoCartao()" type="button" class="btn btn-success btn-block">
                   Realizar Pagamento
                 </button>
               </div>
+
+            </form>
+
+            <div *ngIf="form == 'pix'">
+
+              <h4 class="card-title text-center mt-3">QR Code</h4>
+              <img class="qrCode mt-3" *ngIf="dadosPix" [src]="'data:image/jpeg;base64,' + dadosPix.qr_code_base64" />
+              <p class="card-title text-center mt-3" id="codigoPedido">{{ dadosPix?.qr_code }}</p>
+              <a class="btn btn-block mb-5" (click)="copiarCodigo($event)"><i class="fa fa-copy"></i> Copiar</a>
+
+              <div class="form-group m-0" *ngIf="dadosPix">
+                <a [href]="dadosPix.ticket_url" target="_blank" type="button" class="btn btn-success btn-block">
+                  Pagar com Pix
+                </a>
+              </div>
+            </div>
 
             <hr />
           </div>

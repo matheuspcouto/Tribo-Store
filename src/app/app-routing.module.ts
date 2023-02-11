@@ -18,7 +18,6 @@ const routes: Routes = [
   { path: 'detalhes-produto', component: DetalhesProdutoComponent, canActivate:[SiteAtivoGuard] },
   { path: 'meu-carrinho', component: CarrinhoComponent, canActivate:[SiteAtivoGuard] },
   { path: 'finalizar-pedido', component: FinalizarPedidoComponent, canActivate:[SiteAtivoGuard] },
-  { path: 'pagamento', component: PagamentoComponent, canActivate:[SiteAtivoGuard] },
   { path: 'comprovante', component: SucessoComprovanteComponent },
   { path: 'aguarde', component: AguardeComponent },
 ];

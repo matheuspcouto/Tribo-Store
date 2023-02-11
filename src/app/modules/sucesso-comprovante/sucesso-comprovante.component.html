@@ -16,7 +16,7 @@
             </a><br>
 
             <div class="divImg mt-3">
-              <img src="assets/logo.jpg" class="img" />
+              <img src="assets/logo.png" class="img" />
             </div>
 
             <h2 class="card-title text-center mt-3" id="titulo">
@@ -30,6 +30,12 @@
 
             <h5 class="card-title text-left mt-3">Comprador:</h5>
             <p class="card-title text-left mt-3">{{ pedido.nome }}</p>
+
+            <h5 class="card-title text-left mt-3">CPF/CNPJ:</h5>
+            <p class="card-title text-left mt-3">{{ pedido.documento }}</p>
+
+            <h5 class="card-title text-left mt-3">E-mail:</h5>
+            <p class="card-title text-left mt-3">{{ pedido.email }}</p>
 
             <h5 class="card-title text-left mt-3">Data do pedido:</h5>
             <p class="card-title text-left mt-3">{{ pedido.dataPedido | date:'MM/dd/yyyy' }}</p>

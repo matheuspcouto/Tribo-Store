@@ -25,3 +25,23 @@
 .label-info {
   font-size: small !important;
 }
+
+.divImg {
+  display: flex;
+  justify-content: center;
+  height: 300px;
+  width: 30%;
+  position: relative;
+  left: 36%;
+}
+
+@media (max-width: 450px) {
+  .divImg {
+    display: flex;
+    justify-content: center;
+    height: 200px;
+    width: 30%;
+    position: relative;
+    left: 36%;
+  }
+}

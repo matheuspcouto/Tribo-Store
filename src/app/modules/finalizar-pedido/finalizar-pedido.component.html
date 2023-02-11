@@ -16,92 +16,134 @@
             </a><br>
 
             <div class="divImg mt-3">
-              <img src="assets/logo.jpg" class="img" />
+              <img src="assets/logo.png" class="img" />
             </div>
             <h2 class="card-title text-center mt-3" id="titulo">
               Finalizar Pedido
             </h2>
             <hr />
 
-              <div class="form-group">
-                <label>Nome</label>
-                <input id="nome" type="text" name="nome" [disabled]="disabled" [(ngModel)]="pedido.nome"
-                  class="form-control" required placeholder="Digite o seu nome" />
-                <div *ngIf="errorsValidators">
-                  <div *ngFor="let erro of errorsValidators">
-                    <p class="label-error" *ngIf="erro.controleErro === 'nome'">{{erro.mensagemErro}}</p>
-                  </div>
+            <div class="form-group">
+              <label>Nome</label>
+              <input id="nome" type="text" name="nome" [disabled]="disabled" [(ngModel)]="pedido.nome"
+                class="form-control" required placeholder="Digite o seu nome" />
+              <div *ngIf="errorsValidators">
+                <div *ngFor="let erro of errorsValidators">
+                  <p class="label-error" *ngIf="erro.controleErro === 'nome'">{{erro.mensagemErro}}</p>
                 </div>
               </div>
+            </div>
 
-              <div class="form-group">
-                <label>Telefone</label>
-                <input id="telefone" type="text" name="telefone" [(ngModel)]="pedido.telefone" [disabled]="disabled"
-                  class="form-control" required mask="(00) 0 0000-0000 || (00) 0000-0000"
-                  placeholder="Digite seu telefone" />
-                <div *ngIf="errorsValidators">
-                  <div *ngFor="let erro of errorsValidators">
-                    <p class="label-error" *ngIf="erro.controleErro === 'telefone'">{{erro.mensagemErro}}</p>
-                  </div>
+            <div class="form-group">
+              <label>Telefone</label>
+              <input id="telefone" type="text" name="telefone" [(ngModel)]="pedido.telefone" [disabled]="disabled"
+                class="form-control" required mask="(00) 0 0000-0000 || (00) 0000-0000"
+                placeholder="Digite seu telefone" />
+              <div *ngIf="errorsValidators">
+                <div *ngFor="let erro of errorsValidators">
+                  <p class="label-error" *ngIf="erro.controleErro === 'telefone'">{{erro.mensagemErro}}</p>
                 </div>
               </div>
+            </div>
 
-              <div class="row">
-                <label>Forma de Pagamento</label>
-                <div class="form-group col-sm-12">
-                  <div class="form-group">
-                    <select class="form-select form-select-lg" required
-                      [(ngModel)]="pedido.formaPagamento" [disabled]="disabled" name="formaPagamento">
-                      <option *ngFor="let item of formasPagamento; let i = index" [ngValue]="item">
-                        {{ item }}
-                      </option>
-                    </select>
-                    <div *ngIf="errorsValidators">
-                      <div *ngFor="let erro of errorsValidators">
-                        <p class="label-error" *ngIf="erro.controleErro === 'forma_pagamento'">{{erro.mensagemErro}}</p>
-                      </div>
+            <div class="row">
+              <label>Forma de Pagamento</label>
+              <div class="form-group col-sm-12">
+                <div class="form-group">
+                  <select class="form-select form-select-lg" required [(ngModel)]="pedido.formaPagamento"
+                    [disabled]="disabled" name="formaPagamento">
+                    <option *ngFor="let item of formasPagamento; let i = index" [ngValue]="item">
+                      {{ item }}
+                    </option>
+                  </select>
+                  <div *ngIf="errorsValidators">
+                    <div *ngFor="let erro of errorsValidators">
+                      <p class="label-error" *ngIf="erro.controleErro === 'forma_pagamento'">{{erro.mensagemErro}}</p>
                     </div>
                   </div>
-                  <div class="alert alert-warning text-center"
-                    *ngIf="pedido.formaPagamento && pedido.formaPagamento === 'Cartão de Crédito'">
-                    <i class="fa fa-exclamation-circle float-left"></i>
-                    Atenção, para compras no
-                    cartão de crédito, é cobrado um acréscimo referente a taxa de
-                    serviço de pagamento Mercado Pago.
+                </div>
+                <div class="alert alert-warning text-center"
+                  *ngIf="pedido.formaPagamento && pedido.formaPagamento === 'Cartão de Crédito'">
+                  <i class="fa fa-exclamation-circle float-left"></i>
+                  Atenção, para compras no
+                  cartão de crédito, é cobrado um acréscimo referente a taxa de
+                  serviço de pagamento Mercado Pago.
+                </div>
+              </div>
+            </div>
+
+            <div class="row" *ngIf="documentos">
+              <label>Tipo de Documento</label>
+              <div class="form-group col-sm-12">
+                <div class="form-group">
+                  <select class="form-select form-select-lg" [disabled]="disabled" name="identificationType"
+                    [(ngModel)]="pedido.tipoDocumento" required id="identificationType">
+                    <option *ngFor="let doc of documentos; let i = index" [ngValue]="doc.name">
+                      {{ doc.name }}
+                    </option>
+                  </select>
+                  <div *ngIf="errorsValidators">
+                    <div *ngFor="let erro of errorsValidators">
+                      <p class="label-error" *ngIf="erro.controleErro === 'tipo_documento'">{{erro.mensagemErro}}</p>
+                    </div>
                   </div>
                 </div>
               </div>
+            </div>
 
-              <div class="my-login-validation table-responsive" *ngIf="produtos.length > 0">
-                <table class="table table-hover">
-                  <thead>
-                    <tr>
-                      <th scope="col">Produto</th>
-                      <th scope="col">Qtd</th>
-                      <th scope="col">Valor</th>
-                      <th scope="col">Total</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let produto of produtos; let i = index">
-                      <td>{{formatarProdutoCarrinho(produto)}}</td>
-                      <td>{{produto.qtdItem}}</td>
-                      <td>{{pedido.formaPagamento === 'Cartão de Crédito' ? produto.valorTaxa : produto.valor | currency:'BRL'}}</td>
-                      <td>{{valorTotalProduto(produto) | currency:'BRL'}}</td>
-                    </tr>
-                  </tbody>
-                </table>
-
-                <h5 class="card-title text-right mt-3">Total a Pagar {{totalCarrinho() | currency:'BRL'}}</h5>
+            <div class="form-group" *ngIf="documentos">
+              <label>Número do Documento</label>
+              <input id="identificationNumber" [disabled]="disabled" type="text" name="identificationNumber"
+                [(ngModel)]="pedido.documento" placeholder="Informe o número do documento" class="form-control" required
+                [mask]="pedido.tipoDocumento === 'CPF' ? '000.000.000-00' : '00.000.000/0000-00'" />
+              <div *ngIf="errorsValidators">
+                <div *ngFor="let erro of errorsValidators">
+                  <p class="label-error" *ngIf="erro.controleErro === 'numero_documento'">{{erro.mensagemErro}}</p>
+                </div>
               </div>
-              <br>
+            </div>
 
-              <div class="form-group m-0">
-                <button [disabled]="disabled" (click)="concluirPedido()" type="button"
-                  class="btn btn-success btn-block">
-                  Concluir Pedido
-                </button>
+            <div class="form-group">
+              <label>E-mail</label>
+              <input id="cardholderEmail" [disabled]="disabled" type="email" name="cardholderEmail"
+                [(ngModel)]="pedido.email" placeholder="Informe o email" class="form-control" required />
+              <div *ngIf="errorsValidators">
+                <div *ngFor="let erro of errorsValidators">
+                  <p class="label-error" *ngIf="erro.controleErro === 'email'">{{erro.mensagemErro}}</p>
+                </div>
               </div>
+            </div>
+
+            <div class="my-login-validation table-responsive" *ngIf="produtos.length > 0">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">Produto</th>
+                    <th scope="col">Qtd</th>
+                    <th scope="col">Valor</th>
+                    <th scope="col">Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let produto of produtos; let i = index">
+                    <td>{{formatarProdutoCarrinho(produto)}}</td>
+                    <td>{{produto.qtdItem}}</td>
+                    <td>{{pedido.formaPagamento === 'Cartão de Crédito' ? produto.valorTaxa : produto.valor |
+                      currency:'BRL'}}</td>
+                    <td>{{valorTotalProduto(produto) | currency:'BRL'}}</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <h5 class="card-title text-right mt-3">Total a Pagar {{totalCarrinho() | currency:'BRL'}}</h5>
+            </div>
+            <br>
+
+            <div class="form-group m-0">
+              <button [disabled]="disabled" (click)="concluirPedido()" type="button" class="btn btn-success btn-block">
+                Concluir Pedido
+              </button>
+            </div>
 
             <hr />
             <app-footer></app-footer>

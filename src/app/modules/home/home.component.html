@@ -8,7 +8,7 @@
       <div class="card-wrapper">
         <div class="card fat">
           <div class="card-body" style="background-color: white">
-            <div class="divImg mt-3"><img src="assets/logo.jpg" class="img" /></div>
+            <div class="divImg mt-3"><img src="assets/logo.png" class="img" /></div>
             <h2 class="card-title text-center mt-3" id="titulo">
               Tribo Store
             </h2>
@@ -16,8 +16,11 @@
             <h4 class="card-title text-center mt-3">
               Bem vindo a Tribo Store, a lojinha mais selvagem que existe !
             </h4>
+            <p class="text-center">
+              Ao finalizar a compra, não esqueça de guardar seu comprovante tirando print ou copiando o código do pedido.
+            </p>
             <p class="text-center mt-3">
-              Ao finalizar o pedido, não esqueça de salvar seu comprovante ou tirar print e guardar.
+              Para pagamentos no PIX, a chave é: tribo.imep2022@gmail.com
             </p>
 
             <div class="row1-container mt-3 mb text-center">
@@ -42,17 +45,6 @@
                   Veja o que você tem no carrinho.
                 </p>
                 <a *ngIf="disabled" routerLink="/meu-carrinho" class="card-button"> Ver mais</a>
-                <a *ngIf="!disabled" class="card-button-disabled"> Necessário ter pelo menos 1 item no carrinho</a>
-              </div>
-              <div [class]="disabled ? 'box blue' : 'box gray'">
-                <div class="card-icon">
-                  <i class="fa fa-credit-card fa-3x"></i>
-                </div>
-                <h5>Finalizar Pedido</h5>
-                <p class="text-center mt-3 card-text">
-                  Confirme seu pedido com a gente.
-                </p>
-                <a *ngIf="disabled" routerLink="/finalizar-pedido" class="card-button"> Ver mais</a>
                 <a *ngIf="!disabled" class="card-button-disabled"> Necessário ter pelo menos 1 item no carrinho</a>
               </div>
             </div>

@@ -64,7 +64,7 @@ export class ProdutosComponent implements OnInit {
           valor: 3.0,
           valorTaxa:  3.15,
           ativo: true,
-          img: ['assets/camisa-leao.png']
+          img: ['assets/adesivo-tribo-alvo.png']
         },
         {
           id: 4,
@@ -74,7 +74,7 @@ export class ProdutosComponent implements OnInit {
           valor: 3.0,
           valorTaxa:  3.15,
           ativo: true,
-          img: ['assets/camisa-leao.png']
+          img: ['assets/adesivo-logo-tribo.png']
         },
     ]
   }

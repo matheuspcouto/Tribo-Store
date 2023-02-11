@@ -1,5 +1,3 @@
-
-
 :root {
   --blue: #1F487E;
   --darkBlue: #050505;
@@ -12,6 +10,26 @@
 .container {
   position: relative;
   top: 100px;
+}
+
+.divImg {
+  display: flex;
+  justify-content: center;
+  height: 300px;
+  width: 30%;
+  position: relative;
+  left: 36%;
+}
+
+@media (max-width: 450px) {
+  .divImg {
+    display: flex;
+    justify-content: center;
+    height: 200px;
+    width: 30%;
+    position: relative;
+    left: 36%;
+  }
 }
 
 .card-title {
@@ -73,6 +91,14 @@
   .container {
     top: 10px;
     position: relative;
+  }
+  .divImg {
+    display: flex;
+    justify-content: center;
+    height: 200px;
+    width: 30%;
+    position: relative;
+    left: 36%;
   }
 }
 

@@ -10,6 +10,7 @@ import { CarrinhoService } from 'src/app/services/carrinho-state.service';
 import { FormasPagamento } from 'src/app/shared/enums/formas-pagamento.enum';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
+import { PagamentoService } from 'src/app/services/pagamento-service.service';
 
 @Component({
   selector: 'app-finalizar-pedido',
@@ -28,10 +29,15 @@ export class FinalizarPedidoComponent implements OnInit {
   loading = false;
   disabled: boolean = false;
   errorsValidators: ErroPedido[] = [];
+  documentos: any;
+  docSelecionado: any;
+  email: any;
+  numeroDocumento: any;
 
   constructor(
     private carrinho: CarrinhoService,
     private pedidoService: PedidoService,
+    private pagamentoService: PagamentoService,
     private notificationService: ToastrService,
     private router: Router
   ) {}
@@ -41,6 +47,7 @@ export class FinalizarPedidoComponent implements OnInit {
     try {
       this.produtos = this.carrinho.getItens();
       this.disabled = this.produtos.length == 0;
+      this.getTipoDocumentos();
     } catch (error: any) {
       this.notificationService.error(error, 'Erro');
     }
@@ -145,5 +152,16 @@ export class FinalizarPedidoComponent implements OnInit {
     return this.pedido.formaPagamento === FormasPagamento.CARTAO_CREDITO
       ? this.carrinho.totalTaxa()
       : this.carrinho.total();
+  }
+
+  getTipoDocumentos() {
+    this.pagamentoService.getTiposDocumentos().subscribe({
+      next: (doc) => {
+        this.documentos = doc;
+      },
+      error: (error: HttpErrorResponse) => {
+        this.notificationService.error(error.message, 'Erro');
+      },
+    });
   }
 }

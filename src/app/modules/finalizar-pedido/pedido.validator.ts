@@ -28,6 +28,9 @@ export function getPedidoValidationErrors(pedido: Pedido): ErroPedido[] {
       nome: new FormControl(pedido.nome, nomeValidator),
       telefone: new FormControl(pedido.telefone, telefoneValidator),
       forma_pagamento: new FormControl(pedido.formaPagamento, Validators.required),
+      tipo_documento: new FormControl(pedido.tipoDocumento, Validators.required),
+      numero_documento: new FormControl(pedido.documento, Validators.required),
+      email: new FormControl(pedido.documento, Validators.required),
   });
 
   Object.keys(form.controls).forEach((campoErro) => {

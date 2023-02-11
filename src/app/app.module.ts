@@ -44,14 +44,10 @@ import { PagamentoComponent } from './modules/pagamento/pagamento.component';
     NgxMaskModule.forRoot(),
     BrowserAnimationsModule,
     ToastrModule.forRoot({
-      timeOut: 3000,
+      timeOut: 2000,
       positionClass: 'toast-bottom-right',
       preventDuplicates: true,
-    }),
-    NgxMercadopagoModule.forRoot({
-      publishKey: 'TEST-7f12c163-059a-4392-bab9-66b2a65721b1',
-      pathSDK: 'https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js'
-  })
+    })
   ],
   providers: [SiteAtivoGuard],
   bootstrap: [AppComponent]

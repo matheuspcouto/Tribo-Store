@@ -6,5 +6,5 @@ export enum ApiInfo {
 
 export enum ApiMercadoPagoInfo {
   HOST = 'https://api.mercadopago.com/v1',
-  TOKEN = 'TEST-3764920749918747-021011-ac91b7f52915332ff238c7e4393f7d48-182924706'
+  TOKEN = ''
 }

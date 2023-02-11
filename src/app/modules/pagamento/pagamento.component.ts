@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { FormasPagamento } from './../../shared/enums/formas-pagamento.enum';
 import { FormGroup, FormControl } from '@angular/forms';
 import { PagamentoService } from './../../services/pagamento-service.service';
@@ -6,7 +7,25 @@ import { Pedido } from 'src/app/models/pedido';
 import { ErroPedido } from '../finalizar-pedido/pedido.validator';
 import { ToastrService } from 'ngx-toastr';
 import { HttpErrorResponse } from '@angular/common/http';
-import { CardInstallment, PaymentMethod } from 'ngx-mercadopago';
+import { PaymentMethod, PaymentForm } from 'ngx-mercadopago';
+
+type DadosPix = {
+  qr_code_base64: string;
+  qr_code: string;
+  ticket_url: string;
+};
+
+type DadosCartao = {
+  cardNumber?: string;
+  expirationDate?: string;
+  cardholderName?: string;
+  issuer?: string;
+  installments?: string;
+  identificationType?: string;
+  identificationNumber?: string;
+  cardholderEmail?: string;
+  securityCode?: string;
+};
 
 @Component({
   selector: 'app-pagamento',
@@ -17,15 +36,13 @@ export class PagamentoComponent implements OnInit {
   pedido = new Pedido();
   loading = false;
   errorsValidators: ErroPedido[] = [];
-  parcelas: any;
+  dadosPix?: DadosPix;
+  dadosCartao: DadosCartao = {};
   form: string = 'cartao';
-  documentos: any;
-  docSelecionado: any;
+  parcelas: any;
   bandeiras: any;
-  numeroCartao: any;
-  email: any;
-  numeroDocumento: any;
-  bandeiraSelecionada: any
+  bandeiraSelecionada: any;
+  payment_data: any;
 
   formCheckout = new FormGroup({
     cardNumber: new FormControl(),
@@ -39,19 +56,26 @@ export class PagamentoComponent implements OnInit {
 
   constructor(
     private pagamentoService: PagamentoService,
-    private notificationService: ToastrService
-  ) { this.loading = true; }
+    private notificationService: ToastrService,
+    private router: Router
+  ) {
+    this.loading = true;
+  }
 
   ngOnInit() {
+    //this.initPedido();
 
-    this.initPedido();
+    this.mockPedido();
 
-    if (this.pedido.formaPagamento == FormasPagamento.CARTAO_CREDITO){
+    if (this.pedido.formaPagamento == FormasPagamento.CARTAO_CREDITO) {
       this.form = 'cartao';
-      this.getBandeiras()
+      this.getBandeiras();
     }
 
-    this.getTipoDocumentos();
+    if (this.pedido.formaPagamento == FormasPagamento.PIX) {
+      this.criarPagamentoPix(this.pedido);
+    }
+
     this.loading = false;
   }
 
@@ -64,28 +88,34 @@ export class PagamentoComponent implements OnInit {
       }
 
       console.log(this.pedido);
-
-
     } catch (error: any) {
       this.notificationService.error(error, 'Erro');
     }
   }
 
-  getTipoDocumentos() {
-    this.pagamentoService.getTiposDocumentos().subscribe({
-      next: (doc) => {
-        this.documentos = doc;
-      },
-      error: (error: HttpErrorResponse) => {
-        this.notificationService.error(error.message, 'Erro');
-      },
-    });
+  mockPedido() {
+    this.pedido = {
+      codigoPedido: 'PED110220231676121203848',
+      dataPedido: '11/02/2023',
+      documento: '04886126162',
+      email: 'teste@teste.com',
+      formaPagamento: 'Cartão de Crédito',
+      nome: 'teste',
+      produtos: '(1x) Adesivo Logo Tribo - R$ 3,00',
+      qtdItens: 1,
+      status: 'A PAGAR',
+      telefone: '63992014337',
+      tipoDocumento: 'CPF',
+      valorTotal: 3,
+    };
   }
 
   getBandeiras() {
     this.pagamentoService.getBandeiras().subscribe({
       next: (pag) => {
-        this.bandeiras = pag.filter((i: PaymentMethod) => i.payment_type_id == 'credit_card');
+        this.bandeiras = pag.filter(
+          (i: PaymentMethod) => i.payment_type_id == 'credit_card'
+        );
       },
       error: (error: HttpErrorResponse) => {
         this.notificationService.error(error.message, 'Erro');
@@ -93,24 +123,41 @@ export class PagamentoComponent implements OnInit {
     });
   }
 
-  verParcelas(card: CardInstallment) {
-    this.parcelas = this.pagamentoService.getParcelas(card);
+  copiarCodigo(event: MouseEvent) {
+    event.preventDefault();
+    const payload: string = this.dadosPix?.qr_code
+      ? this.dadosPix?.qr_code
+      : '';
+
+    let listener = (e: ClipboardEvent) => {
+      let clipboard = e.clipboardData || null;
+
+      if (clipboard !== null) {
+        clipboard.setData('text', payload.toString());
+        e.preventDefault();
+      }
+    };
+
+    document.addEventListener('copy', listener, false);
+    document.execCommand('copy');
+    document.removeEventListener('copy', listener, false);
+    this.notificationService.info('Código copiado', '');
   }
 
-  pagarCartao() {
+  criarPagamentoCartao() {
     var payment_data = {
       description: `Tribo Store: Pedido #${this.pedido.codigoPedido}`,
-      payment_method_id: 'credit_card',
+      payment_method_id: this.bandeiraSelecionada.id,
       transaction_amount: this.pedido.valorTotal,
-      installments: 1,
+      installments: this.dadosCartao?.installments,
       payer: {
-        email: this.email,
+        email: this.pedido.email,
         first_name: this.pedido.nome,
         identification: {
-            type: this.docSelecionado,
-            number: this.numeroDocumento
-        }
-      }
+          type: this.pedido.tipoDocumento,
+          number: this.pedido.documento,
+        },
+      },
     };
 
     this.pagamentoService.criarPagamento(payment_data).subscribe({
@@ -121,27 +168,26 @@ export class PagamentoComponent implements OnInit {
         this.notificationService.error(error.message, 'Erro');
       },
     });
-
   }
 
-  pagar() {
-    var payment_data = {
-      description: `Tribo Store: Pedido #${this.pedido.codigoPedido}`,
+  criarPagamentoPix(pedido: Pedido) {
+    this.payment_data = {
+      description: `Tribo Store: Pedido #${pedido.codigoPedido}`,
       payment_method_id: 'pix',
-      transaction_amount: this.pedido.valorTotal,
+      transaction_amount: pedido.valorTotal,
       payer: {
-        email: this.email,
-        first_name: this.pedido.nome,
+        email: pedido.email,
+        first_name: pedido.nome,
         identification: {
-            type: this.docSelecionado,
-            number: this.numeroDocumento
-        }
-      }
+          type: pedido.tipoDocumento,
+          number: pedido.documento,
+        },
+      },
     };
 
-    this.pagamentoService.criarPagamento(payment_data).subscribe({
+    this.pagamentoService.criarPagamento(this.payment_data).subscribe({
       next: (pay) => {
-        console.log(pay.ticket_url);
+        this.dadosPix = pay.point_of_interaction.transaction_data;
       },
       error: (error: HttpErrorResponse) => {
         this.notificationService.error(error.message, 'Erro');
