@@ -46,7 +46,9 @@ export class FinalizarPedidoComponent implements OnInit {
     this.loading = true;
     try {
       this.produtos = this.carrinho.getItens();
-      this.disabled = this.produtos.length == 0;
+      if (this.produtos.length == 0) {
+        this.router.navigate(['home']);
+      }
       this.getTipoDocumentos();
     } catch (error: any) {
       this.notificationService.error(error, 'Erro');

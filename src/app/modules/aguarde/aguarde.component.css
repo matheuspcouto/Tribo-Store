@@ -3,31 +3,6 @@
   top: 200px;
 }
 
-.divImg {
-  display: flex;
-  justify-content: center;
-}
-
 .card-title {
   margin-bottom: 30px;
-}
-
-.divImg {
-  display: flex;
-  justify-content: center;
-  height: 300px;
-  width: 30%;
-  position: relative;
-  left: 36%;
-}
-
-@media (max-width: 450px) {
-  .divImg {
-    display: flex;
-    justify-content: center;
-    height: 200px;
-    width: 30%;
-    position: relative;
-    left: 36%;
-  }
 }

@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Pedido } from 'src/app/models/pedido';
@@ -14,7 +15,10 @@ export class SucessoComprovanteComponent implements OnInit {
   pedido = new Pedido();
   loading = false;
 
-  constructor(private notificationService: ToastrService) {}
+  constructor(
+    private notificationService: ToastrService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     try {
@@ -29,6 +33,9 @@ export class SucessoComprovanteComponent implements OnInit {
       if (produtosPedido !== null) {
         this.produtos = JSON.parse(produtosPedido);
       }
+      if (pedidoRealizado == null || produtosPedido == null) {
+        this.router.navigate(['home']);
+      }
     } catch (error: any) {
       this.notificationService.error(error, 'Erro');
     }
@@ -38,20 +45,22 @@ export class SucessoComprovanteComponent implements OnInit {
 
   copiarCodigo(event: MouseEvent) {
     event.preventDefault();
-    const payload: string = this.pedido.codigoPedido ? this.pedido.codigoPedido : '';
+    const payload: string = this.pedido.codigoPedido
+      ? this.pedido.codigoPedido
+      : '';
 
     let listener = (e: ClipboardEvent) => {
       let clipboard = e.clipboardData || null;
 
-      if(clipboard !== null) {
-        clipboard.setData("text", payload.toString());
-      e.preventDefault();
+      if (clipboard !== null) {
+        clipboard.setData('text', payload.toString());
+        e.preventDefault();
       }
     };
 
-    document.addEventListener("copy", listener, false)
-    document.execCommand("copy");
-    document.removeEventListener("copy", listener, false);
+    document.addEventListener('copy', listener, false);
+    document.execCommand('copy');
+    document.removeEventListener('copy', listener, false);
   }
 
   baixarComprovante() {
@@ -62,7 +71,7 @@ export class SucessoComprovanteComponent implements OnInit {
     let aux = `(${p.qtdItem}x) ${p.nome}`;
 
     if (p.tamanhoSelecionado) {
-      aux += ` - ${ p.tamanhoSelecionado.replaceAll(' ', '')}`;
+      aux += ` - ${p.tamanhoSelecionado.replaceAll(' ', '')}`;
     }
     if (p.corSelecionada) {
       aux += `/${p.corSelecionada}`;
@@ -72,9 +81,15 @@ export class SucessoComprovanteComponent implements OnInit {
     }
 
     if (this.pedido.formaPagamento === FormasPagamento.CARTAO_CREDITO) {
-      aux +=  ` - ${ p.valorTaxa.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})} `;
+      aux += ` - ${p.valorTaxa.toLocaleString('pt-br', {
+        style: 'currency',
+        currency: 'BRL',
+      })} `;
     } else {
-      aux += ` - ${ p.valor.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})} `;
+      aux += ` - ${p.valor.toLocaleString('pt-br', {
+        style: 'currency',
+        currency: 'BRL',
+      })} `;
     }
 
     return aux.trim();

@@ -47,7 +47,6 @@ export class DetalhesProdutoComponent implements OnInit {
 
   adicionarCarrinho() {
     this.loading = true;
-    console.log(this.produto);
 
     try {
       this.errorsValidators = getProdutoValidationErrors(this.produto);

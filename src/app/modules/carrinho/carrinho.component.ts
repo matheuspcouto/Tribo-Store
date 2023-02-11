@@ -43,6 +43,9 @@ export class CarrinhoComponent implements OnInit {
     try {
       this.carrinho.remover(produto);
       this.produtos = this.carrinho.getItens();
+      if (this.produtos.length == 0) {
+        this.router.navigate(['home']);
+      }
       this.totalCarrinho();
       this.notificationService.success('Produto removido do carrinho !', 'Sucesso');
     } catch (error: any) {

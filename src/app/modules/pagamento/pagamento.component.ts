@@ -86,8 +86,6 @@ export class PagamentoComponent implements OnInit {
       if (pedidoRealizado !== null) {
         this.pedido = JSON.parse(pedidoRealizado);
       }
-
-      console.log(this.pedido);
     } catch (error: any) {
       this.notificationService.error(error, 'Erro');
     }

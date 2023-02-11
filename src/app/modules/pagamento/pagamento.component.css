@@ -3,17 +3,6 @@
   font-size: small;
 }
 
-.btnVoltar {
-  position: absolute;
-  top: 2%;
-  right: 91%;
-  width: 100px;
-  line-height: 1;
-  padding: 8px 10px;
-  text-align: center;
-  text-decoration: none;
-}
-
 .qrCode {
   display: flex;
   justify-content: center;
@@ -21,34 +10,4 @@
   width: 30%;
   position: relative;
   left: 35%;
-}
-
-@media screen and (max-width: 425px) {
-  .btnVoltar {
-    right: 70%;
-  }
-  .qrCode {
-    width: 80%;
-    left: 10%;
-  }
-}
-
-.divImg {
-  display: flex;
-  justify-content: center;
-  height: 300px;
-  width: 30%;
-  position: relative;
-  left: 36%;
-}
-
-@media (max-width: 450px) {
-  .divImg {
-    display: flex;
-    justify-content: center;
-    height: 200px;
-    width: 30%;
-    position: relative;
-    left: 36%;
-  }
 }

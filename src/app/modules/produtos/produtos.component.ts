@@ -28,7 +28,7 @@ export class ProdutosComponent implements OnInit {
           descricao: 'Tecido de Algodão',
           tipo: TipoProduto.CAMISA,
           valor: 35.0,
-          valorTaxa:  36.75,
+          valorTaxa:  36.92,
           ativo: true,
           tamanhos: [
             'PP',
@@ -50,7 +50,7 @@ export class ProdutosComponent implements OnInit {
           descricao: 'Tecido de algodão com a logo da tribo bordada',
           tipo: TipoProduto.MEIA,
           valor: 25.0,
-          valorTaxa:  26.25,
+          valorTaxa:  26.37,
           ativo: true,
           tamanhos: ['35', '36', '37', '38', '39', '40', '41', '42', '43'],
           cores: ['Branca', 'Preta'],
@@ -62,7 +62,7 @@ export class ProdutosComponent implements OnInit {
           descricao: 'Tamanho 6cm x 7cm',
           tipo: TipoProduto.ADESIVO,
           valor: 3.0,
-          valorTaxa:  3.15,
+          valorTaxa:  3.16,
           ativo: true,
           img: ['assets/adesivo-tribo-alvo.png']
         },
@@ -72,7 +72,7 @@ export class ProdutosComponent implements OnInit {
           descricao: 'Tamanho 4cm x 8cm',
           tipo: TipoProduto.ADESIVO,
           valor: 3.0,
-          valorTaxa:  3.15,
+          valorTaxa:  3.16,
           ativo: true,
           img: ['assets/adesivo-logo-tribo.png']
         },

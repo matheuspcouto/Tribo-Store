@@ -13,10 +13,10 @@
               <button type="button" class="btn btnVoltar text-center">
                 <i class="fa fa-arrow-left float-left"></i> Voltar
               </button>
-            </a><br>
+            </a><br><br>
 
-            <div *ngFor="let img of produto.img; let i = index" class="divImg mt-3">
-              <img *ngIf="i == indexImg" [src]="img" class="img" />
+            <div *ngFor="let img of produto.img; let i = index" class="divImgProduto mt-3">
+              <img *ngIf="i == indexImg" [src]="img" class="imgProduto" />
             </div>
 
               <button *ngIf="produto.img.length > 1" (click)="mudarImagem()" type="button" class="btn btn-block text-center">
