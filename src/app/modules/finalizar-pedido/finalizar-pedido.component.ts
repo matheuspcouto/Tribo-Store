@@ -29,7 +29,7 @@ export class FinalizarPedidoComponent implements OnInit {
   loading = false;
   disabled: boolean = false;
   errorsValidators: ErroPedido[] = [];
-  documentos: any;
+  documentos: string[] = ['CPF', 'CNPJ'];
   docSelecionado: any;
   email: any;
   numeroDocumento: any;
@@ -49,7 +49,6 @@ export class FinalizarPedidoComponent implements OnInit {
       if (this.produtos.length == 0) {
         this.router.navigate(['home']);
       }
-      this.getTipoDocumentos();
     } catch (error: any) {
       this.notificationService.error(error, 'Erro');
     }
@@ -164,16 +163,5 @@ export class FinalizarPedidoComponent implements OnInit {
     return this.pedido.formaPagamento === FormasPagamento.CARTAO_CREDITO
       ? this.carrinho.totalTaxa()
       : this.carrinho.total();
-  }
-
-  getTipoDocumentos() {
-    this.pagamentoService.getTiposDocumentos().subscribe({
-      next: (doc) => {
-        this.documentos = doc;
-      },
-      error: (error: HttpErrorResponse) => {
-        this.notificationService.error(error.message, 'Erro');
-      },
-    });
   }
 }

@@ -78,8 +78,8 @@
                 <div class="form-group">
                   <select class="form-select form-select-lg" [disabled]="disabled" name="identificationType"
                     [(ngModel)]="pedido.tipoDocumento" required id="identificationType">
-                    <option *ngFor="let doc of documentos; let i = index" [ngValue]="doc.name">
-                      {{ doc.name }}
+                    <option *ngFor="let doc of documentos; let i = index" [ngValue]="doc">
+                      {{ doc }}
                     </option>
                   </select>
                   <div *ngIf="errorsValidators">
