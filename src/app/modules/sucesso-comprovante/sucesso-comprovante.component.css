@@ -8,3 +8,22 @@
 .label-info {
   font-size: small !important;
 }
+
+
+.btn-center {
+  position: relative;
+  left: 40%;
+  width: 20%;
+  line-height: 2;
+  color: white !important;
+}
+
+@media screen and (max-width: 425px) {
+  .btn-center {
+    position: relative;
+    left: 15%;
+    width: 65%;
+    line-height: 2;
+    color: white !important;
+  }
+}
