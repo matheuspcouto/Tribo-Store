@@ -45,7 +45,7 @@
                     <td>{{formatarProdutoCarrinho(produto)}}</td>
                     <td>{{produto.qtdItem}}</td>
                     <td>{{produto.valor | currency:'BRL'}}</td>
-                    <td>{{valorTotalProduto(produto) | currency:'BRL'}}</td>
+                    <td>{{valorTotalProduto(produto)}}</td>
                     <td>
                       <button type="button" (click)="removerCarrinho(produto)" style="width: 50px;"
                         class="btn btn-outline-danger btn-sm"><i class="fa fa-trash"></i></button>
@@ -54,7 +54,7 @@
                 </tbody>
               </table>
 
-              <h6 class="card-title text-right mt-3">Total a Pagar {{totalCarrinho() | currency:'BRL'}}</h6>
+              <h6 class="card-title text-right mt-3">Total a Pagar: {{totalCarrinhoFormatado()}}</h6>
             </div>
 
             <div class="form-group m-0" *ngIf="produtos.length > 0">

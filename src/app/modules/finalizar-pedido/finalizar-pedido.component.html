@@ -105,8 +105,8 @@
 
             <div class="form-group">
               <label>E-mail</label>
-              <input id="cardholderEmail" [disabled]="disabled" type="email" name="cardholderEmail"
-                [(ngModel)]="pedido.email" placeholder="Informe o email" class="form-control" required />
+              <input id="cardholderEmail" [disabled]="disabled" type="text" name="cardholderEmail"
+                [(ngModel)]="pedido.email" placeholder="exemplo@exemplo.com" class="form-control" required />
               <div *ngIf="errorsValidators">
                 <div *ngFor="let erro of errorsValidators">
                   <p class="label-error" *ngIf="erro.controleErro === 'email'">{{erro.mensagemErro}}</p>
@@ -130,12 +130,12 @@
                     <td>{{produto.qtdItem}}</td>
                     <td *ngIf="pedido.formaPagamento === 'Cartão de Crédito'">{{produto.valorTaxa | currency:'BRL'}}</td>
                     <td *ngIf="pedido.formaPagamento !== 'Cartão de Crédito'">{{produto.valor | currency:'BRL'}}</td>
-                    <td>{{valorTotalProduto(produto) | currency:'BRL'}}</td>
+                    <td>{{valorTotalProduto(produto)}}</td>
                   </tr>
                 </tbody>
               </table>
 
-              <h5 class="card-title text-right mt-3">Total a Pagar {{totalCarrinho() | currency:'BRL'}}</h5>
+              <h5 class="card-title text-right mt-3">Total a Pagar: {{totalCarrinhoFormatado()}}</h5>
             </div>
             <br>
 
@@ -146,7 +146,6 @@
             </div>
 
             <hr />
-            <app-footer></app-footer>
           </div>
         </div>
       </div>

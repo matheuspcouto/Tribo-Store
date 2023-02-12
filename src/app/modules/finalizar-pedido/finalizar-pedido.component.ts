@@ -4,13 +4,14 @@ import { ErroPedido, getPedidoValidationErrors } from './pedido.validator';
 import { Component, OnInit } from '@angular/core';
 import { Pedido } from 'src/app/models/pedido';
 import { Produto } from 'src/app/models/produto';
-import { TipoProduto } from 'src/app/shared/enums/tipo-produto-enum';
 import { Router } from '@angular/router';
 import { CarrinhoService } from 'src/app/services/carrinho-state.service';
 import { FormasPagamento } from 'src/app/shared/enums/formas-pagamento.enum';
-import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { PagamentoService } from 'src/app/services/pagamento-service.service';
+import { formatarCpf } from 'src/app/shared/Utils/documento-formatador';
+import { formatarProdutoCarrinho, formatarProdutosPedido, formatarValorTotalProduto } from 'src/app/shared/Utils/produto-formatador';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-finalizar-pedido',
@@ -56,32 +57,35 @@ export class FinalizarPedidoComponent implements OnInit {
   }
 
   concluirPedido() {
+    this.loading = true;
+    this.disabled = true;
     this.errorsValidators = getPedidoValidationErrors(this.pedido);
 
     if (this.errorsValidators.length == 0) {
-      this.loading = true;
 
       try {
         this.pedido.dataPedido = new Date().toLocaleDateString('pt-br');
 
-        this.pedido.valorTotal =
-          this.pedido.formaPagamento === FormasPagamento.CARTAO_CREDITO
-            ? parseFloat(this.carrinho.totalTaxa().toFixed(2))
-            : parseFloat(this.carrinho.total().toFixed(2));
-
-        this.pedido.produtos = this.formatarProdutos(this.produtos);
+        this.pedido.valorTotal = this.totalCarrinho()
+        this.pedido.produtos = formatarProdutosPedido(this.produtos, this.pedido);
         this.pedido.qtdItens = this.produtos.length;
         this.pedido.status = StatusPedido.A_PAGAR;
         this.pedido.codigoPedido = this.gerarCodigoPedido(this.pedido);
+        this.pedido.documento = formatarCpf(this.pedido.documento);
 
-        this.pedidoService.criarPedido(this.pedido).subscribe({
+        // TESTES LOCAIS
+        /* sessionStorage.setItem('pedido', JSON.stringify(this.pedido));
+        sessionStorage.setItem('produtos', JSON.stringify(this.produtos));
+        this.notificationService.success('Pedido feito com sucesso !','Sucesso');
+        console.log(this.pedido);
+        this.router.navigate(['comprovante']);
+        return; */
+
+         this.pedidoService.criarPedido(this.pedido).subscribe({
           next: () => {
             sessionStorage.setItem('pedido', JSON.stringify(this.pedido));
             sessionStorage.setItem('produtos', JSON.stringify(this.produtos));
-            this.notificationService.success(
-              'Pedido feito com sucesso !',
-              'Sucesso'
-            );
+            this.notificationService.success('Pedido feito com sucesso !','Sucesso');
             this.router.navigate(['comprovante']);
           },
           error: (error: HttpErrorResponse) => {
@@ -91,77 +95,39 @@ export class FinalizarPedidoComponent implements OnInit {
       } catch (error: any) {
         this.notificationService.error(error, 'Erro');
       }
-      this.loading = false;
     }
-  }
-
-  formatarProdutos(produtos: Produto[]): string {
-    let aux: string = '';
-
-    produtos.map((p) => {
-      aux += `(${p.qtdItem}x) ${p.nome}`;
-
-      if (p.tamanhoSelecionado) {
-        aux += ` - ${p.tamanhoSelecionado.replaceAll(' ', '')}`;
-      }
-      if (p.corSelecionada) {
-        aux += `/${p.corSelecionada}`;
-      }
-      if (p.modeloCelular) {
-        aux += ` - ${p.modeloCelular.toUpperCase().replaceAll(' ', '')}`;
-      }
-
-      if (this.pedido.formaPagamento === FormasPagamento.CARTAO_CREDITO) {
-        aux += ` - ${p.valorTaxa.toLocaleString('pt-br', {
-          style: 'currency',
-          currency: 'BRL',
-        })} `;
-      } else {
-        aux += ` - ${p.valor.toLocaleString('pt-br', {
-          style: 'currency',
-          currency: 'BRL',
-        })} `;
-      }
-    });
-
-    return aux.trim();
+    this.disabled = false;
+    this.loading = false;
   }
 
   gerarCodigoPedido(pedido: Pedido) {
     let code = 'PED';
-    code +=
-      pedido.dataPedido?.replaceAll('/', '') + new Date().getTime().toString();
+    code += pedido.dataPedido?.replaceAll('/', '') + new Date().getTime().toString();
     return code;
   }
 
-  valorTotalProduto(produto: Produto) {
-    let total;
-
-    if (this.pedido.formaPagamento == FormasPagamento.CARTAO_CREDITO) {
-      total = produto.qtdItem ? produto.valorTaxa * produto.qtdItem : 0;
-    } else {
-      total = produto.qtdItem ? produto.valor * produto.qtdItem : 0;
-    }
-
-    return total;
-  }
 
   formatarProdutoCarrinho(produto: Produto) {
-    let aux = produto.nome + ' - ';
+    return formatarProdutoCarrinho(produto);
+  }
 
-    aux += produto.tipo == TipoProduto.CAMISA ? produto.tamanhoSelecionado : '';
-    aux +=
-      produto.tipo == TipoProduto.MEIA
-        ? produto.tamanhoSelecionado + '/' + produto.corSelecionada
-        : '';
-    aux += produto.tipo == TipoProduto.CAPINHA ? produto.modeloCelular : '';
-
-    return aux.trim();
+  valorTotalProduto(produto: Produto) {
+    return formatarValorTotalProduto(produto, this.pedido);
   }
 
   totalCarrinho() {
-    return this.pedido.formaPagamento === FormasPagamento.CARTAO_CREDITO
-      ? this.carrinho.totalTaxa()
-      : this.carrinho.total();
+    let total = this.pedido.formaPagamento === FormasPagamento.CARTAO_CREDITO
+    ? this.carrinho.totalTaxa()
+    : this.carrinho.total();
+
+    return parseFloat(total.toFixed(2));
   }
+
+  totalCarrinhoFormatado() {
+    let total = this.pedido.formaPagamento === FormasPagamento.CARTAO_CREDITO
+    ? this.carrinho.totalTaxa()
+    : this.carrinho.total();
+
+    return total.toLocaleString('pt-br', { style: 'currency', currency: 'BRL'});
+  };
 }

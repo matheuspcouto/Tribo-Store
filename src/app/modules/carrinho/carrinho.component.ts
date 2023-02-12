@@ -1,3 +1,4 @@
+import { formatarValorTotalProduto, formatarProdutoCarrinho } from 'src/app/shared/Utils/produto-formatador';
 import { TipoProduto } from './../../shared/enums/tipo-produto-enum';
 import { CarrinhoService } from 'src/app/services/carrinho-state.service';
 import { Component, OnInit } from '@angular/core';
@@ -46,7 +47,7 @@ export class CarrinhoComponent implements OnInit {
       if (this.produtos.length == 0) {
         this.router.navigate(['home']);
       }
-      this.totalCarrinho();
+      this.totalCarrinhoFormatado();
       this.notificationService.success('Produto removido do carrinho !', 'Sucesso');
     } catch (error: any) {
       this.notificationService.error(error.message, 'Erro');
@@ -54,27 +55,15 @@ export class CarrinhoComponent implements OnInit {
     this.loading = false;
   }
 
-  totalCarrinho() {
-    return this.carrinho.total();
+  formatarProdutoCarrinho(produto: Produto) {
+    return formatarProdutoCarrinho(produto)
+  }
+
+  totalCarrinhoFormatado() {
+    return this.carrinho.total().toLocaleString('pt-br', { style: 'currency', currency: 'BRL'});;
   }
 
   valorTotalProduto(produto: Produto) {
-    return produto.qtdItem ? produto.valor * produto.qtdItem : 0;
-  }
-
-  formatarProdutoCarrinho(p: Produto) {
-    let aux = `(${p.qtdItem}x) ${p.nome}`;
-
-    if (p.tamanhoSelecionado) {
-      aux += ` - ${ p.tamanhoSelecionado.replaceAll(' ', '')}`;
-    }
-    if (p.corSelecionada) {
-      aux += `/${p.corSelecionada}`;
-    }
-    if (p.modeloCelular) {
-      aux += ` - ${p.modeloCelular.toUpperCase().replaceAll(' ', '')}`;
-    }
-
-    return aux.trim();
+    return formatarValorTotalProduto(produto, undefined)
   }
 }

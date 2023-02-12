@@ -21,6 +21,11 @@ export class CarrinhoService {
     return this.produtos;
   }
 
+  clear() {
+    sessionStorage.clear();
+    this.produtos = [];
+  }
+
   pesquisar(idProduto: number) {
     return this.produtos.some((item) => item.id == idProduto);
   }

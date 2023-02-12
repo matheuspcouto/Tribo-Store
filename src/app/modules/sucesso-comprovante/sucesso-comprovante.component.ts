@@ -1,3 +1,4 @@
+import { CarrinhoService } from 'src/app/services/carrinho-state.service';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
@@ -17,7 +18,8 @@ export class SucessoComprovanteComponent implements OnInit {
 
   constructor(
     private notificationService: ToastrService,
-    private router: Router
+    private router: Router,
+    private carrinho: CarrinhoService
   ) {}
 
   ngOnInit() {
@@ -33,9 +35,13 @@ export class SucessoComprovanteComponent implements OnInit {
       if (produtosPedido !== null) {
         this.produtos = JSON.parse(produtosPedido);
       }
-      if (pedidoRealizado == null || produtosPedido == null) {
+
+      if (!this.pedido || this.produtos.length == 0) {
         this.router.navigate(['home']);
       }
+
+      if (this.pedido && this.produtos) { this.carrinho.clear() }
+
     } catch (error: any) {
       this.notificationService.error(error, 'Erro');
     }
@@ -61,10 +67,7 @@ export class SucessoComprovanteComponent implements OnInit {
     document.addEventListener('copy', listener, false);
     document.execCommand('copy');
     document.removeEventListener('copy', listener, false);
-  }
-
-  baixarComprovante() {
-    window.print();
+    this.notificationService.info('Código copiado', '');
   }
 
   formatarProdutos(p: Produto): string {
@@ -93,5 +96,9 @@ export class SucessoComprovanteComponent implements OnInit {
     }
 
     return aux.trim();
+  }
+
+  valorTotalFormatado() {
+    return this.pedido.valorTotal.toLocaleString('pt-br', { style: 'currency', currency: 'BRL'});
   }
 }
