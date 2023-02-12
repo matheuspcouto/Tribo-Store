@@ -55,15 +55,19 @@
               <i class="fa fa-exclamation-circle float-left"></i>
               <p>Este comprovante é muito importante, então tire print ou copie o código do pedido para se proteger.</p>
               <p class="mt-3"> A chave pix para pagamentos é <b>tribo.imep2022@gmail.com.</b> </p>
-              <p class="mt-3"> Lembre-se de enviar para o número abaixo: </p>
-              <b><a class="mt-0" href="https://api.whatsapp.com/send?phone=5563991321949" target="_blank">(63) 9 9132-1949</a></b>
+              <p class="mt-3"> Ao realizar o pagamento, envie o comprovante para o número abaixo: </p>
+              <b><a class="btn" href="https://api.whatsapp.com/send?phone=5563991321949" target="_blank">(63) 9
+                  8441-6085</a></b>
             </div>
 
-            <div class="label-info alert alert-info text-center" *ngIf="pedido.formaPagamento != 'Pix'">
-              <i class="fa fa-exclamation-circle float-left"></i>
-              <p>Este comprovante é muito importante, então tire print ou copie o código do pedido para se proteger.</p>
-              <p class="mt-3">Para receber o link de pagamento, solicite para o número abaixo: </p>
-              <b><a href="https://api.whatsapp.com/send?phone=5563984416085" target="_blank">(63) 9 8441-6085</a></b>
+            <div *ngIf="pedido.formaPagamento != 'Pix'">
+              <div class="label-info alert alert-info text-center">
+                <i class="fa fa-exclamation-circle float-left"></i>
+                Este comprovante é muito importante, então tire print ou copie o código do pedido para se proteger. Para
+                receber o link de pagamento, clique no botão abaixo.
+              </div>
+              <a class="btn-center btn btn-success text-center" (click)="enviarComprovante()" target="_blank">Enviar
+                para WhatsApp <i class="fa fa-whatsapp float-right fa-2x"></i></a>
             </div>
 
             <hr />

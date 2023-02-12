@@ -40,8 +40,7 @@ export class SucessoComprovanteComponent implements OnInit {
         this.router.navigate(['home']);
       }
 
-      if (this.pedido && this.produtos) { this.carrinho.clear() }
-
+      if (this.pedido && this.produtos) { this.carrinho.clear(); }
     } catch (error: any) {
       this.notificationService.error(error, 'Erro');
     }
@@ -98,7 +97,16 @@ export class SucessoComprovanteComponent implements OnInit {
     return aux.trim();
   }
 
+  enviarComprovante() {
+    let messageText = `Olá, eu gostaria de receber o link de pagamento do pedido *${this.pedido.codigoPedido}* na Tribo Store.`;
+    let url = `https://api.whatsapp.com/send?phone=5563984416085&text=${messageText}`;
+    window.open(url);
+  }
+
   valorTotalFormatado() {
-    return this.pedido.valorTotal.toLocaleString('pt-br', { style: 'currency', currency: 'BRL'});
+    return this.pedido.valorTotal.toLocaleString('pt-br', {
+      style: 'currency',
+      currency: 'BRL',
+    });
   }
 }
