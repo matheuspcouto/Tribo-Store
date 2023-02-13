@@ -21,7 +21,7 @@
             <h2 class="card-title text-center mt-3" id="titulo">
               Meu Carrinho
             </h2>
-            <hr *ngIf="produtos.length == 0"/>
+            <hr *ngIf="produtos.length == 0" />
             <br *ngIf="produtos.length > 0">
 
             <div *ngIf="produtos.length == 0">
@@ -47,8 +47,9 @@
                     <td>{{produto.valor | currency:'BRL'}}</td>
                     <td>{{valorTotalProduto(produto)}}</td>
                     <td>
-                      <button type="button" (click)="removerCarrinho(produto)" style="width: 50px;"
-                        class="btn btn-outline-danger btn-sm"><i class="fa fa-trash"></i></button>
+                      <button type="button"  style="width: 50px;" class="btn btn-outline-danger btn-sm"
+                        [appModalConfirmacao]="{title: 'Quer mesmo remover este item do carrinho?', message: 'Ao confirmar, ele não fará mais parte do pedido.'}"
+                        (then)="removerCarrinho(produto)"><i class="fa fa-trash"></i></button>
                     </td>
                   </tr>
                 </tbody>
