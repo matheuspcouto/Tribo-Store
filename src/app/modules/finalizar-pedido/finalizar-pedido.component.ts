@@ -80,7 +80,7 @@ export class FinalizarPedidoComponent implements OnInit {
         this.pedido.documento = formatarCpf(this.pedido.documento);
 
         // TESTES LOCAIS
-        sessionStorage.setItem('pedido', JSON.stringify(this.pedido));
+        /* sessionStorage.setItem('pedido', JSON.stringify(this.pedido));
         sessionStorage.setItem('produtos', JSON.stringify(this.produtos));
         this.notificationService.success(
           'Pedido feito com sucesso !',
@@ -88,7 +88,7 @@ export class FinalizarPedidoComponent implements OnInit {
         );
         console.log(this.pedido);
         this.router.navigate(['comprovante']);
-        return;
+        return; */
 
         this.pedidoService.criarPedido(this.pedido).subscribe({
           next: () => {
@@ -107,7 +107,7 @@ export class FinalizarPedidoComponent implements OnInit {
       } catch (error: any) {
         this.notificationService.error(error, 'Erro');
       } finally {
-        //this.loading = false;
+        this.loading = false;
         this.disabled = false;
       }
     }

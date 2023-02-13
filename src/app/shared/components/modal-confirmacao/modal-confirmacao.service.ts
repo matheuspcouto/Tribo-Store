@@ -16,7 +16,10 @@ export class ModalConfirmacaoService {
 
   show({ title, message }: { title: string, message: string }): Promise<boolean> {
     this.lastFocusElement = document.activeElement;
-    this.currentModal$.next( { title , message });
+    this.currentModal$.next( { title, message });
+
+    console.log(this.action$);
+
 
     return this.action$.pipe(
       take(1),

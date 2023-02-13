@@ -26,8 +26,8 @@ export class ModalConfirmacaoDirective {
     if (this.config) {
       const result = await this.confirm(this.config);
 
-      if (result) { this.then.next }
-      else { this.else.next }
+      if (result) { this.then.next(); }
+      else { this.else.next(); }
     }
   }
 
