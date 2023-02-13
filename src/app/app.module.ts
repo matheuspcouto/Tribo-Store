@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import { FooterComponent } from './modules/footer/footer.component';
 import { HomeComponent } from './modules/home/home.component';
 import { SucessoComprovanteComponent } from './modules/sucesso-comprovante/sucesso-comprovante.component';
-import { LoadderComponent } from './shared/loadder/loadder.component';
+import { LoadderComponent } from './modules/loadder/loadder.component';
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { NgxMaskModule } from "ngx-mask";
 import { ProdutosComponent } from './modules/produtos/produtos.component';
@@ -16,7 +16,6 @@ import { DetalhesProdutoComponent } from './modules/produtos/detalhes-produto/de
 import { HttpClientModule } from '@angular/common/http';
 import { CarrinhoComponent } from './modules/carrinho/carrinho.component';
 import { FinalizarPedidoComponent } from './modules/finalizar-pedido/finalizar-pedido.component';
-import { NgxMercadopagoModule } from 'ngx-mercadopago';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { PagamentoComponent } from './modules/pagamento/pagamento.component';

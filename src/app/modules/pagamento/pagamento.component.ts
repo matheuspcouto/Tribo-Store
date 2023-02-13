@@ -7,7 +7,6 @@ import { Pedido } from 'src/app/models/pedido';
 import { ErroPedido } from '../finalizar-pedido/pedido.validator';
 import { ToastrService } from 'ngx-toastr';
 import { HttpErrorResponse } from '@angular/common/http';
-import { PaymentMethod, PaymentForm } from 'ngx-mercadopago';
 
 type DadosPix = {
   qr_code_base64: string;
@@ -69,7 +68,6 @@ export class PagamentoComponent implements OnInit {
 
     if (this.pedido.formaPagamento == FormasPagamento.CARTAO_CREDITO) {
       this.form = 'cartao';
-      this.getBandeiras();
     }
 
     if (this.pedido.formaPagamento == FormasPagamento.PIX) {
@@ -106,19 +104,6 @@ export class PagamentoComponent implements OnInit {
       tipoDocumento: 'CPF',
       valorTotal: 3,
     };
-  }
-
-  getBandeiras() {
-    this.pagamentoService.getBandeiras().subscribe({
-      next: (pag) => {
-        this.bandeiras = pag.filter(
-          (i: PaymentMethod) => i.payment_type_id == 'credit_card'
-        );
-      },
-      error: (error: HttpErrorResponse) => {
-        this.notificationService.error(error.message, 'Erro');
-      },
-    });
   }
 
   copiarCodigo(event: MouseEvent) {

@@ -10,7 +10,11 @@ import { FormasPagamento } from 'src/app/shared/enums/formas-pagamento.enum';
 import { ToastrService } from 'ngx-toastr';
 import { PagamentoService } from 'src/app/services/pagamento-service.service';
 import { formatarCpf } from 'src/app/shared/Utils/documento-formatador';
-import { formatarProdutoCarrinho, formatarProdutosPedido, formatarValorTotalProduto } from 'src/app/shared/Utils/produto-formatador';
+import {
+  formatarProdutoCarrinho,
+  formatarProdutosPedido,
+  formatarValorTotalProduto,
+} from 'src/app/shared/Utils/produto-formatador';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -57,35 +61,43 @@ export class FinalizarPedidoComponent implements OnInit {
   }
 
   concluirPedido() {
-    this.loading = true;
-    this.disabled = true;
     this.errorsValidators = getPedidoValidationErrors(this.pedido);
 
     if (this.errorsValidators.length == 0) {
-
       try {
-        this.pedido.dataPedido = new Date().toLocaleDateString('pt-br');
+        this.loading = true;
+        this.disabled = true;
 
-        this.pedido.valorTotal = this.totalCarrinho()
-        this.pedido.produtos = formatarProdutosPedido(this.produtos, this.pedido);
+        this.pedido.dataPedido = new Date().toLocaleDateString('pt-br');
+        this.pedido.valorTotal = this.totalCarrinho();
+        this.pedido.produtos = formatarProdutosPedido(
+          this.produtos,
+          this.pedido
+        );
         this.pedido.qtdItens = this.produtos.length;
         this.pedido.status = StatusPedido.A_PAGAR;
         this.pedido.codigoPedido = this.gerarCodigoPedido(this.pedido);
         this.pedido.documento = formatarCpf(this.pedido.documento);
 
         // TESTES LOCAIS
-        /* sessionStorage.setItem('pedido', JSON.stringify(this.pedido));
+        sessionStorage.setItem('pedido', JSON.stringify(this.pedido));
         sessionStorage.setItem('produtos', JSON.stringify(this.produtos));
-        this.notificationService.success('Pedido feito com sucesso !','Sucesso');
+        this.notificationService.success(
+          'Pedido feito com sucesso !',
+          'Sucesso'
+        );
         console.log(this.pedido);
         this.router.navigate(['comprovante']);
-        return; */
+        return;
 
-         this.pedidoService.criarPedido(this.pedido).subscribe({
+        this.pedidoService.criarPedido(this.pedido).subscribe({
           next: () => {
             sessionStorage.setItem('pedido', JSON.stringify(this.pedido));
             sessionStorage.setItem('produtos', JSON.stringify(this.produtos));
-            this.notificationService.success('Pedido feito com sucesso !','Sucesso');
+            this.notificationService.success(
+              'Pedido feito com sucesso !',
+              'Sucesso'
+            );
             this.router.navigate(['comprovante']);
           },
           error: (error: HttpErrorResponse) => {
@@ -94,18 +106,19 @@ export class FinalizarPedidoComponent implements OnInit {
         });
       } catch (error: any) {
         this.notificationService.error(error, 'Erro');
+      } finally {
+        //this.loading = false;
+        this.disabled = false;
       }
     }
-    this.disabled = false;
-    this.loading = false;
   }
 
   gerarCodigoPedido(pedido: Pedido) {
     let code = 'PED';
-    code += pedido.dataPedido?.replaceAll('/', '') + new Date().getTime().toString();
+    code +=
+      pedido.dataPedido?.replaceAll('/', '') + new Date().getTime().toString();
     return code;
   }
-
 
   formatarProdutoCarrinho(produto: Produto) {
     return formatarProdutoCarrinho(produto);
@@ -116,18 +129,23 @@ export class FinalizarPedidoComponent implements OnInit {
   }
 
   totalCarrinho() {
-    let total = this.pedido.formaPagamento === FormasPagamento.CARTAO_CREDITO
-    ? this.carrinho.totalTaxa()
-    : this.carrinho.total();
+    let total =
+      this.pedido.formaPagamento === FormasPagamento.CARTAO_CREDITO
+        ? this.carrinho.totalTaxa()
+        : this.carrinho.total();
 
     return parseFloat(total.toFixed(2));
   }
 
   totalCarrinhoFormatado() {
-    let total = this.pedido.formaPagamento === FormasPagamento.CARTAO_CREDITO
-    ? this.carrinho.totalTaxa()
-    : this.carrinho.total();
+    let total =
+      this.pedido.formaPagamento === FormasPagamento.CARTAO_CREDITO
+        ? this.carrinho.totalTaxa()
+        : this.carrinho.total();
 
-    return total.toLocaleString('pt-br', { style: 'currency', currency: 'BRL'});
-  };
+    return total.toLocaleString('pt-br', {
+      style: 'currency',
+      currency: 'BRL',
+    });
+  }
 }
