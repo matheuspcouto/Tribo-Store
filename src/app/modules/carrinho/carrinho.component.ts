@@ -1,9 +1,7 @@
 import { formatarValorTotalProduto, formatarProdutoCarrinho } from 'src/app/shared/Utils/produto-formatador';
-import { TipoProduto } from './../../shared/enums/tipo-produto-enum';
 import { CarrinhoService } from 'src/app/services/carrinho-state.service';
 import { Component, OnInit } from '@angular/core';
 import { Produto } from 'src/app/models/produto';
-import { Pedido } from 'src/app/models/pedido';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
@@ -29,6 +27,9 @@ export class CarrinhoComponent implements OnInit {
     this.loading = true;
     try {
       this.produtos = this.carrinho.getItens();
+      if (this.produtos.length == 0) {
+        this.router.navigate(['home']);
+      }
     } catch (error: any) {
       this.notificationService.error(error, 'Erro');
     }
