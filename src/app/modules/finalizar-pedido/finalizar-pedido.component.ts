@@ -66,7 +66,6 @@ export class FinalizarPedidoComponent implements OnInit {
     if (this.errorsValidators.length == 0) {
       try {
         this.loading = true;
-        this.disabled = true;
 
         this.pedido.dataPedido = new Date().toLocaleDateString('pt-br');
         this.pedido.valorTotal = this.totalCarrinho();
@@ -98,6 +97,7 @@ export class FinalizarPedidoComponent implements OnInit {
               'Pedido feito com sucesso !',
               'Sucesso'
             );
+            this.loading = false;
             this.router.navigate(['comprovante']);
           },
           error: (error: HttpErrorResponse) => {
@@ -106,9 +106,7 @@ export class FinalizarPedidoComponent implements OnInit {
         });
       } catch (error: any) {
         this.notificationService.error(error, 'Erro');
-      } finally {
         this.loading = false;
-        this.disabled = false;
       }
     }
   }

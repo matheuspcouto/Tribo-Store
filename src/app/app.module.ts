@@ -48,7 +48,8 @@ import { ModalConfirmacaoConfig, ModalConfirmacaoDirective, MODAL_CONFIRMACAO } 
     ToastrModule.forRoot({
       timeOut: 2000,
       positionClass: 'toast-bottom-right',
-      preventDuplicates: true,
+      preventDuplicates: false,
+      maxOpened: 3
     }),
   ],
   providers: [
