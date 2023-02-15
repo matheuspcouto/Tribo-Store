@@ -15,6 +15,7 @@ import {
   formatarValorTotalProduto,
 } from 'src/app/shared/Utils/produto-formatador';
 import { HttpErrorResponse } from '@angular/common/http';
+import { formatarTelefone } from 'src/app/shared/Utils/telefone.formatador';
 
 @Component({
   selector: 'app-finalizar-pedido',
@@ -69,14 +70,15 @@ export class FinalizarPedidoComponent implements OnInit {
         this.pedido.status = StatusPedido.A_PAGAR;
         this.pedido.codigoPedido = this.gerarCodigoPedido(this.pedido);
         this.pedido.documento = formatarCpf(this.pedido.documento);
+        this.pedido.telefone = formatarTelefone(this.pedido.telefone);
 
         // TESTES LOCAIS
-        /* sessionStorage.setItem('pedido', JSON.stringify(this.pedido));
+        sessionStorage.setItem('pedido', JSON.stringify(this.pedido));
         sessionStorage.setItem('produtos', JSON.stringify(this.produtos));
         this.notificationService.success('Pedido feito com sucesso !','Sucesso');
         console.log(this.pedido);
         this.router.navigate(['comprovante']);
-        return; */
+        return;
 
         this.pedidoService.criarPedido(this.pedido).subscribe({
           next: () => {
