@@ -2,7 +2,7 @@
   <app-loadder></app-loadder>
 </div>
 
-<section class="h-100 mt-3 section mb-3" *ngIf="!loading" (onfocus)="removido = false;">
+<section class="h-100 mt-3 section mb-3" *ngIf="!loading">
   <div class="container h-100">
     <div class="row justify-content-md-center h-100">
       <div class="card-wrapper">
@@ -18,11 +18,9 @@
             <div class="divImg mt-3">
               <img src="assets/logo.png" class="img" />
             </div>
-            <h2 class="card-title text-center mt-3" id="titulo">
+            <h2 class="card-title text-center mt-3" >
               Meu Carrinho
             </h2>
-            <hr *ngIf="produtos.length == 0" />
-            <br *ngIf="produtos.length > 0">
 
             <div *ngIf="produtos.length == 0">
               <p class="card-title text-center mt-3">Você não tem nenhum item no carrinho !</p>

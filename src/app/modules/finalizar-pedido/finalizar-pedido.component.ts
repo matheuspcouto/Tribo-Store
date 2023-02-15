@@ -8,7 +8,6 @@ import { Router } from '@angular/router';
 import { CarrinhoService } from 'src/app/services/carrinho-state.service';
 import { FormasPagamento } from 'src/app/shared/enums/formas-pagamento.enum';
 import { ToastrService } from 'ngx-toastr';
-import { PagamentoService } from 'src/app/services/pagamento-service.service';
 import { formatarCpf } from 'src/app/shared/Utils/documento-formatador';
 import {
   formatarProdutoCarrinho,
@@ -35,14 +34,10 @@ export class FinalizarPedidoComponent implements OnInit {
   disabled: boolean = false;
   errorsValidators: ErroPedido[] = [];
   documentos: string[] = ['CPF', 'CNPJ'];
-  docSelecionado: any;
-  email: any;
-  numeroDocumento: any;
 
   constructor(
     private carrinho: CarrinhoService,
     private pedidoService: PedidoService,
-    private pagamentoService: PagamentoService,
     private notificationService: ToastrService,
     private router: Router
   ) {}
@@ -69,10 +64,7 @@ export class FinalizarPedidoComponent implements OnInit {
 
         this.pedido.dataPedido = new Date().toLocaleDateString('pt-br');
         this.pedido.valorTotal = this.totalCarrinho();
-        this.pedido.produtos = formatarProdutosPedido(
-          this.produtos,
-          this.pedido
-        );
+        this.pedido.produtos = formatarProdutosPedido(this.produtos, this.pedido);
         this.pedido.qtdItens = this.produtos.length;
         this.pedido.status = StatusPedido.A_PAGAR;
         this.pedido.codigoPedido = this.gerarCodigoPedido(this.pedido);
@@ -81,10 +73,7 @@ export class FinalizarPedidoComponent implements OnInit {
         // TESTES LOCAIS
         /* sessionStorage.setItem('pedido', JSON.stringify(this.pedido));
         sessionStorage.setItem('produtos', JSON.stringify(this.produtos));
-        this.notificationService.success(
-          'Pedido feito com sucesso !',
-          'Sucesso'
-        );
+        this.notificationService.success('Pedido feito com sucesso !','Sucesso');
         console.log(this.pedido);
         this.router.navigate(['comprovante']);
         return; */
@@ -93,15 +82,13 @@ export class FinalizarPedidoComponent implements OnInit {
           next: () => {
             sessionStorage.setItem('pedido', JSON.stringify(this.pedido));
             sessionStorage.setItem('produtos', JSON.stringify(this.produtos));
-            this.notificationService.success(
-              'Pedido feito com sucesso !',
-              'Sucesso'
-            );
+            this.notificationService.success('Pedido feito com sucesso !', 'Sucesso');
             this.loading = false;
             this.router.navigate(['comprovante']);
           },
           error: (error: HttpErrorResponse) => {
             this.notificationService.error(error.message, 'Erro');
+            this.loading = false;
           },
         });
       } catch (error: any) {
@@ -113,8 +100,7 @@ export class FinalizarPedidoComponent implements OnInit {
 
   gerarCodigoPedido(pedido: Pedido) {
     let code = 'PED';
-    code +=
-      pedido.dataPedido?.replaceAll('/', '') + new Date().getTime().toString();
+    code += pedido.dataPedido?.replaceAll('/', '') + new Date().getTime().toString();
     return code;
   }
 

@@ -1,4 +1,3 @@
-import { PagamentoComponent } from './modules/pagamento/pagamento.component';
 import { FinalizarPedidoComponent } from './modules/finalizar-pedido/finalizar-pedido.component';
 import { CarrinhoComponent } from './modules/carrinho/carrinho.component';
 import { DetalhesProdutoComponent } from './modules/produtos/detalhes-produto/detalhes-produto.component';

@@ -19,7 +19,7 @@
               <img src="assets/logo.png" class="img" />
             </div>
 
-            <h2 class="card-title text-center mt-3" id="titulo">
+            <h2 class="card-title text-center mt-3" >
               Pedido Realizado <i class="fa fa-check"></i>
             </h2>
             <hr />
@@ -38,7 +38,7 @@
             <p class="card-title text-left mt-3">{{ pedido.email }}</p>
 
             <h5 class="card-title text-left mt-3">Data do pedido:</h5>
-            <p class="card-title text-left mt-3">{{ pedido.dataPedido | date:'MM/dd/yyyy' }}</p>
+            <p class="card-title text-left mt-3">{{ pedido.dataPedido }}</p>
 
             <h5 class="card-title text-left mt-3">Produtos:</h5>
             <div *ngFor="let prod of produtos">

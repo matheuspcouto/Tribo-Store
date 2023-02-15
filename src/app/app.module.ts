@@ -19,7 +19,6 @@ import { CarrinhoComponent } from './modules/carrinho/carrinho.component';
 import { FinalizarPedidoComponent } from './modules/finalizar-pedido/finalizar-pedido.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
-import { PagamentoComponent } from './modules/pagamento/pagamento.component';
 import { ModalConfirmacaoConfig, ModalConfirmacaoDirective, MODAL_CONFIRMACAO } from './shared/components/modal-confirmacao/modal-confirmacao.directive';
 
 @NgModule({
@@ -34,7 +33,6 @@ import { ModalConfirmacaoConfig, ModalConfirmacaoDirective, MODAL_CONFIRMACAO } 
     ProdutosComponent,
     DetalhesProdutoComponent,
     FinalizarPedidoComponent,
-    PagamentoComponent,
     ModalConfirmacaoDirective,
   ],
   imports: [

@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { CarrinhoService } from './../../../services/carrinho-state.service';
 import { Produto } from './../../../models/produto';
 import { Component, OnInit } from '@angular/core';
@@ -25,7 +26,8 @@ export class DetalhesProdutoComponent implements OnInit {
 
   constructor(
     private carrinho: CarrinhoService,
-    private notificationService: ToastrService
+    private notificationService: ToastrService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -38,6 +40,8 @@ export class DetalhesProdutoComponent implements OnInit {
         this.produto = JSON.parse(produtoSelecionado);
         this.tamanhos = this.produto.tamanhos ? this.produto.tamanhos : [];
         this.cores = this.produto.cores ? this.produto.cores : [];
+      } else {
+        this.router.navigate(['home']);
       }
     } catch (error: any) {
       this.notificationService.error(error, 'Erro');

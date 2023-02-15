@@ -9,7 +9,7 @@
         <div class="card fat">
           <div class="card-body" style="background-color: white">
             <div class="divImg mt-3"><img src="assets/logo.png" class="img" /></div>
-            <h2 class="card-title text-center mt-3" id="titulo">
+            <h2 class="card-title text-center mt-3" >
               Tribo Store
             </h2>
             <hr />
@@ -20,7 +20,7 @@
               Ao finalizar a compra, não esqueça de guardar seu comprovante tirando print ou copiando o código do pedido.
             </p>
             <p class="text-center mt-3">
-              Para pagamentos no PIX, a chave é: tribo.imep2022@gmail.com
+              Para pagamentos no PIX, a chave é: <b>tribo.imep2022@gmail.com</b>
             </p>
 
             <div class="row1-container mt-3 mb text-center">
@@ -45,7 +45,7 @@
                   Veja o que você tem no carrinho.
                 </p>
                 <a *ngIf="disabled" routerLink="/meu-carrinho" class="card-button"> Ver mais</a>
-                <a *ngIf="!disabled" class="card-button-disabled"> Necessário ter pelo menos 1 item no carrinho</a>
+                <a *ngIf="!disabled" class="card-button-disabled"> Adicione algum item ao carrinho</a>
               </div>
             </div>
 
