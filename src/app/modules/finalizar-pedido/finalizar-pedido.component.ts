@@ -73,12 +73,12 @@ export class FinalizarPedidoComponent implements OnInit {
         this.pedido.telefone = formatarTelefone(this.pedido.telefone);
 
         // TESTES LOCAIS
-        sessionStorage.setItem('pedido', JSON.stringify(this.pedido));
+        /* sessionStorage.setItem('pedido', JSON.stringify(this.pedido));
         sessionStorage.setItem('produtos', JSON.stringify(this.produtos));
         this.notificationService.success('Pedido feito com sucesso !','Sucesso');
         console.log(this.pedido);
         this.router.navigate(['comprovante']);
-        return;
+        return; */
 
         this.pedidoService.criarPedido(this.pedido).subscribe({
           next: () => {
