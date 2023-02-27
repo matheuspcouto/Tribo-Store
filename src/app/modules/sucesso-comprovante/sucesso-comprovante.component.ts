@@ -1,8 +1,8 @@
+import { PedidoResponse } from './../../models/pedido-response';
 import { CarrinhoService } from 'src/app/services/carrinho-state.service';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { PedidoRequest } from 'src/app/models/pedido-request';
 import { Produto } from 'src/app/models/produto';
 import { FormasPagamento } from 'src/app/shared/enums/formas-pagamento.enum';
 
@@ -12,8 +12,7 @@ import { FormasPagamento } from 'src/app/shared/enums/formas-pagamento.enum';
   styleUrls: ['./sucesso-comprovante.component.css'],
 })
 export class SucessoComprovanteComponent implements OnInit {
-  produtos: Produto[] = [];
-  pedido = new PedidoRequest();
+  pedido = new PedidoResponse();
   loading = false;
 
   constructor(
@@ -26,21 +25,16 @@ export class SucessoComprovanteComponent implements OnInit {
     try {
       this.loading = true;
       let pedidoRealizado = sessionStorage.getItem('pedido');
-      let produtosPedido = sessionStorage.getItem('produtos');
 
       if (pedidoRealizado !== null) {
         this.pedido = JSON.parse(pedidoRealizado);
       }
 
-      if (produtosPedido !== null) {
-        this.produtos = JSON.parse(produtosPedido);
-      }
-
-      if (!this.pedido || this.produtos.length == 0) {
+      if (!this.pedido) {
         this.router.navigate(['home']);
       }
 
-      if (this.pedido && this.produtos) { this.carrinho.clear(); }
+      if (this.pedido) { this.carrinho.clear(); }
     } catch (error: any) {
       this.notificationService.error(error, 'Erro');
     }

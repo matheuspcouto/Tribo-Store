@@ -32,17 +32,29 @@ export class HomeComponent implements OnInit {
   }
 
   consultarPedido() {
-    this.pedidoService.consultarPedido(this.codigoPedido).subscribe({
-      next: (response) => {
-        sessionStorage.setItem('pedido', response.dados);
-        console.log(response);
+    if (this.codigoPedido) {
+      this.loading = true;
+      this.pedidoService.consultarPedido(this.codigoPedido).subscribe({
+        next: (response) => {
 
-        //this.router.navigate(['comprovante']);
-      },
-      error: (error: HttpErrorResponse) => {
-        this.notificationService.error(error.message, 'Erro');
-        this.loading = false;
-      },
-    });
+          if (response.errorCode) {
+            this.notificationService.error(response.errorMessage, 'Erro');
+            this.loading = false;
+            return;
+          }
+
+          sessionStorage.setItem('pedido', JSON.stringify(response.dados));
+          this.router.navigate(['comprovante']);
+          this.loading = false;
+        },
+        error: (error: HttpErrorResponse) => {
+          this.notificationService.error(error.message, 'Erro');
+          this.loading = false;
+        },
+      });
+    } else {
+      this.notificationService.error('É necessário informar o código do pedido', 'Erro');
+      this.loading = false;
+    }
   }
 }

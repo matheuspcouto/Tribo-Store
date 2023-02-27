@@ -84,7 +84,6 @@ export class FinalizarPedidoComponent implements OnInit {
         this.pedidoService.criarPedido(this.pedido).subscribe({
           next: () => {
             sessionStorage.setItem('pedido', JSON.stringify(this.pedido));
-            sessionStorage.setItem('produtos', JSON.stringify(this.produtos));
             this.notificationService.success('Pedido feito com sucesso !', 'Sucesso');
             this.loading = false;
             this.router.navigate(['comprovante']);
