@@ -9,7 +9,7 @@
         <div class="card fat">
           <div class="card-body" style="background-color: white">
             <div class="divImg mt-3"><img src="assets/logo.png" class="img" /></div>
-            <h2 class="card-title text-center mt-3" >
+            <h2 class="card-title text-center mt-3">
               Tribo Store
             </h2>
             <hr />
@@ -17,14 +17,26 @@
               Bem vindo a Tribo Store, a lojinha mais selvagem que existe !
             </h4>
             <p class="text-center">
-              Ao finalizar a compra, não esqueça de guardar seu comprovante tirando print ou copiando o código do pedido.
+              Ao finalizar a compra, não esqueça de guardar seu comprovante tirando print ou copiando o código do
+              pedido.
             </p>
             <p class="text-center mt-3">
               Para pagamentos no PIX, a chave é: <b>tribo.imep2022@gmail.com</b>
             </p>
 
             <div class="row1-container mt-3 mb text-center">
-              <i class="fa fa-shirt"></i>
+              <div class="box blue">
+                <div class="card-icon">
+                  <i class="fa fa-search fa-3x"></i>
+                </div>
+                <h5>Consultar Pedido</h5>
+                <input type="text" class="card-text-input" placeholder="Código do Pedido" name="codigoPedido"
+                  [(ngModel)]="codigoPedido">
+                <button class="btn btn-outline-primary" (click)="consultarPedido()" type="button" class="card-button">
+                  Pesquisar
+                </button>
+              </div>
+
               <div class="box blue">
                 <div class="card-icon">
                   <i class="fa fa-inbox fa-3x"></i>

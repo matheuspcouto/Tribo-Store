@@ -1,9 +1,9 @@
-import { Pedido } from "src/app/models/pedido";
+import { PedidoRequest } from "src/app/models/pedido-request";
 import { Produto } from "src/app/models/produto";
 import { FormasPagamento } from "../enums/formas-pagamento.enum";
 import { TipoProduto } from "../enums/tipo-produto-enum";
 
-export function formatarProdutosPedido(produtos: Produto[], pedido: Pedido): string {
+export function formatarProdutosPedido(produtos: Produto[], pedido: PedidoRequest): string {
   let aux: string = '';
 
   produtos.map((p) => {
@@ -35,7 +35,7 @@ export function formatarProdutosPedido(produtos: Produto[], pedido: Pedido): str
   return aux.trim();
 }
 
-export function formatarValorTotalProduto(produto: Produto, pedido: Pedido | undefined) {
+export function formatarValorTotalProduto(produto: Produto, pedido: PedidoRequest | undefined) {
   let total;
 
   if (pedido && pedido.formaPagamento == FormasPagamento.CARTAO_CREDITO) {

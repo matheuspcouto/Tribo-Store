@@ -1,5 +1,5 @@
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Pedido } from 'src/app/models/pedido';
+import { PedidoRequest } from 'src/app/models/pedido-request';
 
 export interface ErroPedido {
   tipoErro: string;
@@ -43,16 +43,15 @@ export const cpfValidator = [
 ];
 
 
-export function getPedidoValidationErrors(pedido: Pedido): ErroPedido[] {
+export function getPedidoValidationErrors(pedido: PedidoRequest, tipoDocumento: string): ErroPedido[] {
   let errors: ErroPedido[] = [];
 
   var form = new FormGroup({
       nome: new FormControl(pedido.nome, nomeValidator),
       telefone: new FormControl(pedido.telefone, telefoneValidator),
-      numero_documento: new FormControl(pedido.documento, pedido.tipoDocumento == 'CPF' ? cpfValidator : cnpjValidator),
+      numero_documento: new FormControl(pedido.documento, tipoDocumento == 'CPF' ? cpfValidator : cnpjValidator),
       email: new FormControl(pedido.email, Validators.required),
       forma_pagamento: new FormControl(pedido.formaPagamento, Validators.required),
-      tipo_documento: new FormControl(pedido.tipoDocumento, Validators.required),
   });
 
   Object.keys(form.controls).forEach((campoErro) => {

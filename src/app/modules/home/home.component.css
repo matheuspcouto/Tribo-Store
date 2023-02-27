@@ -34,6 +34,22 @@
   color: #636262;
 }
 
+.card-text-input {
+  padding: 10px 15px;
+  background: #fff;
+  font-size: 14px;
+  color: #636262;
+  width: 90%;
+  border-radius: 0.375rem;
+  display: block;
+  line-height: 1.5;
+  border: 1px solid #ced4da;
+  left: 5%;
+  position: relative;
+  margin-top: 15px;
+  text-align: center;
+}
+
 .card-button {
   display: flex;
   justify-content: center;
@@ -44,6 +60,7 @@
   border-radius: 0 0 8px 8px;
   text-decoration: none;
   margin-top: 25px;
+  border: none;
 }
 
 .card-button-disabled {

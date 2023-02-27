@@ -77,7 +77,7 @@
               <div class="form-group col-sm-12">
                 <div class="form-group">
                   <select class="form-select form-select-lg" [disabled]="disabled" name="identificationType"
-                    [(ngModel)]="pedido.tipoDocumento" required id="identificationType">
+                    [(ngModel)]="tipoDocumento" required id="identificationType">
                     <option *ngFor="let doc of documentos; let i = index" [ngValue]="doc">
                       {{ doc }}
                     </option>
@@ -95,7 +95,7 @@
               <label>Número do Documento</label>
               <input id="identificationNumber" [disabled]="disabled" type="text" name="identificationNumber"
                 [(ngModel)]="pedido.documento" placeholder="Informe o número do documento" class="form-control" required
-                [mask]="pedido.tipoDocumento === 'CPF' ? '000.000.000-00' : '00.000.000/0000-00'" />
+                [mask]="tipoDocumento === 'CPF' ? '000.000.000-00' : '00.000.000/0000-00'" />
               <div *ngIf="errorsValidators">
                 <div *ngFor="let erro of errorsValidators">
                   <p class="label-error" *ngIf="erro.controleErro === 'numero_documento'">{{erro.mensagemErro}}</p>

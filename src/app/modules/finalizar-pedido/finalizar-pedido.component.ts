@@ -2,7 +2,7 @@ import { StatusPedido } from './../../shared/enums/status-pedido.enums';
 import { PedidoService } from './../../services/pedido.service';
 import { ErroPedido, getPedidoValidationErrors } from './pedido.validator';
 import { Component, OnInit } from '@angular/core';
-import { Pedido } from 'src/app/models/pedido';
+import { PedidoRequest } from 'src/app/models/pedido-request';
 import { Produto } from 'src/app/models/produto';
 import { Router } from '@angular/router';
 import { CarrinhoService } from 'src/app/services/carrinho-state.service';
@@ -24,7 +24,7 @@ import { formatarTelefone } from 'src/app/shared/Utils/telefone.formatador';
 })
 export class FinalizarPedidoComponent implements OnInit {
   produtos: Produto[] = [];
-  pedido = new Pedido();
+  pedido = new PedidoRequest();
   formasPagamento: string[] = [
     FormasPagamento.PIX,
     FormasPagamento.CARTAO_CREDITO,
@@ -35,6 +35,7 @@ export class FinalizarPedidoComponent implements OnInit {
   disabled: boolean = false;
   errorsValidators: ErroPedido[] = [];
   documentos: string[] = ['CPF', 'CNPJ'];
+  tipoDocumento: string = 'CPF';
 
   constructor(
     private carrinho: CarrinhoService,
@@ -57,7 +58,7 @@ export class FinalizarPedidoComponent implements OnInit {
   }
 
   concluirPedido() {
-    this.errorsValidators = getPedidoValidationErrors(this.pedido);
+    this.errorsValidators = getPedidoValidationErrors(this.pedido, this.tipoDocumento);
 
     if (this.errorsValidators.length == 0) {
       try {
@@ -100,7 +101,7 @@ export class FinalizarPedidoComponent implements OnInit {
     }
   }
 
-  gerarCodigoPedido(pedido: Pedido) {
+  gerarCodigoPedido(pedido: PedidoRequest) {
     let code = 'PED';
     code += pedido.dataPedido?.replaceAll('/', '') + new Date().getTime().toString();
     return code;

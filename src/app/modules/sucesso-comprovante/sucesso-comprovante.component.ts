@@ -2,7 +2,7 @@ import { CarrinhoService } from 'src/app/services/carrinho-state.service';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { Pedido } from 'src/app/models/pedido';
+import { PedidoRequest } from 'src/app/models/pedido-request';
 import { Produto } from 'src/app/models/produto';
 import { FormasPagamento } from 'src/app/shared/enums/formas-pagamento.enum';
 
@@ -13,7 +13,7 @@ import { FormasPagamento } from 'src/app/shared/enums/formas-pagamento.enum';
 })
 export class SucessoComprovanteComponent implements OnInit {
   produtos: Produto[] = [];
-  pedido = new Pedido();
+  pedido = new PedidoRequest();
   loading = false;
 
   constructor(
