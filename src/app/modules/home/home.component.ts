@@ -37,8 +37,8 @@ export class HomeComponent implements OnInit {
       this.pedidoService.consultarPedido(this.codigoPedido).subscribe({
         next: (response) => {
 
-          if (response.errorCode) {
-            this.notificationService.error(response.errorMessage, 'Erro');
+          if (response.error) {
+            this.notificationService.error(response.error.errorMessage, 'Erro');
             this.loading = false;
             return;
           }

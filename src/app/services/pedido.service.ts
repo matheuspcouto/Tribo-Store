@@ -20,6 +20,6 @@ export class PedidoService {
 
   criarPedido(body: any): Observable<any> {
     const requestBody = JSON.stringify(body);
-    return this.httpClient.post<any>(`${ApiInfo.HOST}`, requestBody, { headers: this.headers });
+    return this.httpClient.post<any>(`${ApiInfo.HOST}?method=criarPedido`, requestBody, { headers: this.headers });
   }
 }

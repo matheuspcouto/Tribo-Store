@@ -64,7 +64,7 @@ export class FinalizarPedidoComponent implements OnInit {
       try {
         this.loading = true;
 
-        this.pedido.dataPedido = new Date().toLocaleDateString('pt-br');
+        this.pedido.dataPedido = new Date().toString();
         this.pedido.valorTotal = this.totalCarrinho();
         this.pedido.produtos = formatarProdutosPedido(this.produtos, this.pedido);
         this.pedido.qtdItens = this.produtos.length;

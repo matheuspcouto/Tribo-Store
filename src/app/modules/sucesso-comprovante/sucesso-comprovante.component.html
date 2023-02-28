@@ -20,7 +20,7 @@
             </div>
 
             <h2 class="card-title text-center mt-3" >
-              Pedido Realizado <i class="fa fa-check"></i>
+              Comprovante de Pedido <i class="fa fa-check"></i>
             </h2>
             <hr />
 
@@ -38,7 +38,7 @@
             <p class="card-title text-left mt-3">{{ pedido.email }}</p>
 
             <h5 class="card-title text-left mt-3">Data do pedido:</h5>
-            <p class="card-title text-left mt-3">{{ pedido.dataPedido }}</p>
+            <p class="card-title text-left mt-3">{{ pedido.dataPedido | date: 'dd/MM/yyyy' }}</p>
 
             <h5 class="card-title text-left mt-3">Produtos:</h5>
               <p class="card-title text-left">{{ pedido.produtos }}</p>
