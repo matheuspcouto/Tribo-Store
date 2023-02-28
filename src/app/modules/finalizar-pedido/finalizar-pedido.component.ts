@@ -64,7 +64,7 @@ export class FinalizarPedidoComponent implements OnInit {
       try {
         this.loading = true;
 
-        this.pedido.dataPedido = new Date().toString();
+        this.pedido.dataPedido = new Date().toLocaleString('pt-br');
         this.pedido.valorTotal = this.totalCarrinho();
         this.pedido.produtos = formatarProdutosPedido(this.produtos, this.pedido);
         this.pedido.qtdItens = this.produtos.length;
@@ -73,18 +73,17 @@ export class FinalizarPedidoComponent implements OnInit {
         this.pedido.documento = formatarCpf(this.pedido.documento);
         this.pedido.telefone = formatarTelefone(this.pedido.telefone);
 
-        // TESTES LOCAIS
-        /* sessionStorage.setItem('pedido', JSON.stringify(this.pedido));
-        sessionStorage.setItem('produtos', JSON.stringify(this.produtos));
-        this.notificationService.success('Pedido feito com sucesso !','Sucesso');
-        console.log(this.pedido);
-        this.router.navigate(['comprovante']);
-        return; */
-
         this.pedidoService.criarPedido(this.pedido).subscribe({
-          next: () => {
-            sessionStorage.setItem('pedido', JSON.stringify(this.pedido));
-            this.notificationService.success('Pedido feito com sucesso !', 'Sucesso');
+          next: (response) => {
+
+            if (response.error) {
+              this.notificationService.error(response.error.errorMessage, 'Erro');
+              return;
+            }
+
+            if (this.pedido.codigoPedido) { sessionStorage.setItem('codigoPedido', this.pedido.codigoPedido); }
+            sessionStorage.setItem('paginaOrigem', 'finalizar-pedido');
+            this.notificationService.success(response.message, 'Sucesso');
             this.loading = false;
             this.router.navigate(['comprovante']);
           },
@@ -102,7 +101,7 @@ export class FinalizarPedidoComponent implements OnInit {
 
   gerarCodigoPedido(pedido: PedidoRequest) {
     let code = 'PED';
-    code += pedido.dataPedido?.replaceAll('/', '') + new Date().getTime().toString();
+    code += pedido.dataPedido?.substring(0,10).replaceAll('/', '') + new Date().getTime().toString();
     return code;
   }
 

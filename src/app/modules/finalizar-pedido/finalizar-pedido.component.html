@@ -18,7 +18,7 @@
             <div class="divImg mt-3">
               <img src="assets/logo.png" class="img" />
             </div>
-            <h2 class="card-title text-center mt-3" >
+            <h2 class="card-title text-center mt-3">
               Finalizar Pedido
             </h2>
             <hr />
@@ -128,7 +128,8 @@
                   <tr *ngFor="let produto of produtos; let i = index">
                     <td>{{formatarProdutoCarrinho(produto)}}</td>
                     <td>{{produto.qtdItem}}</td>
-                    <td *ngIf="pedido.formaPagamento === 'Cartão de Crédito'">{{produto.valorTaxa | currency:'BRL'}}</td>
+                    <td *ngIf="pedido.formaPagamento === 'Cartão de Crédito'">{{produto.valorTaxa | currency:'BRL'}}
+                    </td>
                     <td *ngIf="pedido.formaPagamento !== 'Cartão de Crédito'">{{produto.valor | currency:'BRL'}}</td>
                     <td>{{valorTotalProduto(produto)}}</td>
                   </tr>
@@ -141,7 +142,7 @@
 
             <div class="form-group m-0">
               <button [disabled]="disabled" (click)="concluirPedido()" type="button" class="btn btn-success btn-block">
-                Finalizar Pedido  <i class="fa fa-credit-card"></i>
+                Finalizar Pedido <i class="fa fa-credit-card"></i>
               </button>
             </div>
 

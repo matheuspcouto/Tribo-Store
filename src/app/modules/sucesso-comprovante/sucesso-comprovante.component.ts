@@ -1,3 +1,4 @@
+import { PedidoService } from './../../services/pedido.service';
 import { PedidoResponse } from './../../models/pedido-response';
 import { CarrinhoService } from 'src/app/services/carrinho-state.service';
 import { Router } from '@angular/router';
@@ -5,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Produto } from 'src/app/models/produto';
 import { FormasPagamento } from 'src/app/shared/enums/formas-pagamento.enum';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-sucesso-comprovante',
@@ -14,32 +16,47 @@ import { FormasPagamento } from 'src/app/shared/enums/formas-pagamento.enum';
 export class SucessoComprovanteComponent implements OnInit {
   pedido = new PedidoResponse();
   loading = false;
+  codigoPedido?: string | null;
+  paginaOrigem?: string | null;
 
   constructor(
     private notificationService: ToastrService,
     private router: Router,
-    private carrinho: CarrinhoService
-  ) {}
+    private carrinho: CarrinhoService,
+    private pedidoService: PedidoService
+  ) {
+    this.codigoPedido = sessionStorage.getItem('codigoPedido');
+    this.paginaOrigem = sessionStorage.getItem('paginaOrigem');
+  }
 
   ngOnInit() {
-    try {
-      this.loading = true;
-      let pedidoRealizado = sessionStorage.getItem('pedido');
 
-      if (pedidoRealizado !== null) {
-        this.pedido = JSON.parse(pedidoRealizado);
-      }
+    this.loading = true;
 
-      if (!this.pedido) {
-        this.router.navigate(['home']);
-      }
+    if (this.codigoPedido != null) {
+      this.pedidoService.consultarPedido(this.codigoPedido).subscribe({
+        next: (response) => {
 
-      if (this.pedido) { this.carrinho.clear(); }
-    } catch (error: any) {
-      this.notificationService.error(error, 'Erro');
+          if (response.error) {
+            this.notificationService.error(response.error.errorMessage, 'Erro');
+            this.router.navigate([this.paginaOrigem]);
+            this.loading = false;
+            return;
+          }
+
+          this.pedido = response.dados;
+          if (this.pedido) { this.carrinho.clear(); }
+          this.loading = false;
+        },
+        error: (error: HttpErrorResponse) => {
+          this.notificationService.error(error.message, 'Erro');
+          this.loading = false;
+        },
+      });
+    } else {
+      this.router.navigate([this.paginaOrigem ? this.paginaOrigem : 'home']);
+      this.loading = false;
     }
-
-    this.loading = false;
   }
 
   copiarCodigo(event: MouseEvent) {

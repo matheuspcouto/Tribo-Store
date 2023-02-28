@@ -22,10 +22,9 @@ export const telefoneValidator = [
 ];
 
 export const emailValidator = [
-  Validators.maxLength(11),
-  Validators.minLength(10),
   Validators.required,
   Validators.nullValidator,
+  Validators.email
 ];
 
 export const cnpjValidator = [
@@ -50,7 +49,7 @@ export function getPedidoValidationErrors(pedido: PedidoRequest, tipoDocumento: 
       nome: new FormControl(pedido.nome, nomeValidator),
       telefone: new FormControl(pedido.telefone, telefoneValidator),
       numero_documento: new FormControl(pedido.documento, tipoDocumento == 'CPF' ? cpfValidator : cnpjValidator),
-      email: new FormControl(pedido.email, Validators.required),
+      email: new FormControl(pedido.email, emailValidator),
       forma_pagamento: new FormControl(pedido.formaPagamento, Validators.required),
   });
 
