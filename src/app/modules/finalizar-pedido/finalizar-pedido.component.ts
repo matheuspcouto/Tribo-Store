@@ -84,8 +84,8 @@ export class FinalizarPedidoComponent implements OnInit {
 
             if (this.pedido.codigoPedido) { sessionStorage.setItem('codigoPedido', this.pedido.codigoPedido); }
             sessionStorage.setItem('paginaOrigem', 'finalizar-pedido');
-            this.notificationService.success(response.message, 'Sucesso');
             this.loading = false;
+            this.notificationService.success(response.message, 'Sucesso');
             this.router.navigate(['comprovante']);
           },
           error: (error: HttpErrorResponse) => {
