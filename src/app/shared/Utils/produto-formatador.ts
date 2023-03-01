@@ -44,14 +44,14 @@ export function formatarValorTotalProduto(produto: Produto, pedido: PedidoReques
     total = produto.qtdItem ? produto.valor * produto.qtdItem : 0;
   }
 
-  return total.toLocaleString('pt-br', { style: 'currency', currency: 'BRL'});
+  return total.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
 }
 
 export function formatarProdutoPedido(p: Produto) {
   let aux = `(${p.qtdItem}x) ${p.nome}`;
 
   if (p.tamanhoSelecionado) {
-    aux += ` - ${ p.tamanhoSelecionado.replaceAll(' ', '')}`;
+    aux += ` - ${p.tamanhoSelecionado.replaceAll(' ', '')}`;
   }
   if (p.corSelecionada) {
     aux += `/${p.corSelecionada}`;
@@ -68,9 +68,13 @@ export function formatarProdutoCarrinho(produto: Produto) {
 
   aux += produto.tipo == TipoProduto.CAMISA ? produto.tamanhoSelecionado : '';
   aux += produto.tipo == TipoProduto.MEIA
-      ? produto.tamanhoSelecionado + '/' + produto.corSelecionada
-      : '';
+    ? produto.tamanhoSelecionado + '/' + produto.corSelecionada
+    : '';
   aux += produto.tipo == TipoProduto.CAPINHA ? produto.modeloCelular : '';
+
+  if (aux.endsWith(' - ')) {
+    aux = aux.substring(0, aux.length - 3);
+  }
 
   return aux.trim();
 }

@@ -19,21 +19,23 @@
               <img *ngIf="i == indexImg" [src]="img" class="imgProduto" />
             </div>
 
-              <button *ngIf="produto.img.length > 1" (click)="mudarImagem()" type="button" class="btn btn-block text-center">
-                 <i class="fa fa-retweet"></i>
-              </button><br>
+            <button *ngIf="produto.img.length > 1" (click)="mudarImagem()" type="button"
+              class="btn btn-block text-center">
+              <i class="fa fa-retweet"></i>
+            </button><br>
 
             <h3 class="card-title text-center mt-3"> {{ produto.nome }}</h3>
-            <h5 class="card-title text-left mt-3"> Descrição: {{ produto.descricao}} </h5>
-            <h5 class="card-title text-left mt-3"> Valor: {{ produto.valor | currency:"BRL" }} </h5>
+            <h5 class="card-title text-left mt-3"> Descrição: </h5>
+            <p class="card-title text-left mt-3"> {{ produto.descricao}} </p>
+            <h5 class="card-title text-left mt-3"> Valor: </h5>
+            <p class="card-title text-left mt-3"> {{ produto.valor | currency:"BRL" }} </p>
             <br>
 
             <div class="row" *ngIf="tamanhos.length">
               <label>Tamanhos</label>
               <div class="form-group col-sm-12">
                 <div class="form-group">
-                  <select class="form-select form-select-lg"
-                    [(ngModel)]="produto.tamanhoSelecionado" name="idItem">
+                  <select class="form-select form-select-lg" [(ngModel)]="produto.tamanhoSelecionado" name="idItem">
                     <option *ngFor="let tamanho of tamanhos; let i = index" [ngValue]="tamanho" [selected]="i === 0">
                       {{ tamanho }}
                     </option>
@@ -52,8 +54,7 @@
               <label>Cores</label>
               <div class="form-group col-sm-12">
                 <div class="form-group">
-                  <select class="form-select form-select-lg" [(ngModel)]="produto.corSelecionada"
-                    name="idItem">
+                  <select class="form-select form-select-lg" [(ngModel)]="produto.corSelecionada" name="idItem">
                     <option *ngFor="let cor of cores; let i = index" [ngValue]="cor" [selected]="i === 0">
                       {{ cor }}
                     </option>
@@ -69,8 +70,8 @@
 
             <div class="form-group" *ngIf="produto.tipo === 'Celular'">
               <label>Qual o modelo do celular ?</label>
-              <input id="celular" type="text" name="celular" [(ngModel)]="produto.modeloCelular"
-                class="form-control" required placeholder="Informe o modelo do celular" />
+              <input id="celular" type="text" name="celular" [(ngModel)]="produto.modeloCelular" class="form-control"
+                required placeholder="Informe o modelo do celular" />
               <div *ngIf="errorsValidators">
                 <div *ngFor="let erro of errorsValidators">
                   <p class="label-error" *ngIf="erro.controleErro === 'modelo_celular'">{{erro.mensagemErro}}</p>
@@ -80,18 +81,17 @@
 
             <div class="form-group">
               <label>Quantidade</label>
-              <input id="qtd" type="number" name="qtd" [(ngModel)]="produto.qtdItem"
-                class="form-control" placeholder="Informe a quantidade que deseja comprar" required />
+              <input id="qtd" type="number" name="qtd" [(ngModel)]="produto.qtdItem" class="form-control"
+                placeholder="Informe a quantidade que deseja comprar" required />
               <div *ngIf="errorsValidators">
                 <div *ngFor="let erro of errorsValidators">
                   <p class="label-error" *ngIf="erro.controleErro === 'quantidade'">{{erro.mensagemErro}}</p>
                 </div>
               </div>
-            </div>
+            </div><br>
 
             <div class="mb-0 mt-3">
-              <button (click)="adicionarCarrinho()" type="button"
-                class="btn btn-primary btn-block">
+              <button (click)="adicionarCarrinho()" type="button" class="btn btn-primary btn-block">
                 Adicionar ao carrinho <i class="fa fa-cart-plus"></i>
               </button>
             </div>
