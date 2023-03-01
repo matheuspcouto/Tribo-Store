@@ -19,6 +19,7 @@ export class ProdutosComponent implements OnInit {
   constructor(private router: Router){};
 
   ngOnInit() {
+    // TODO: Remover mock de produtos e trazer da API
     this.produtos = this.mockProdutos().filter((p) => p.ativo);
   }
 

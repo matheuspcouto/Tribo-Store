@@ -14,10 +14,10 @@
             </h2>
             <hr />
             <h4 class="card-title text-center mt-3">
-              Bem vindo a Tribo Store, a lojinha mais selvagem que existe !
+              Bem vindo a Tribo Store, a loja mais selvagem que existe !
             </h4>
 
-            <h5 class="card-title text-center mt-5">Consultar Pedido</h5>
+            <h5 class="card-title text-center mt-5">Consulte seu pedido abaixo</h5>
             <div class="row">
               <input type="text" class="input-pesquisa" placeholder="Código do Pedido" name="codigoPedido"
                 [(ngModel)]="codigoPedido">
@@ -44,10 +44,10 @@
                 </div>
                 <h5>Meu Carrinho</h5>
                 <p class="text-center mt-3 card-text">
-                  Veja o que você tem no carrinho.
+                  Você tem {{ textoBoxCarrinho }} no carrinho.
                 </p>
                 <a *ngIf="disabled" routerLink="/meu-carrinho" class="card-button"> Ver mais</a>
-                <a *ngIf="!disabled" class="card-button-disabled"> Adicione algum item ao carrinho</a>
+                <a *ngIf="!disabled" class="card-button-disabled"> O carrinho está vazio </a>
               </div>
             </div>
 

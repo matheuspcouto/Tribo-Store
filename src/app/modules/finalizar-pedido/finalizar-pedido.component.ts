@@ -77,6 +77,7 @@ export class FinalizarPedidoComponent implements OnInit {
           next: (response) => {
 
             if (response.error) {
+              // TODO: Fazer tela de Erro com detalhes do erro para print
               this.notificationService.error(response.error.errorMessage, 'Erro');
               return;
             }

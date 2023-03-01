@@ -34,6 +34,7 @@ export class DetalhesProdutoComponent implements OnInit {
     this.loading = true;
 
     try {
+      // TODO: Trazer produto da API e não da Session Storage
       let produtoSelecionado = sessionStorage.getItem('produto');
 
       if (produtoSelecionado !== null) {
@@ -56,6 +57,7 @@ export class DetalhesProdutoComponent implements OnInit {
       this.errorsValidators = getProdutoValidationErrors(this.produto);
       if (this.errorsValidators.length == 0) {
 
+        // TODO: verificar Item no Carrinho
         /* if (this.verificarProdutoCarrinho(this.produto)) {
           this.notificationService.error('Ja existe um produto igual a esse no carrinho','Erro');
           this.loading = false;

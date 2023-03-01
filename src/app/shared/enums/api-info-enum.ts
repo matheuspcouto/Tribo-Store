@@ -4,5 +4,5 @@ export enum ApiInfo {
   // PLANILHA PRODUÇÃO
 
   // PLANILHA DE TESTES
-  HOST = 'https://script.google.com/macros/s/AKfycbx46CWQU3e5rFyuF5BXH_esfjnUYKX6Oxocf4GOq3ii82HmBC7KKxbqpmI--vK-QVgGEg/exec'
+  HOST = 'https://script.google.com/macros/s/AKfycbxl-zHPHabalTdWwzkjWHRsvLlPGYCLUitUNABXDIYRMA7bpWdaV8Bwi6nQ_l25rWf2nQ/exec'
 }
