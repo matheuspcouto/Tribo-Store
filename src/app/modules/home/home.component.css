@@ -7,11 +7,6 @@
   --weight3: 600;
 }
 
-.container {
-  position: relative;
-  top: 100px;
-}
-
 .card-title {
   margin-bottom: 30px;
 }
@@ -60,14 +55,14 @@
   margin-bottom: 5%;
 }
 
-@media (max-width: 450px) {
+@media screen and (min-width: 320px) and (max-width: 480px) {
   .input-pesquisa {
     padding: 5px 15px;
     background: #fff;
     font-size: 14px;
     color: #636262;
-    max-width: 65%;
-    width: 65%;
+    max-width: 70%;
+    width: 70%;
     border-radius: 0.375rem;
     display: block;
     line-height: 1.5;
@@ -83,6 +78,8 @@
     height: 10%;
     position: relative;
     left: 10%;
+    padding: 8px 10px;
+    text-align: center;
   }
 }
 
@@ -117,20 +114,13 @@
   color: #fff;
 }
 
-@media (max-width: 450px) {
+@media screen and (min-width: 320px) and (max-width: 480px) {
   .box {
-      width: 300px;
-  }
-  .container {
-    top: 10px;
-    position: relative;
-  }
-}
-
-@media (max-width: 950px) and (min-width: 450px) {
-  .box {
+      width: 95%;
       text-align: center;
-      height: 180px;
+      height: 15%;
+      position: relative;
+      right: 4%;
   }
 }
 
@@ -142,7 +132,7 @@
   border-top: 3px solid var(--gray);
 }
 
-@media (min-width: 950px) {
+@media screen and (min-width: 768px) {
   .row1-container {
       display: flex;
       justify-content: center;
@@ -150,7 +140,7 @@
   }
 
   .box {
-      width: 30%;
+      width: 40%;
       height: 15%;
   }
 }
