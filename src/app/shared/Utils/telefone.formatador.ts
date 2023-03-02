@@ -1,7 +1,7 @@
 export function formatarTelefone(telefone: string| undefined): string | undefined {
 
-  const cleaned = ('' + telefone).replace(/\D/g, ''); // Remove todos os caracteres não-numéricos
-  const match = cleaned.match(/^(\d{2})(\d{4,5})(\d{4})$/); // Verifica se tem 10 ou 11 dígitos
+  const cleaned = ('' + telefone).replace(/\D/g, '');
+  const match = cleaned.match(/^(\d{2})(\d{4,5})(\d{4})$/);
 
   if (match) {
 
