@@ -28,6 +28,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     // TODO: Ver outra fonte para o site
+    // TODO: Criar Perfis de Responsividade (table, celular e pc)
     let qtdCarrinhoItens = this.carrinho.getItens().length;
     this.textoBoxCarrinho = qtdCarrinhoItens.toString();
     this.textoBoxCarrinho += qtdCarrinhoItens > 1 || qtdCarrinhoItens == 0 ? ' itens' : ' item';
