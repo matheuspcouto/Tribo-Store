@@ -9,22 +9,24 @@
         <div class="card fat">
           <div class="card-body" style="background-color: white">
             <div class="divImg mt-3"><img src="assets/logo.png" class="img" /></div>
-            <h2 class="card-title text-center mt-3" >
+            <h2 class="card-title text-center mt-3">
               Tribo Store
             </h2>
             <hr />
             <h4 class="card-title text-center mt-3">
-              Bem vindo a Tribo Store, a lojinha mais selvagem que existe !
+              Bem vindo a Tribo Store, a loja mais selvagem que existe !
             </h4>
-            <p class="text-center">
-              Ao finalizar a compra, não esqueça de guardar seu comprovante tirando print ou copiando o código do pedido.
-            </p>
-            <p class="text-center mt-3">
-              Para pagamentos no PIX, a chave é: <b>tribo.imep2022@gmail.com</b>
-            </p>
+
+            <h5 class="card-title text-center mt-5">Consulte seu pedido abaixo</h5>
+            <div class="row">
+              <input type="text" class="input-pesquisa" placeholder="Código do Pedido" name="codigoPedido"
+                [(ngModel)]="codigoPedido">
+              <button class="btn btn-outline-primary btnPesquisa" (click)="consultarPedido()" type="button">
+                <i class="fa fa-search"></i>
+              </button>
+            </div>
 
             <div class="row1-container mt-3 mb text-center">
-              <i class="fa fa-shirt"></i>
               <div class="box blue">
                 <div class="card-icon">
                   <i class="fa fa-inbox fa-3x"></i>
@@ -42,10 +44,10 @@
                 </div>
                 <h5>Meu Carrinho</h5>
                 <p class="text-center mt-3 card-text">
-                  Veja o que você tem no carrinho.
+                  Você tem {{ textoBoxCarrinho }} no carrinho.
                 </p>
                 <a *ngIf="disabled" routerLink="/meu-carrinho" class="card-button"> Ver mais</a>
-                <a *ngIf="!disabled" class="card-button-disabled"> Adicione algum item ao carrinho</a>
+                <a *ngIf="!disabled" class="card-button-disabled"> O carrinho está vazio </a>
               </div>
             </div>
 

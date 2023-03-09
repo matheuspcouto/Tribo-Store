@@ -18,11 +18,11 @@
   color: white !important;
 }
 
-@media screen and (max-width: 425px) {
+@media screen and (min-width: 320px) and (max-width: 480px) {
   .btn-center {
     position: relative;
-    left: 15%;
-    width: 65%;
+    left: 10%;
+    width: 80%;
     line-height: 2;
     color: white !important;
   }

@@ -18,9 +18,6 @@ export class ModalConfirmacaoService {
     this.lastFocusElement = document.activeElement;
     this.currentModal$.next( { title, message });
 
-    console.log(this.action$);
-
-
     return this.action$.pipe(
       take(1),
       tap(() => this.currentModal$.next(null)),

@@ -2,7 +2,7 @@ import { StatusPedido } from './../../shared/enums/status-pedido.enums';
 import { PedidoService } from './../../services/pedido.service';
 import { ErroPedido, getPedidoValidationErrors } from './pedido.validator';
 import { Component, OnInit } from '@angular/core';
-import { Pedido } from 'src/app/models/pedido';
+import { PedidoRequest } from 'src/app/models/pedido-request';
 import { Produto } from 'src/app/models/produto';
 import { Router } from '@angular/router';
 import { CarrinhoService } from 'src/app/services/carrinho-state.service';
@@ -24,7 +24,7 @@ import { formatarTelefone } from 'src/app/shared/Utils/telefone.formatador';
 })
 export class FinalizarPedidoComponent implements OnInit {
   produtos: Produto[] = [];
-  pedido = new Pedido();
+  pedido = new PedidoRequest();
   formasPagamento: string[] = [
     FormasPagamento.PIX,
     FormasPagamento.CARTAO_CREDITO,
@@ -35,6 +35,7 @@ export class FinalizarPedidoComponent implements OnInit {
   disabled: boolean = false;
   errorsValidators: ErroPedido[] = [];
   documentos: string[] = ['CPF', 'CNPJ'];
+  tipoDocumento: string = 'CPF';
 
   constructor(
     private carrinho: CarrinhoService,
@@ -57,13 +58,13 @@ export class FinalizarPedidoComponent implements OnInit {
   }
 
   concluirPedido() {
-    this.errorsValidators = getPedidoValidationErrors(this.pedido);
+    this.errorsValidators = getPedidoValidationErrors(this.pedido, this.tipoDocumento);
 
     if (this.errorsValidators.length == 0) {
       try {
         this.loading = true;
 
-        this.pedido.dataPedido = new Date().toLocaleDateString('pt-br');
+        this.pedido.dataPedido = new Date().toLocaleString('pt-br');
         this.pedido.valorTotal = this.totalCarrinho();
         this.pedido.produtos = formatarProdutosPedido(this.produtos, this.pedido);
         this.pedido.qtdItens = this.produtos.length;
@@ -72,20 +73,19 @@ export class FinalizarPedidoComponent implements OnInit {
         this.pedido.documento = formatarCpf(this.pedido.documento);
         this.pedido.telefone = formatarTelefone(this.pedido.telefone);
 
-        // TESTES LOCAIS
-        /* sessionStorage.setItem('pedido', JSON.stringify(this.pedido));
-        sessionStorage.setItem('produtos', JSON.stringify(this.produtos));
-        this.notificationService.success('Pedido feito com sucesso !','Sucesso');
-        console.log(this.pedido);
-        this.router.navigate(['comprovante']);
-        return; */
-
         this.pedidoService.criarPedido(this.pedido).subscribe({
-          next: () => {
-            sessionStorage.setItem('pedido', JSON.stringify(this.pedido));
-            sessionStorage.setItem('produtos', JSON.stringify(this.produtos));
-            this.notificationService.success('Pedido feito com sucesso !', 'Sucesso');
+          next: (response) => {
+
+            if (response.error) {
+              // TODO: Fazer tela de Erro com detalhes do erro para print
+              this.notificationService.error(response.error.errorMessage, 'Erro');
+              return;
+            }
+
+            if (this.pedido.codigoPedido) { sessionStorage.setItem('codigoPedido', this.pedido.codigoPedido); }
+            sessionStorage.setItem('paginaOrigem', 'finalizar-pedido');
             this.loading = false;
+            this.notificationService.success(response.message, 'Sucesso');
             this.router.navigate(['comprovante']);
           },
           error: (error: HttpErrorResponse) => {
@@ -100,9 +100,9 @@ export class FinalizarPedidoComponent implements OnInit {
     }
   }
 
-  gerarCodigoPedido(pedido: Pedido) {
+  gerarCodigoPedido(pedido: PedidoRequest) {
     let code = 'PED';
-    code += pedido.dataPedido?.replaceAll('/', '') + new Date().getTime().toString();
+    code += pedido.dataPedido?.substring(0,10).replaceAll('/', '') + new Date().getTime().toString();
     return code;
   }
 

@@ -4,3 +4,4 @@ export enum TipoProduto {
   MEIA = 'Meia',
   CAPINHA = 'Capa de  Celular',
 }
+// TODO: Mudar para Categoria e colocar SubCategoria

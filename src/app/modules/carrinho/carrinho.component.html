@@ -18,19 +18,15 @@
             <div class="divImg mt-3">
               <img src="assets/logo.png" class="img" />
             </div>
-            <h2 class="card-title text-center mt-3" >
+            <h2 class="card-title text-center mt-3">
               Meu Carrinho
             </h2>
-
-            <div *ngIf="produtos.length == 0">
-              <p class="card-title text-center mt-3">Você não tem nenhum item no carrinho !</p>
-              <p class="card-title text-center">Se quiser, dê uma olhada em nossos produtos</p>
-            </div>
+            <br>
 
             <div class="my-login-validation table-responsive" *ngIf="produtos.length > 0">
               <table class="table table-hover">
                 <thead>
-                  <tr>
+                  <tr class="table-light">
                     <th scope="col">Produto</th>
                     <th scope="col">Qtd</th>
                     <th scope="col">Valor</th>
@@ -45,16 +41,20 @@
                     <td>{{produto.valor | currency:'BRL'}}</td>
                     <td>{{valorTotalProduto(produto)}}</td>
                     <td>
-                      <button type="button"  style="width: 50px;" class="btn btn-outline-danger btn-sm"
+                      <button type="button" style="width: 50px;" class="btn btn-outline-danger btn-sm"
                         [appModalConfirmacao]="{title: 'Quer mesmo remover este item do carrinho?', message: 'Ao confirmar, ele não fará mais parte do pedido.'}"
                         (then)="removerCarrinho(produto)"><i class="fa fa-trash"></i></button>
                     </td>
                   </tr>
+                  <tr class="table-light">
+                    <td colspan="5" class="text-center">
+                      <b>Total a Pagar: {{totalCarrinhoFormatado()}}</b>
+                    </td>
+                  </tr>
                 </tbody>
               </table>
-
-              <h6 class="card-title text-right mt-3">Total a Pagar: {{totalCarrinhoFormatado()}}</h6>
             </div>
+            <br>
 
             <div class="form-group m-0" *ngIf="produtos.length > 0">
               <button (click)="finalizarPedido()" type="button" id="btnEnviar" class="btn btn-success btn-block">

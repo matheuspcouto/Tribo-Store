@@ -1,8 +1,6 @@
-export class Pedido {
-  id?: string;
+export class PedidoResponse {
   codigoPedido?: string;
   nome: string = '';
-  tipoDocumento?: string;
   documento?: string;
   email?: string;
   telefone?: string;
@@ -12,4 +10,5 @@ export class Pedido {
   formaPagamento?: string;
   dataPedido?: string;
   status?: string;
+  dataPagamento?: string;
 }

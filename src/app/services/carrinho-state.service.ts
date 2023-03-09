@@ -23,6 +23,7 @@ export class CarrinhoService {
 
   clear() {
     sessionStorage.clear();
+    localStorage.clear();
     this.produtos = [];
   }
 

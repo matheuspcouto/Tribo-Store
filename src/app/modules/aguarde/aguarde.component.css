@@ -1,6 +1,8 @@
-.container {
-  position: relative;
-  top: 200px;
+@media screen and (min-width: 480px) {
+  .section {
+    position: relative;
+    top: 150px;
+  }
 }
 
 .card-title {

@@ -23,7 +23,7 @@ export class CarrinhoComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit() {
+  ngOnInit() { // TODO: Melhorar fluxo de quantidade de produtos
     this.loading = true;
     try {
       this.produtos = this.carrinho.getItens();

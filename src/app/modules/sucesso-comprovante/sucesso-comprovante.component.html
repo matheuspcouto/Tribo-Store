@@ -19,14 +19,19 @@
               <img src="assets/logo.png" class="img" />
             </div>
 
-            <h2 class="card-title text-center mt-3" >
-              Pedido Realizado <i class="fa fa-check"></i>
+            <h2 class="card-title text-center mt-3">
+              Comprovante de Pedido <i class="fa fa-check"></i>
             </h2>
             <hr />
 
             <h5 class="card-title text-left mt-3">Pedido:</h5>
             <p class="card-title text-left mt-3" id="codigoPedido">{{ pedido.codigoPedido }}</p>
             <a class="btn btnCopiar" (click)="copiarCodigo($event)"><i class="fa fa-copy"></i> Copiar código</a>
+
+            <h5 class="card-title text-left mt-3">Status do Pedido:</h5>
+            <h5 *ngIf="pedido.status == 'A PAGAR'"><span class="badge badge-danger">{{ pedido.status }}</span></h5>
+            <h5 *ngIf="pedido.status == 'PAGO'"><span class="badge badge-success">{{ pedido.status }}</span></h5>
+            <h5 *ngIf="pedido.status == 'ENTREGUE'"><span class="badge badge-primary">{{ pedido.status }}</span></h5>
 
             <h5 class="card-title text-left mt-3">Comprador:</h5>
             <p class="card-title text-left mt-3">{{ pedido.nome }}</p>
@@ -38,39 +43,44 @@
             <p class="card-title text-left mt-3">{{ pedido.email }}</p>
 
             <h5 class="card-title text-left mt-3">Data do pedido:</h5>
-            <p class="card-title text-left mt-3">{{ pedido.dataPedido }}</p>
+            <p class="card-title text-left mt-3">{{ pedido.dataPedido | date: 'dd/MM/yyyy' }}</p>
 
             <h5 class="card-title text-left mt-3">Produtos:</h5>
-            <div *ngFor="let prod of produtos">
-              <p class="card-title text-left">{{ formatarProdutos(prod) }}</p>
-            </div>
+            <p class="card-title text-left">{{ pedido.produtos }}</p>
 
             <h5 class="card-title text-left mt-3">Valor Total:</h5>
             <p class="card-title text-left mt-3">{{ valorTotalFormatado() }}</p>
 
+            <div *ngIf="pedido.dataPagamento">
+              <h5 class="card-title text-left mt-3">Data de Pagamento:</h5>
+              <p class="card-title text-left mt-3">{{ pedido.dataPedido | date: 'dd/MM/yyyy' }}</p>
+            </div>
+
             <h5 class="card-title text-left mt-3">Forma de Pagamento:</h5>
             <p class="card-title text-left mt-3 mb-5">{{ pedido.formaPagamento }}</p>
 
-            <div class="label-info alert alert-info text-center" *ngIf="pedido.formaPagamento == 'Pix'">
-              <i class="fa fa-exclamation-circle float-left"></i>
-              <p>Este comprovante é muito importante, então tire print ou copie o código do pedido para se proteger.</p>
-              <p class="mt-3"> A chave pix para pagamentos é <b>tribo.imep2022@gmail.com.</b> </p>
-              <p class="mt-3"> Ao realizar o pagamento, envie o comprovante para o número abaixo: </p>
-              <b><a class="btn" href="https://api.whatsapp.com/send?phone=5563991321949" target="_blank">(63) 9
-                  8441-6085</a></b>
-            </div>
-
-            <div *ngIf="pedido.formaPagamento != 'Pix'">
+            <div *ngIf="pedido.formaPagamento == 'Pix' && pedido.status == 'A PAGAR'">
               <div class="label-info alert alert-info text-center">
                 <i class="fa fa-exclamation-circle float-left"></i>
-                Este comprovante é muito importante, então tire print ou copie o código do pedido para se proteger. Para
-                receber o link de pagamento, clique no botão abaixo.
+                <p class="mt-3"> A chave pix para pagamentos é <b>tribo.imep2022@gmail.com.</b> </p>
+                <p class="mt-3"> Ao realizar o pagamento, envie o comprovante clicando no botão abaixo.
+                </p>
               </div>
-              <a class="btn-center btn btn-success text-center" (click)="enviarComprovante()" target="_blank">Enviar
-                para WhatsApp <i class="fa fa-whatsapp float-right fa-2x"></i></a>
+              <a class="btn-center btn btn-success text-center" href="https://api.whatsapp.com/send?phone=5563991321949"
+                target="_blank">Enviar pelo WhatsApp <i class="fa fa-whatsapp float-right fa-2x"></i></a>
             </div>
 
-            <hr />
+
+            <div
+              *ngIf="(pedido.formaPagamento == 'Cartão de Crédito' || pedido.formaPagamento == 'Cartão de Débito') && pedido.status == 'A PAGAR'">
+              <div class="label-info alert alert-info text-center">
+                <i class="fa fa-exclamation-circle float-left"></i>
+                Solicite o link de pagamento clicando no botão abaixo.
+              </div>
+              <a class="btn-center btn btn-success text-center" (click)="enviarComprovante()" target="_blank">Pedir pelo
+                WhatsApp <i class="fa fa-whatsapp float-right fa-2x"></i></a>
+            </div>
+
           </div>
         </div>
       </div>
