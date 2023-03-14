@@ -25,41 +25,41 @@
             <hr />
 
             <h5 class="card-title text-left mt-3">Pedido:</h5>
-            <p class="card-title text-left mt-3" id="codigoPedido">{{ pedido.codigoPedido }}</p>
+            <p class="card-title text-left mt-3" id="codigoPedido">{{ pedidoComprovante.codigoPedido }}</p>
             <a class="btn btnCopiar" (click)="copiarCodigo($event)"><i class="fa fa-copy"></i> Copiar código</a>
 
             <h5 class="card-title text-left mt-3">Status do Pedido:</h5>
-            <h5 *ngIf="pedido.status == 'A PAGAR'"><span class="badge badge-danger">{{ pedido.status }}</span></h5>
-            <h5 *ngIf="pedido.status == 'PAGO'"><span class="badge badge-success">{{ pedido.status }}</span></h5>
-            <h5 *ngIf="pedido.status == 'ENTREGUE'"><span class="badge badge-primary">{{ pedido.status }}</span></h5>
+            <h5 *ngIf="pedidoComprovante.status == 'A PAGAR'"><span class="badge badge-danger">{{ pedidoComprovante.status }}</span></h5>
+            <h5 *ngIf="pedidoComprovante.status == 'PAGO'"><span class="badge badge-success">{{ pedidoComprovante.status }}</span></h5>
+            <h5 *ngIf="pedidoComprovante.status == 'ENTREGUE'"><span class="badge badge-primary">{{ pedidoComprovante.status }}</span></h5>
 
             <h5 class="card-title text-left mt-3">Comprador:</h5>
-            <p class="card-title text-left mt-3">{{ pedido.nome }}</p>
+            <p class="card-title text-left mt-3">{{ pedidoComprovante.nome }}</p>
 
             <h5 class="card-title text-left mt-3">CPF/CNPJ:</h5>
-            <p class="card-title text-left mt-3">{{ pedido.documento }}</p>
+            <p class="card-title text-left mt-3">{{ pedidoComprovante.documento }}</p>
 
             <h5 class="card-title text-left mt-3">E-mail:</h5>
-            <p class="card-title text-left mt-3">{{ pedido.email }}</p>
+            <p class="card-title text-left mt-3">{{ pedidoComprovante.email }}</p>
 
-            <h5 class="card-title text-left mt-3">Data do pedido:</h5>
-            <p class="card-title text-left mt-3">{{ pedido.dataPedido | date: 'dd/MM/yyyy' }}</p>
+            <h5 class="card-title text-left mt-3">Data do Pedido:</h5>
+            <p class="card-title text-left mt-3">{{ pedidoComprovante.dataPedido | date: 'dd/MM/yyyy' }}</p>
 
             <h5 class="card-title text-left mt-3">Produtos:</h5>
-            <p class="card-title text-left">{{ pedido.produtos }}</p>
+            <p class="card-title text-left">{{ pedidoComprovante.produtos }}</p>
 
             <h5 class="card-title text-left mt-3">Valor Total:</h5>
             <p class="card-title text-left mt-3">{{ valorTotalFormatado() }}</p>
 
-            <div *ngIf="pedido.dataPagamento">
+            <div *ngIf="pedidoComprovante.dataPagamento">
               <h5 class="card-title text-left mt-3">Data de Pagamento:</h5>
-              <p class="card-title text-left mt-3">{{ pedido.dataPedido | date: 'dd/MM/yyyy' }}</p>
+              <p class="card-title text-left mt-3">{{ pedidoComprovante.dataPedido | date: 'dd/MM/yyyy' }}</p>
             </div>
 
             <h5 class="card-title text-left mt-3">Forma de Pagamento:</h5>
-            <p class="card-title text-left mt-3 mb-5">{{ pedido.formaPagamento }}</p>
+            <p class="card-title text-left mt-3 mb-5">{{ pedidoComprovante.formaPagamento }}</p>
 
-            <div *ngIf="pedido.formaPagamento == 'Pix' && pedido.status == 'A PAGAR'">
+            <div *ngIf="pedidoComprovante.formaPagamento == 'Pix' && pedidoComprovante.status == 'A PAGAR'">
               <div class="label-info alert alert-info text-center">
                 <i class="fa fa-exclamation-circle float-left"></i>
                 <p class="mt-3"> A chave pix para pagamentos é <b>tribo.imep2022@gmail.com.</b> </p>
@@ -72,7 +72,7 @@
 
 
             <div
-              *ngIf="(pedido.formaPagamento == 'Cartão de Crédito' || pedido.formaPagamento == 'Cartão de Débito') && pedido.status == 'A PAGAR'">
+              *ngIf="(pedidoComprovante.formaPagamento == 'Cartão de Crédito' || pedidoComprovante.formaPagamento == 'Cartão de Débito') && pedidoComprovante.status == 'A PAGAR'">
               <div class="label-info alert alert-info text-center">
                 <i class="fa fa-exclamation-circle float-left"></i>
                 Solicite o link de pagamento clicando no botão abaixo.

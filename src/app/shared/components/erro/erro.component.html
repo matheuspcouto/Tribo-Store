@@ -1,0 +1,35 @@
+<div *ngIf="loading">
+  <app-loadder></app-loadder>
+</div>
+
+<section class="h-100 mt-3 section mb-3" *ngIf="!loading">
+  <div class="container h-100">
+    <div class="row justify-content-md-center h-100">
+      <div class="card-wrapper">
+        <div class="card fat">
+          <div class="card-body" style="background-color: white">
+
+            <a routerLink="/home">
+              <button type="button" class="btn btnVoltar text-center">
+                <i class="fa fa-arrow-left float-left"></i> Voltar
+              </button>
+            </a><br><br>
+
+            <div class="divImg mt-3"><img src="assets/logo.png" class="img"></div>
+            <br>
+            <h2 class="card-title text-center mt-3 mb-4">Ops, Algo deu Errado !</h2>
+            <p class="card-title text-center mt-3"><b>Código do Erro:</b> {{apiError.errorCode}}</p>
+            <p class="card-title text-center mt-3"><b>Tipo de Erro:</b> {{apiError.errorName}}</p>
+            <p class="card-title text-center mt-3"><b>Mensagem:</b></p>
+            <p class="card-title text-center">{{apiError.errorMessage}}</p>
+            <br>
+            <hr>
+
+            <app-footer></app-footer>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

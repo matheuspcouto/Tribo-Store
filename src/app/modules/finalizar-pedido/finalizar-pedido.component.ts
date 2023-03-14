@@ -77,12 +77,13 @@ export class FinalizarPedidoComponent implements OnInit {
           next: (response) => {
 
             if (response.error) {
-              // TODO: Fazer tela de Erro com detalhes do erro para print
-              this.notificationService.error(response.error.errorMessage, 'Erro');
+              sessionStorage.setItem('erro', JSON.stringify(response.error));
+              this.loading = false;
+              this.router.navigate(['erro']);
               return;
             }
 
-            if (this.pedido.codigoPedido) { sessionStorage.setItem('codigoPedido', this.pedido.codigoPedido); }
+            if (this.pedido.codigoPedido) { sessionStorage.setItem('pedido', JSON.stringify(this.pedido)); }
             sessionStorage.setItem('paginaOrigem', 'finalizar-pedido');
             this.loading = false;
             this.notificationService.success(response.message, 'Sucesso');
