@@ -20,6 +20,7 @@ import { FinalizarPedidoComponent } from './modules/finalizar-pedido/finalizar-p
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { ModalConfirmacaoConfig, ModalConfirmacaoDirective, MODAL_CONFIRMACAO } from './shared/components/modal-confirmacao/modal-confirmacao.directive';
+import { ErroComponent } from './shared/components/erro/erro.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { ModalConfirmacaoConfig, ModalConfirmacaoDirective, MODAL_CONFIRMACAO } 
     DetalhesProdutoComponent,
     FinalizarPedidoComponent,
     ModalConfirmacaoDirective,
+    ErroComponent,
   ],
   imports: [
     HttpClientModule,

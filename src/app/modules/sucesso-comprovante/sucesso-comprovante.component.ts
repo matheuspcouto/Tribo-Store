@@ -38,9 +38,9 @@ export class SucessoComprovanteComponent implements OnInit {
         next: (response) => {
 
           if (response.error) {
-            this.notificationService.error(response.error.errorMessage, 'Erro');
-            this.router.navigate([this.paginaOrigem]);
+            sessionStorage.setItem('erro', JSON.stringify(response.error));
             this.loading = false;
+            this.router.navigate(['erro']);
             return;
           }
 

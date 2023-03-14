@@ -9,9 +9,11 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AguardeComponent } from './modules/aguarde/aguarde.component';
 import { HomeComponent } from './modules/home/home.component';
+import { ErroComponent } from './shared/components/erro/erro.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
+  { path: 'erro', component: ErroComponent, canActivate:[SiteAtivoGuard] },
   { path: 'home', component: HomeComponent, canActivate: [SiteAtivoGuard] },
   { path: 'produtos', component: ProdutosComponent, canActivate:[SiteAtivoGuard] },
   { path: 'detalhes-produto', component: DetalhesProdutoComponent, canActivate:[SiteAtivoGuard] },
