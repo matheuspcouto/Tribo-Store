@@ -83,7 +83,7 @@ export class FinalizarPedidoComponent implements OnInit {
               return;
             }
 
-            if (this.pedido.codigoPedido) { sessionStorage.setItem('codigoPedido', this.pedido.codigoPedido); }
+            if (this.pedido.codigoPedido) { sessionStorage.setItem('pedido', JSON.stringify(this.pedido)); }
             sessionStorage.setItem('paginaOrigem', 'finalizar-pedido');
             this.loading = false;
             this.notificationService.success(response.message, 'Sucesso');
