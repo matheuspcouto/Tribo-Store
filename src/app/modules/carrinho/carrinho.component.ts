@@ -1,9 +1,9 @@
 import { formatarValorTotalProduto, formatarProdutoCarrinho } from 'src/app/shared/Utils/produto-formatador';
 import { CarrinhoService } from 'src/app/services/carrinho-state.service';
 import { Component, OnInit } from '@angular/core';
-import { Produto } from 'src/app/models/produto';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { ProdutoRequest } from 'src/app/models/request/produto-request';
 
 @Component({
   selector: 'app-carrinho',
@@ -11,8 +11,8 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./carrinho.component.css'],
 })
 export class CarrinhoComponent implements OnInit {
-  produtos: Produto[] = [];
-  produto = new Produto();
+  produtos: ProdutoRequest[] = [];
+  produto = new ProdutoRequest();
   loading = false;
   erroForm: any;
   removido: boolean = false;
@@ -40,7 +40,7 @@ export class CarrinhoComponent implements OnInit {
     this.router.navigate(['/finalizar-pedido']);
   }
 
-  removerCarrinho(produto: Produto) {
+  removerCarrinho(produto: ProdutoRequest) {
     this.loading = true;
     try {
       this.carrinho.remover(produto);
@@ -56,7 +56,7 @@ export class CarrinhoComponent implements OnInit {
     this.loading = false;
   }
 
-  formatarProdutoCarrinho(produto: Produto) {
+  formatarProdutoCarrinho(produto: ProdutoRequest) {
     return formatarProdutoCarrinho(produto)
   }
 
@@ -64,7 +64,7 @@ export class CarrinhoComponent implements OnInit {
     return this.carrinho.total().toLocaleString('pt-br', { style: 'currency', currency: 'BRL'});;
   }
 
-  valorTotalProduto(produto: Produto) {
+  valorTotalProduto(produto: ProdutoRequest) {
     return formatarValorTotalProduto(produto, undefined)
   }
 }

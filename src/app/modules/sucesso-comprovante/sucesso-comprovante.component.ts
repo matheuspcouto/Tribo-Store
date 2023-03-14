@@ -1,4 +1,4 @@
-import { PedidoResponse } from './../../models/pedido-response';
+import { PedidoResponse } from '../../models/response/pedido-response';
 import { CarrinhoService } from 'src/app/services/carrinho-state.service';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';

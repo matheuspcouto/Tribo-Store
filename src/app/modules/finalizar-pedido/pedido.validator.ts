@@ -1,5 +1,5 @@
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { PedidoRequest } from 'src/app/models/pedido-request';
+import { PedidoRequest } from 'src/app/models/request/pedido-request';
 
 export interface ErroPedido {
   tipoErro: string;

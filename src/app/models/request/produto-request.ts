@@ -1,11 +1,10 @@
-export class Produto {
+export class ProdutoRequest {
   id: number = 0;
   nome: string = '';
   descricao?: string;
-  tipo?: string;
-  tamanhos?: string[];
+  categoria?: string;
+  subCategoria?: string;
   tamanhoSelecionado?: string;
-  cores?: string[];
   corSelecionada?: string;
   modeloCelular?: string;
   qtdItem?: number;

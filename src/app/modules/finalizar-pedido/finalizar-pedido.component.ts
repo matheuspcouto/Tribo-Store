@@ -2,8 +2,7 @@ import { StatusPedido } from './../../shared/enums/status-pedido.enums';
 import { PedidoService } from './../../services/pedido.service';
 import { ErroPedido, getPedidoValidationErrors } from './pedido.validator';
 import { Component, OnInit } from '@angular/core';
-import { PedidoRequest } from 'src/app/models/pedido-request';
-import { Produto } from 'src/app/models/produto';
+import { PedidoRequest } from 'src/app/models/request/pedido-request';
 import { Router } from '@angular/router';
 import { CarrinhoService } from 'src/app/services/carrinho-state.service';
 import { FormasPagamento } from 'src/app/shared/enums/formas-pagamento.enum';
@@ -16,6 +15,7 @@ import {
 } from 'src/app/shared/Utils/produto-formatador';
 import { HttpErrorResponse } from '@angular/common/http';
 import { formatarTelefone } from 'src/app/shared/Utils/telefone.formatador';
+import { ProdutoRequest } from 'src/app/models/request/produto-request';
 
 @Component({
   selector: 'app-finalizar-pedido',
@@ -23,7 +23,7 @@ import { formatarTelefone } from 'src/app/shared/Utils/telefone.formatador';
   styleUrls: ['./finalizar-pedido.component.css'],
 })
 export class FinalizarPedidoComponent implements OnInit {
-  produtos: Produto[] = [];
+  produtos: ProdutoRequest[] = [];
   pedido = new PedidoRequest();
   formasPagamento: string[] = [
     FormasPagamento.PIX,
@@ -107,11 +107,11 @@ export class FinalizarPedidoComponent implements OnInit {
     return code;
   }
 
-  formatarProdutoCarrinho(produto: Produto) {
+  formatarProdutoCarrinho(produto: ProdutoRequest) {
     return formatarProdutoCarrinho(produto);
   }
 
-  valorTotalProduto(produto: Produto) {
+  valorTotalProduto(produto: ProdutoRequest) {
     return formatarValorTotalProduto(produto, this.pedido);
   }
 

@@ -1,5 +1,5 @@
-import { TipoProduto } from './../../../shared/enums/tipo-produto-enum';
-import { Produto } from './../../../models/produto';
+import { CategoriaProduto, SubCategoriaProduto } from '../../../shared/enums/categoria-enum';
+import { ProdutoRequest } from '../../../models/request/produto-request';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 export interface ErroDetalhesProduto {
@@ -28,14 +28,14 @@ export const qtdValidator = [
   Validators.nullValidator,
 ];
 
-export function getProdutoValidationErrors(produto: Produto): ErroDetalhesProduto[] {
+export function getProdutoValidationErrors(produto: ProdutoRequest): ErroDetalhesProduto[] {
   let errors: ErroDetalhesProduto[] = [];
 
   var form = new FormGroup({
       quantidade: new FormControl(produto.qtdItem, qtdValidator),
-      cor: new FormControl(produto.corSelecionada, produto.tipo === TipoProduto.MEIA ? Validators.required : null),
-      tamanho: new FormControl(produto.tamanhoSelecionado, produto.tipo === TipoProduto.MEIA || produto.tipo === TipoProduto.CAMISA ? Validators.required : null),
-      modelo_celular: new FormControl(produto.modeloCelular, produto.tipo === TipoProduto.CAPINHA ? Validators.required : null),
+      cor: new FormControl(produto.corSelecionada, produto.subCategoria === SubCategoriaProduto.MEIA ? Validators.required : null),
+      tamanho: new FormControl(produto.tamanhoSelecionado, produto.categoria != CategoriaProduto.PERSONALIZADOS ? Validators.required : null),
+      modelo_celular: new FormControl(produto.modeloCelular, produto.subCategoria === SubCategoriaProduto.CAPA_CELULAR ? Validators.required : null),
   });
 
   Object.keys(form.controls).forEach((campoErro) => {

@@ -15,27 +15,27 @@
               </button>
             </a><br><br>
 
-            <div *ngFor="let img of produto.img; let i = index" class="divImgProduto mt-3">
+            <div *ngFor="let img of produtoResponse.img; let i = index" class="divImgProduto mt-3">
               <img *ngIf="i == indexImg" [src]="img" class="imgProduto" />
             </div>
 
-            <button *ngIf="produto.img.length > 1" (click)="mudarImagem()" type="button"
+            <button *ngIf="produtoResponse.img.length > 1" (click)="mudarImagem()" type="button"
               class="btn btn-block text-center">
               <i class="fa fa-retweet"></i>
             </button><br>
 
-            <h3 class="card-title text-center mt-3"> {{ produto.nome }}</h3>
+            <h3 class="card-title text-center mt-3"> {{ produtoResponse.nome }}</h3>
             <h5 class="card-title text-left mt-3"> Descrição: </h5>
-            <p class="card-title text-left mt-3"> {{ produto.descricao}} </p>
+            <p class="card-title text-left mt-3"> {{ produtoResponse.descricao}} </p>
             <h5 class="card-title text-left mt-3"> Valor: </h5>
-            <p class="card-title text-left mt-3"> {{ produto.valor | currency:"BRL" }} </p>
+            <p class="card-title text-left mt-3"> {{ produtoResponse.valor | currency:"BRL" }} </p>
             <br>
 
             <div class="row" *ngIf="tamanhos.length">
               <label>Tamanhos</label>
               <div class="form-group col-sm-12">
                 <div class="form-group">
-                  <select class="form-select form-select-lg" [(ngModel)]="produto.tamanhoSelecionado" name="idItem">
+                  <select class="form-select form-select-lg" [(ngModel)]="produtoRequest.tamanhoSelecionado" name="idItem">
                     <option *ngFor="let tamanho of tamanhos; let i = index" [ngValue]="tamanho" [selected]="i === 0">
                       {{ tamanho }}
                     </option>
@@ -54,7 +54,7 @@
               <label>Cores</label>
               <div class="form-group col-sm-12">
                 <div class="form-group">
-                  <select class="form-select form-select-lg" [(ngModel)]="produto.corSelecionada" name="idItem">
+                  <select class="form-select form-select-lg" [(ngModel)]="produtoRequest.corSelecionada" name="idItem">
                     <option *ngFor="let cor of cores; let i = index" [ngValue]="cor" [selected]="i === 0">
                       {{ cor }}
                     </option>
@@ -68,9 +68,9 @@
               </div>
             </div>
 
-            <div class="form-group" *ngIf="produto.tipo === 'Celular'">
+            <div class="form-group" *ngIf="produtoResponse.subCategoria === 'Capa de Celular'">
               <label>Qual o modelo do celular ?</label>
-              <input id="celular" type="text" name="celular" [(ngModel)]="produto.modeloCelular" class="form-control"
+              <input id="celular" type="text" name="celular" [(ngModel)]="produtoRequest.modeloCelular" class="form-control"
                 required placeholder="Informe o modelo do celular" />
               <div *ngIf="errorsValidators">
                 <div *ngFor="let erro of errorsValidators">
@@ -81,7 +81,7 @@
 
             <div class="form-group">
               <label>Quantidade</label>
-              <input id="qtd" type="number" name="qtd" [(ngModel)]="produto.qtdItem" class="form-control"
+              <input id="qtd" type="number" name="qtd" [(ngModel)]="produtoRequest.qtdItem" class="form-control"
                 placeholder="Informe a quantidade que deseja comprar" required />
               <div *ngIf="errorsValidators">
                 <div *ngFor="let erro of errorsValidators">

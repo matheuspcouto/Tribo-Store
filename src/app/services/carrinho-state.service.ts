@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
-import { Produto } from '../models/produto';
+import { ProdutoRequest } from '../models/request/produto-request';
 
 @Injectable({ providedIn: 'root' })
 export class CarrinhoService {
   constructor() {}
 
-  produtos: Produto[] = [];
+  produtos: ProdutoRequest[] = [];
 
-  adicionar(prod: Produto) {
+  adicionar(prod: ProdutoRequest) {
     this.produtos.push(prod);
     sessionStorage.setItem('carrinho', JSON.stringify(this.produtos));
   }
 
-  remover(produto: Produto) {
+  remover(produto: ProdutoRequest) {
     this.produtos.splice(this.produtos.indexOf(produto), 1);
     sessionStorage.setItem('carrinho', JSON.stringify(this.produtos));
   }
@@ -31,7 +31,7 @@ export class CarrinhoService {
     return this.produtos.some((item) => item.id == idProduto);
   }
 
-  verificarExisteProduto(prod: Produto): boolean {
+  verificarExisteProduto(prod: ProdutoRequest): boolean {
     return this.produtos.some(
       (item) =>
         (item.corSelecionada == prod.corSelecionada ||

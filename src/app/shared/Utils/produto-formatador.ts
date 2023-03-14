@@ -1,9 +1,9 @@
-import { PedidoRequest } from "src/app/models/pedido-request";
-import { Produto } from "src/app/models/produto";
+import { PedidoRequest } from "src/app/models/request/pedido-request";
+import { ProdutoRequest } from "src/app/models/request/produto-request";
 import { FormasPagamento } from "../enums/formas-pagamento.enum";
-import { TipoProduto } from "../enums/tipo-produto-enum";
+import { CategoriaProduto, SubCategoriaProduto } from "../enums/categoria-enum";
 
-export function formatarProdutosPedido(produtos: Produto[], pedido: PedidoRequest): string {
+export function formatarProdutosPedido(produtos: ProdutoRequest[], pedido: PedidoRequest): string {
   let aux: string = '';
 
   produtos.map((p) => {
@@ -35,7 +35,7 @@ export function formatarProdutosPedido(produtos: Produto[], pedido: PedidoReques
   return aux.trim();
 }
 
-export function formatarValorTotalProduto(produto: Produto, pedido: PedidoRequest | undefined) {
+export function formatarValorTotalProduto(produto: ProdutoRequest, pedido: PedidoRequest | undefined) {
   let total;
 
   if (pedido && pedido.formaPagamento == FormasPagamento.CARTAO_CREDITO) {
@@ -47,7 +47,7 @@ export function formatarValorTotalProduto(produto: Produto, pedido: PedidoReques
   return total.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
 }
 
-export function formatarProdutoPedido(p: Produto) {
+export function formatarProdutoPedido(p: ProdutoRequest) {
   let aux = `(${p.qtdItem}x) ${p.nome}`;
 
   if (p.tamanhoSelecionado) {
@@ -63,14 +63,14 @@ export function formatarProdutoPedido(p: Produto) {
   return aux.trim();
 }
 
-export function formatarProdutoCarrinho(produto: Produto) {
+export function formatarProdutoCarrinho(produto: ProdutoRequest) {
   let aux = produto.nome + ' - ';
 
-  aux += produto.tipo == TipoProduto.CAMISA ? produto.tamanhoSelecionado : '';
-  aux += produto.tipo == TipoProduto.MEIA
-    ? produto.tamanhoSelecionado + '/' + produto.corSelecionada
-    : '';
-  aux += produto.tipo == TipoProduto.CAPINHA ? produto.modeloCelular : '';
+  aux += produto.categoria != CategoriaProduto.PERSONALIZADOS ? produto.tamanhoSelecionado : '';
+
+  aux += produto.subCategoria == SubCategoriaProduto.MEIA ? '/' + produto.corSelecionada : '';
+
+  aux += produto.subCategoria == SubCategoriaProduto.CAPA_CELULAR ? produto.modeloCelular : '';
 
   if (aux.endsWith(' - ')) {
     aux = aux.substring(0, aux.length - 3);
